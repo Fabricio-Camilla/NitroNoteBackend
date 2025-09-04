@@ -4,25 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="56d7f9d0-263c-4939-96bb-25fc70ea1b39" name="Changes" comment="Comienzo de test 2">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/nitro-note.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/nitro-note.test.iml" afterDir="false" />
+    <list default="true" id="56d7f9d0-263c-4939-96bb-25fc70ea1b39" name="Changes" comment="3 TEST OK , 1 erroneo ya que puedo introducir un nombre en blanco, pero no es null sino que tiene espacios">
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nitro_note/modelo/Mantenimiento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/modelo/Mantenimiento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nitro_note/persistence/dao/MantenimientoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/persistence/dao/MantenimientoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nitro_note/persistence/dto/MantenimientoJPADTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/persistence/dto/MantenimientoJPADTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nitro_note/service/impl/MantenimientoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/service/impl/MantenimientoServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/nitro_note/service/MantenimientoServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/nitro_note/service/MantenimientoServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,7 +246,7 @@
       <workItem from="1756858280724" duration="16000" />
       <workItem from="1756859734109" duration="35000" />
       <workItem from="1756938108067" duration="12580000" />
-      <workItem from="1756993122431" duration="11109000" />
+      <workItem from="1756993122431" duration="11753000" />
     </task>
     <task id="LOCAL-00001" summary="variables de entorno">
       <option name="closed" value="true" />
@@ -331,7 +320,55 @@
       <option name="project" value="LOCAL" />
       <updated>1756954567209</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Configuracion para que funcione la BD">
+      <option name="closed" value="true" />
+      <created>1757006932119</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1757006932119</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Configuracion para que funcione la BD">
+      <option name="closed" value="true" />
+      <created>1757006946866</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1757006946866</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Contenido del MantenimientoJPADTO">
+      <option name="closed" value="true" />
+      <created>1757006998633</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1757006998633</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Cambios en el SERVICE">
+      <option name="closed" value="true" />
+      <created>1757007022793</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1757007022793</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Ahora el DAO depende del jpadto">
+      <option name="closed" value="true" />
+      <created>1757007042358</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1757007042358</updated>
+    </task>
+    <task id="LOCAL-00015" summary="3 TEST OK , 1 erroneo ya que puedo introducir un nombre en blanco, pero no es null sino que tiene espacios">
+      <option name="closed" value="true" />
+      <created>1757007083712</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1757007083712</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -347,7 +384,12 @@
     <MESSAGE value="Correccion en Service" />
     <MESSAGE value="Comienzo de test" />
     <MESSAGE value="Comienzo de test 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Comienzo de test 2" />
+    <MESSAGE value="Configuracion para que funcione la BD" />
+    <MESSAGE value="Contenido del MantenimientoJPADTO" />
+    <MESSAGE value="Cambios en el SERVICE" />
+    <MESSAGE value="Ahora el DAO depende del jpadto" />
+    <MESSAGE value="3 TEST OK , 1 erroneo ya que puedo introducir un nombre en blanco, pero no es null sino que tiene espacios" />
+    <option name="LAST_COMMIT_MESSAGE" value="3 TEST OK , 1 erroneo ya que puedo introducir un nombre en blanco, pero no es null sino que tiene espacios" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

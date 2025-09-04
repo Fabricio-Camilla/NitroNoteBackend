@@ -4,18 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="56d7f9d0-263c-4939-96bb-25fc70ea1b39" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/modelo/Mantenimiento.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/persistence/dao/MantenimientoDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/persistence/dto/MantenimientoJPADTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/service/impl/MantenimientoServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/service/interfaces/MantenimientoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/checksums/checksums.lock" afterDir="false" />
+    <list default="true" id="56d7f9d0-263c-4939-96bb-25fc70ea1b39" name="Changes" comment="Comienzo de test 2">
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/nitro-note.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/nitro-note.test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nitro_note/modelo/Mantenimiento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/modelo/Mantenimiento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nitro_note/persistence/dao/MantenimientoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/persistence/dao/MantenimientoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nitro_note/persistence/dto/MantenimientoJPADTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/persistence/dto/MantenimientoJPADTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nitro_note/service/impl/MantenimientoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/service/impl/MantenimientoServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/nitro_note/service/MantenimientoServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/nitro_note/service/MantenimientoServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +37,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Record" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -65,9 +73,17 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.Build NitroNoteBackend.executor": "Run",
     "Gradle.Download Sources.executor": "Run",
+    "Gradle.MantenimientoServiceTest.executor": "Run",
+    "Gradle.MantenimientoServiceTest.testCrearUnMantenimiento.executor": "Run",
+    "Gradle.MantenimientoServiceTest.testFinalizarMantenimiento.executor": "Run",
+    "Gradle.MantenimientoServiceTest.testReglaDeNegocio_NombreObligatorio.executor": "Run",
+    "Gradle.MantenimientoServiceTest.testSeCreanVariosMantenimientosYQuedanListados.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.NitroNoteApplication.executor": "Run",
     "git-widget-placeholder": "ft-mantenimiento",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -81,7 +97,127 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.MantenimientoServiceTest">
+    <configuration name="MantenimientoServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.nitro_note.service.MantenimientoServiceTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="MantenimientoServiceTest.testCrearUnMantenimiento" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.nitro_note.service.MantenimientoServiceTest.testCrearUnMantenimiento&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="MantenimientoServiceTest.testFinalizarMantenimiento" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.nitro_note.service.MantenimientoServiceTest.testFinalizarMantenimiento&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="MantenimientoServiceTest.testReglaDeNegocio_NombreObligatorio" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.nitro_note.service.MantenimientoServiceTest.testReglaDeNegocio_NombreObligatorio&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="MantenimientoServiceTest.testSeCreanVariosMantenimientosYQuedanListados" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.nitro_note.service.MantenimientoServiceTest.testSeCreanVariosMantenimientosYQuedanListados&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="NitroNoteApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="nitro-note.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.nitro_note.NitroNoteApplication" />
@@ -89,6 +225,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.MantenimientoServiceTest" />
+        <item itemvalue="Gradle.MantenimientoServiceTest.testFinalizarMantenimiento" />
+        <item itemvalue="Gradle.MantenimientoServiceTest.testReglaDeNegocio_NombreObligatorio" />
+        <item itemvalue="Gradle.MantenimientoServiceTest.testSeCreanVariosMantenimientosYQuedanListados" />
+        <item itemvalue="Gradle.MantenimientoServiceTest.testCrearUnMantenimiento" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -111,12 +256,109 @@
       <workItem from="1756855872293" duration="1777000" />
       <workItem from="1756858280724" duration="16000" />
       <workItem from="1756859734109" duration="35000" />
-      <workItem from="1756938108067" duration="8262000" />
+      <workItem from="1756938108067" duration="12580000" />
+      <workItem from="1756993122431" duration="11109000" />
     </task>
+    <task id="LOCAL-00001" summary="variables de entorno">
+      <option name="closed" value="true" />
+      <created>1756950945124</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1756950945124</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Service interface e Implementacion de clase Mantenimiento">
+      <option name="closed" value="true" />
+      <created>1756950983610</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1756950983610</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Persistence DAO y JPADTO de clase Mantenimiento">
+      <option name="closed" value="true" />
+      <created>1756951029586</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1756951029586</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Controller de clase Mantenimiento">
+      <option name="closed" value="true" />
+      <created>1756951047368</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1756951047368</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Modelo de clase Mantenimiento">
+      <option name="closed" value="true" />
+      <created>1756951053959</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1756951053959</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Correccion en Controller">
+      <option name="closed" value="true" />
+      <created>1756954142267</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1756954142267</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Correccion en Service">
+      <option name="closed" value="true" />
+      <created>1756954150897</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1756954150897</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Comienzo de test">
+      <option name="closed" value="true" />
+      <created>1756954158578</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1756954158578</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Comienzo de test 2">
+      <option name="closed" value="true" />
+      <created>1756954567209</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1756954567209</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="variables de entorno" />
+    <MESSAGE value="Service interface e Implementacion de clase Mantenimiento" />
+    <MESSAGE value="Persistence DAO y JPADTO de clase Mantenimiento" />
+    <MESSAGE value="Controller de clase Mantenimiento" />
+    <MESSAGE value="Modelo de clase Mantenimiento" />
+    <MESSAGE value="Correccion en Controller" />
+    <MESSAGE value="Correccion en Service" />
+    <MESSAGE value="Comienzo de test" />
+    <MESSAGE value="Comienzo de test 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comienzo de test 2" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/com/nitro_note/service/MantenimientoServiceTest.java</url>
+          <line>101</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

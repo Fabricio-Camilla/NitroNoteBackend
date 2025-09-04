@@ -2,11 +2,11 @@ package com.nitro_note.service.impl;
 
 import com.nitro_note.modelo.Mantenimiento;
 import com.nitro_note.persistence.dao.MantenimientoDAO;
+import com.nitro_note.persistence.dto.MantenimientoJPADTO;
 import com.nitro_note.service.interfaces.MantenimientoService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.security.PublicKey;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,27 +21,38 @@ public class MantenimientoServiceImpl implements MantenimientoService {
 
     @Override
     public Mantenimiento recuperarMantenimiento(Long mantenimientoId) {
-        return mantenimientoDAO.findById(mantenimientoId).orElse(null);
+        return mantenimientoDAO.findById(mantenimientoId)
+                .orElseThrow(()-> new NoSuchElementException("Mantenimiento not found with id: " + mantenimientoId))
+                .aModelo();
     }
 
     @Override
     public Set<Mantenimiento> allMantenimientos() {
-        return Set.of();
+        return Set.copyOf(mantenimientoDAO.findAll())
+                .stream()
+                .map(MantenimientoJPADTO::aModelo)
+                .collect(Collectors.toSet());
     }
 
     @Override
     public Long guardarMantenimiento(Mantenimiento mantenimiento) {
-        return mantenimientoDAO.save(mantenimiento).getId();
+        MantenimientoJPADTO mantenimientoJPADTO = MantenimientoJPADTO.desdeModelo(mantenimiento);
+        mantenimientoDAO.save(mantenimientoJPADTO);
+        mantenimiento.setId(mantenimientoJPADTO.getId());
+        return mantenimiento.getId();
     }
 
     @Override
     public void deleteMantenimiento(Mantenimiento mantenimiento) {
-        mantenimientoDAO.delete(mantenimiento);
+        if (mantenimiento.getId() == null) {
+            throw new IllegalArgumentException("No se puede eliminar un mantenimiento sin ID");
+        }
+        mantenimientoDAO.deleteById(mantenimiento.getId());
     }
 
     @Override
     public void clearAll() {
-
+        mantenimientoDAO.deleteAll();
     }
 
 

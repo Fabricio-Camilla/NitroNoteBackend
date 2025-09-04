@@ -2,7 +2,6 @@ package com.nitro_note.controller;
 
 
 import com.nitro_note.controller.dto.MantenimientoDTO;
-import com.nitro_note.modelo.Mantenimiento;
 import com.nitro_note.service.interfaces.MantenimientoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +18,11 @@ public class MantenimientoControllerREST {
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public Long createMantenimiento(@RequestBody MantenimientoDTO mantenimiento){
-        return mantenimientoService.guardarMantenimiento(mantenimiento);
+        return mantenimientoService.guardarMantenimiento(mantenimiento.aModelo());
+    }
+
+    @GetMapping("/{id}")
+    public MantenimientoDTO getMantenimiento(@PathVariable Long id) {
+        return MantenimientoDTO.desdeModelo(mantenimientoService.getMantenimiento(id));
     }
 }

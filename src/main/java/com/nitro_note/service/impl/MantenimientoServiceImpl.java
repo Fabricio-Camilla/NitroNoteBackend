@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.PublicKey;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 public class MantenimientoServiceImpl implements MantenimientoService {
     private final MantenimientoDAO mantenimientoDAO;
@@ -18,16 +21,18 @@ public class MantenimientoServiceImpl implements MantenimientoService {
 
     @Override
     public Mantenimiento getMantenimiento(Long mantenimientoId) {
-        return mantenimientoDAO.findById(mantenimientoId).orElse(null) ;
+        return mantenimientoDAO.findById(mantenimientoId).orElse(null);
     }
 
     @Override
     public Long guardarMantenimiento(Mantenimiento mantenimiento) {
-        mantenimientoDAO.save(mantenimiento).getId();
+        return mantenimientoDAO.save(mantenimiento).getId();
     }
 
     @Override
     public void deleteMantenimiento(Mantenimiento mantenimiento) {
         mantenimientoDAO.delete(mantenimiento);
     }
+
+
 }

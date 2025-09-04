@@ -23,6 +23,6 @@ public class MantenimientoControllerREST {
 
     @GetMapping("/{id}")
     public MantenimientoDTO getMantenimiento(@PathVariable Long id) {
-        return MantenimientoDTO.desdeModelo(mantenimientoService.getMantenimiento(id));
+        return MantenimientoDTO.desdeModelo(mantenimientoService.recuperarMantenimiento(id));
     }
 }

@@ -51,6 +51,7 @@ public class MantenimientoServiceTest {
         // Act: guardamos el tercero
         Long guardado = mantenimientoService.guardarMantenimiento(frenos);
 
+        Mantenimiento mantenimientoFrenos = mantenimientoService.recuperarMantenimiento(guardado);
         // Assert: se asigna ID y se pueden leer los campos
         Assertions.assertNotNull(guardado.getClass(), "El mantenimiento guardado debe tener ID");
         Assertions.assertEquals("Cambio de pastillas de freno", guardado.getClass().getName(), "El mantenimiento guardado debe tener ID");

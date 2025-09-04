@@ -20,8 +20,13 @@ public class MantenimientoServiceImpl implements MantenimientoService {
 
 
     @Override
-    public Mantenimiento getMantenimiento(Long mantenimientoId) {
+    public Mantenimiento recuperarMantenimiento(Long mantenimientoId) {
         return mantenimientoDAO.findById(mantenimientoId).orElse(null);
+    }
+
+    @Override
+    public Set<Mantenimiento> allMantenimientos() {
+        return Set.of();
     }
 
     @Override
@@ -32,6 +37,11 @@ public class MantenimientoServiceImpl implements MantenimientoService {
     @Override
     public void deleteMantenimiento(Mantenimiento mantenimiento) {
         mantenimientoDAO.delete(mantenimiento);
+    }
+
+    @Override
+    public void clearAll() {
+
     }
 
 

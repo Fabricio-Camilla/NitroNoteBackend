@@ -1,0 +1,33 @@
+package com.nitro_note.service.impl;
+
+import com.nitro_note.modelo.Mantenimiento;
+import com.nitro_note.persistence.dao.MantenimientoDAO;
+import com.nitro_note.service.interfaces.MantenimientoService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.security.PublicKey;
+@Service
+public class MantenimientoServiceImpl implements MantenimientoService {
+    private final MantenimientoDAO mantenimientoDAO;
+
+    public MantenimientoServiceImpl(MantenimientoDAO mantenimientoDAO) {
+        this.mantenimientoDAO = mantenimientoDAO;
+    }
+
+
+    @Override
+    public Mantenimiento getMantenimiento(Long mantenimientoId) {
+        return mantenimientoDAO.findById(mantenimientoId).orElse(null) ;
+    }
+
+    @Override
+    public Long guardarMantenimiento(Mantenimiento mantenimiento) {
+        mantenimientoDAO.save(mantenimiento).getId();
+    }
+
+    @Override
+    public void deleteMantenimiento(Mantenimiento mantenimiento) {
+        mantenimientoDAO.delete(mantenimiento);
+    }
+}

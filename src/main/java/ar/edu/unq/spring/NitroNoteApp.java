@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EjemploSpringApp {
+public class NitroNoteApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(EjemploSpringApp.class, args);
+        SpringApplication.run(NitroNoteApp.class, args);
     }
 }

@@ -39,7 +39,7 @@ public class MantenimientoControllerREST {
 
     // UPDATE
     @PutMapping("/{id}")
-    public MantenimientoDTO update(@PathVariable("id") Long id, @RequestBody MantenimientoDTO mantenimiento) {
+    public MantenimientoDTO updateMantenimiento(@PathVariable("id") Long id, @RequestBody MantenimientoDTO mantenimiento) {
         var modelo = mantenimiento.aModelo();
         modelo.setId(id);
         mantenimientoService.guardarMantenimiento(modelo);
@@ -49,7 +49,7 @@ public class MantenimientoControllerREST {
     // PATCH (finalizar)
     @PatchMapping("/{id}/finalizar")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void finalizar(@PathVariable("id") Long id) {
+    public void finalizarMantenimiento(@PathVariable("id") Long id) {
         var mantenimiento = mantenimientoService.recuperarMantenimiento(id);
         mantenimiento.finalizarMantenimiento();
         mantenimientoService.guardarMantenimiento(mantenimiento);
@@ -58,7 +58,7 @@ public class MantenimientoControllerREST {
     // DELETE
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") Long id) {
+    public void deleteMantenimiento(@PathVariable("id") Long id) {
         var mantenimiento = mantenimientoService.recuperarMantenimiento(id); // lanza si no existe
         mantenimientoService.deleteMantenimiento(mantenimiento);
     }

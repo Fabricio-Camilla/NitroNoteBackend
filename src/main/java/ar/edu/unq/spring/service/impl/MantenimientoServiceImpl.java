@@ -29,7 +29,7 @@ public class MantenimientoServiceImpl implements MantenimientoService {
 
     @Override
     public Set<Mantenimiento> allMantenimientos() {
-        return Set.copyOf(mantenimientoDAO.findAll())
+        return mantenimientoDAO.findAll()
                 .stream()
                 .map(MantenimientoJPADTO::aModelo)
                 .collect(Collectors.toSet());

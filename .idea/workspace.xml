@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="56d7f9d0-263c-4939-96bb-25fc70ea1b39" name="Changes" comment="3 TEST OK , 1 erroneo ya que puedo introducir un nombre en blanco, pero no es null sino que tiene espacios">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nitro_note/controller/MantenimientoControllerREST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/controller/MantenimientoControllerREST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nitro_note/service/impl/MantenimientoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nitro_note/service/impl/MantenimientoServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,33 +64,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build NitroNoteBackend.executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "Gradle.MantenimientoServiceTest.executor": "Run",
-    "Gradle.MantenimientoServiceTest.testCrearUnMantenimiento.executor": "Run",
-    "Gradle.MantenimientoServiceTest.testFinalizarMantenimiento.executor": "Run",
-    "Gradle.MantenimientoServiceTest.testReglaDeNegocio_NombreObligatorio.executor": "Run",
-    "Gradle.MantenimientoServiceTest.testSeCreanVariosMantenimientosYQuedanListados.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.NitroNoteApplication.executor": "Run",
-    "git-widget-placeholder": "ft-mantenimiento",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/unq+/repositorios/NitroNoteBackend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build NitroNoteBackend.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MantenimientoServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MantenimientoServiceTest.testCrearUnMantenimiento.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MantenimientoServiceTest.testFinalizarMantenimiento.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MantenimientoServiceTest.testReglaDeNegocio_NombreObligatorio.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MantenimientoServiceTest.testSeCreanVariosMantenimientosYQuedanListados.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.NitroNoteApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;ft-mantenimiento&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/unq+/repositorios/NitroNoteBackend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Gradle.MantenimientoServiceTest">
+}</component>
+  <component name="RunManager" selected="Spring Boot.NitroNoteApplication">
     <configuration name="MantenimientoServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -246,7 +254,8 @@
       <workItem from="1756858280724" duration="16000" />
       <workItem from="1756859734109" duration="35000" />
       <workItem from="1756938108067" duration="12580000" />
-      <workItem from="1756993122431" duration="11753000" />
+      <workItem from="1756993122431" duration="12046000" />
+      <workItem from="1757083504535" duration="7756000" />
     </task>
     <task id="LOCAL-00001" summary="variables de entorno">
       <option name="closed" value="true" />
@@ -368,7 +377,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757007083712</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="3 TEST OK , 1 erroneo ya que puedo introducir un nombre en blanco, pero no es null sino que tiene espacios">
+      <option name="closed" value="true" />
+      <created>1757007676369</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1757007676369</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

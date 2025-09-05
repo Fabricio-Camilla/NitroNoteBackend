@@ -1,5 +1,6 @@
 package ar.edu.unq.spring.service.interfaces;
 
+import ar.edu.unq.spring.modelo.Mantenimiento;
 import ar.edu.unq.spring.modelo.Vehiculo;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface VehiculoService {
     List<Vehiculo> recuperarTodos();
 
     void eliminar(String patente);
+
+    void agregarMantenimiento(String patente, Mantenimiento mantenimiento);
 }

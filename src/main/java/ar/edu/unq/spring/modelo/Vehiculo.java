@@ -1,6 +1,7 @@
 package ar.edu.unq.spring.modelo;
 
 import ar.edu.unq.spring.modelo.exception.CantidadDeKilometrosMenorException;
+import ar.edu.unq.spring.modelo.exception.MantenimientoYaAgregadoException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -9,8 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity @NoArgsConstructor @Getter @Setter
 public class Vehiculo {
@@ -31,8 +32,8 @@ public class Vehiculo {
     @Min(1990) @Max(2025)
     private int anio;
 
-    @Transient
-    private List<Mantenimiento> mantenimientos;
+    @OneToMany(mappedBy = "vehiculo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Mantenimiento> mantenimientos;
 
     public Vehiculo(@NonNull String marca, @NonNull String modelo, @NonNull String patente, int anio, int kilometros) {
         this.marca = marca;
@@ -40,7 +41,7 @@ public class Vehiculo {
         this.patente = patente;
         this.anio = anio;
         this.kilometros = kilometros;
-        this.mantenimientos = new ArrayList<Mantenimiento>();
+        this.mantenimientos = new HashSet<Mantenimiento>();
     }
 
     public void actualizarKilometros(int kilometros) {
@@ -52,5 +53,22 @@ public class Vehiculo {
         if(this.kilometros > kilometros) {
             throw new CantidadDeKilometrosMenorException();
         }
+    }
+
+    public void guardarMantenimiento(Mantenimiento mantenimiento) {
+       // this.validarManteniemientoParaAgregar(mantenimiento);
+        this.mantenimientos.add(mantenimiento);
+        mantenimiento.setVehiculo(this);
+    }
+
+    private void validarManteniemientoParaAgregar(Mantenimiento mantenimiento) {
+        if(this.tieneTipoDeMantenimiento(mantenimiento)){
+            throw new MantenimientoYaAgregadoException();
+        }
+    }
+
+    private boolean tieneTipoDeMantenimiento(Mantenimiento mantenimiento) {
+        return this.mantenimientos.stream().anyMatch(m -> mantenimiento.getTipo() == m.getTipo());
+        //es en memoria?????+
     }
 }

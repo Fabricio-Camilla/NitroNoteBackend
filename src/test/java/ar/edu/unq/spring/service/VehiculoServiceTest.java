@@ -1,6 +1,7 @@
 package ar.edu.unq.spring.service;
 
 import ar.edu.unq.spring.controller.dto.VehiculoDTO;
+import ar.edu.unq.spring.modelo.Mantenimiento;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.modelo.exception.CantidadDeKilometrosMenorException;
 import ar.edu.unq.spring.modelo.exception.VehiculoNoRegistradoException;
@@ -104,6 +105,28 @@ public class VehiculoServiceTest {
         assertThrows(CantidadDeKilometrosMenorException.class, () -> {
             vehiculo.actualizarKilometros(200);
         });
+    }
+
+    @Test
+    public void test(){
+        vehiculoService.guardar(vehiculo);
+
+        vehiculo.guardarMantenimiento(new Mantenimiento("Cambio aceite"));
+
+        vehiculoService.guardar(vehiculo);
+
+        var v = vehiculoService.recuperar(vehiculo.getPatente());
+
+        assertFalse(v.getMantenimientos().isEmpty());
+
+        v.guardarMantenimiento(new Mantenimiento("Cambio aceite"));
+
+        vehiculoService.guardar(vehiculo);
+
+        var v2 = vehiculoService.recuperar(vehiculo.getPatente());
+
+        assertEquals(1 , v2.getMantenimientos().size());
+
     }
 
     @AfterEach

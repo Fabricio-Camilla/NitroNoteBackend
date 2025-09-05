@@ -1,5 +1,6 @@
 package ar.edu.unq.spring.service.impl;
 
+import ar.edu.unq.spring.modelo.Mantenimiento;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.modelo.exception.VehiculoNoRegistradoException;
 import ar.edu.unq.spring.persistence.VehiculoDAO;
@@ -18,7 +19,7 @@ public class VehiculoServiceImpl implements VehiculoService {
     private final Validator validator;
     private VehiculoDAO vehiculoDAO;
 
-    public VehiculoServiceImpl(VehiculoDAO vehiculoDAO, Validator validator) {
+    public VehiculoServiceImpl(VehiculoDAO vehiculoDAO,  Validator validator) {
         this.vehiculoDAO = vehiculoDAO;
         this.validator = validator;
     }
@@ -49,8 +50,21 @@ public class VehiculoServiceImpl implements VehiculoService {
 
     @Override
     public void eliminar(String patente) {
-        Vehiculo vehiculoAEliminar = vehiculoDAO.findByPatente(patente).orElseThrow(VehiculoNoRegistradoException::new);
+        Vehiculo vehiculoAEliminar = vehiculoDAO.findByPatente(patente)
+                .orElseThrow(VehiculoNoRegistradoException::new);
 
         vehiculoDAO.delete(vehiculoAEliminar);
+    }
+
+    @Override
+    public void agregarMantenimiento(String patente, Mantenimiento mantenimiento) {
+        Vehiculo recuperado = vehiculoDAO.findByPatente(patente)
+                .orElseThrow(VehiculoNoRegistradoException::new);
+//se supone que hago una query para encontrar el mantenimiento asociado al vehiculo y saber si es del
+        //tipo que quiere agregar nuevo, si isPresent exception
+        mantenimientoDAO.tieneVehiculoElMantenimiento(recuperado.getId(), mantenimiento.getNombre());
+        recuperado.guardarMantenimiento(mantenimiento);
+
+        vehiculoDAO.save(recuperado);
     }
 }

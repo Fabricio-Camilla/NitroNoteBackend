@@ -4,8 +4,10 @@ import ar.edu.unq.spring.controller.dto.VehiculoDTO;
 import ar.edu.unq.spring.controller.dto.VehiculoRequestDTO;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.service.interfaces.VehiculoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +25,7 @@ public class VehiculoControllerREST {
     }
 
     @PostMapping()
-    public ResponseEntity<String> crearVehiculo(@RequestBody VehiculoRequestDTO vehiculo) {
+    public ResponseEntity<String> crearVehiculo(@Validated @RequestBody VehiculoRequestDTO vehiculo) {
         this.vehiculoService.guardar(vehiculo.aModelo());
         return ResponseEntity.status(HttpStatus.CREATED).body("Vehiculo creado con exito");
     }

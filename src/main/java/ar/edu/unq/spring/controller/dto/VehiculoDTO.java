@@ -13,7 +13,7 @@ public record VehiculoDTO(Long id,
     public static VehiculoDTO desdeModelo(Vehiculo vehiculo) {
         return new VehiculoDTO(
                 vehiculo.getId(),
-                vehiculo.getPatente(),
+                vehiculo.getPatente().isBlank() ? null : vehiculo.getPatente(),
                 vehiculo.getMarca(),
                 vehiculo.getModelo(),
                 vehiculo.getAnio(),

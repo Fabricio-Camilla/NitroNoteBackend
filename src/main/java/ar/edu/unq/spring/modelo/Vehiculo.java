@@ -1,8 +1,9 @@
 package ar.edu.unq.spring.modelo;
 
+import ar.edu.unq.spring.modelo.exception.CantidadDeKilometrosMenorException;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -42,4 +43,14 @@ public class Vehiculo {
         this.mantenimientos = new ArrayList<Mantenimiento>();
     }
 
+    public void actualizarKilometros(int kilometros) {
+        this.validarKilometrosParaActualizar(kilometros);
+        this.kilometros = kilometros;
+    }
+
+    private void validarKilometrosParaActualizar(int kilometros) {
+        if(this.kilometros > kilometros) {
+            throw new CantidadDeKilometrosMenorException();
+        }
+    }
 }

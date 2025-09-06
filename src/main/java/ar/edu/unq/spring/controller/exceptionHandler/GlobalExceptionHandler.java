@@ -2,6 +2,8 @@ package ar.edu.unq.spring.controller.exceptionHandler;
 
 
 import ar.edu.unq.spring.controller.VehiculoControllerREST;
+import ar.edu.unq.spring.modelo.exception.AnioIngresadoInvalidoException;
+import ar.edu.unq.spring.modelo.exception.CantidadDeKilometrosInvalidaException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<BodyError> handleIlegalArgumentException(HttpServletRequest request ){
         BodyError body = new BodyError(HttpStatus.CONFLICT, "Los campos ingresados son invalidos", request.getRequestURI());
+        return new ResponseEntity<>( body, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(AnioIngresadoInvalidoException.class)
+    public ResponseEntity<BodyError> handleAnioIngresadoInvalido(HttpServletRequest request ){
+        BodyError body = new BodyError(HttpStatus.CONFLICT, "El anio ingresado tiene que ser mayor a 1990 o menor e igual a 2025", request.getRequestURI());
+        return new ResponseEntity<>( body, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(CantidadDeKilometrosInvalidaException.class)
+    public ResponseEntity<BodyError> handleKilometrosMenosACeroInvalido(HttpServletRequest request ){
+        BodyError body = new BodyError(HttpStatus.CONFLICT, "La cantidad de kilometros tiene que ser mayor o igual a 0", request.getRequestURI());
         return new ResponseEntity<>( body, HttpStatus.CONFLICT);
     }
 

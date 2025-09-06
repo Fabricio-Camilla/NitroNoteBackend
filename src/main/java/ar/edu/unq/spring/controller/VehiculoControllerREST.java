@@ -36,4 +36,11 @@ public class VehiculoControllerREST {
                 .map(VehiculoDTO::desdeModelo)
                 .collect(Collectors.toList());
     }
+
+    @GetMapping("/{patente}")
+    public ResponseEntity<VehiculoDTO> getVehiculoByPatente(@PathVariable String patente) {
+        Vehiculo vehiculo = this.vehiculoService.recuperar(patente);
+        return ResponseEntity.ok(VehiculoDTO.desdeModelo(vehiculo));
+    }
+
 }

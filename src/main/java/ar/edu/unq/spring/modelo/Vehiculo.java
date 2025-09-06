@@ -1,7 +1,7 @@
 package ar.edu.unq.spring.modelo;
 
-import ar.edu.unq.spring.modelo.exception.CantidadDeKilometrosMenorException;
-import ar.edu.unq.spring.modelo.exception.MantenimientoYaAgregadoException;
+import ar.edu.unq.spring.modelo.exception.*;
+import ar.edu.unq.spring.modelo.utils.MarcasModeloAutos;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 @Entity @NoArgsConstructor @Getter @Setter
 public class Vehiculo {
@@ -32,19 +33,61 @@ public class Vehiculo {
     @Min(1990) @Max(2025)
     private int anio;
 
-    @OneToMany(mappedBy = "vehiculo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Mantenimiento> mantenimientos;
 
     public Vehiculo(@NonNull String marca, @NonNull String modelo, @NonNull String patente, int anio, int kilometros) {
-        this.marca = marca;
-        this.modelo = modelo;
-        this.patente = patente;
-        this.anio = anio;
-        this.kilometros = kilometros;
-        this.mantenimientos = new HashSet<Mantenimiento>();
+        setMarca(marca);
+        setModelo(modelo);
+        setPatente(patente);
+        this.anio = validarAnio(anio);
+        this.kilometros = validarKilometros(kilometros);
     }
 
-    public void actualizarKilometros(int kilometros) {
+    public void setPatente(String patente) {
+        String regexp = "^([A-Za-z]{2}[0-9]{3}[A-Za-z]{2}|[A-Za-z]{3}[0-9]{3})$";
+        if(patente.matches(regexp)) {
+            this.patente = patente;
+        }else{
+            throw new FormatoDePatenteInvalidoException();
+        }
+    }
+
+    public void setMarca(String marca) {
+        validarMarca(marca);
+        this.marca = marca;
+    }
+
+    private void validarMarca(String marca) {
+        if (MarcasModeloAutos.MARCAS.stream().noneMatch(m -> m.equals(marca))){
+            throw new MarcaInexistenteException();
+        }
+    }
+
+    public void setModelo(String modelo) {
+        validarModelo(modelo);
+        this.modelo = modelo;
+    }
+
+    private void validarModelo(String modelo) {
+        if (MarcasModeloAutos.MODELOS.stream().noneMatch(m -> m.equals(modelo))) {
+            throw new ModeloInexistenteException();
+        }
+    }
+
+    private int validarKilometros(int kilometros) {
+        if(kilometros < 0 ){
+            throw new CantidadDeKilometrosInvalidaException();
+        }
+        return kilometros;
+    }
+
+    private int validarAnio(int anio) {
+        if(anio < 1990 || anio > 2025 ){
+            throw new AnioIngresadoInvalidoException();
+        }
+        return anio;
+    }
+
+    public void setKilometros(int kilometros) {
         this.validarKilometrosParaActualizar(kilometros);
         this.kilometros = kilometros;
     }
@@ -55,20 +98,8 @@ public class Vehiculo {
         }
     }
 
-    public void guardarMantenimiento(Mantenimiento mantenimiento) {
-       // this.validarManteniemientoParaAgregar(mantenimiento);
-        this.mantenimientos.add(mantenimiento);
-        mantenimiento.setVehiculo(this);
+    public void setAnio(int anio){
+        this.anio = validarAnio(anio);
     }
 
-    private void validarManteniemientoParaAgregar(Mantenimiento mantenimiento) {
-        if(this.tieneTipoDeMantenimiento(mantenimiento)){
-            throw new MantenimientoYaAgregadoException();
-        }
-    }
-
-    private boolean tieneTipoDeMantenimiento(Mantenimiento mantenimiento) {
-        return this.mantenimientos.stream().anyMatch(m -> mantenimiento.getTipo() == m.getTipo());
-        //es en memoria?????+
-    }
 }

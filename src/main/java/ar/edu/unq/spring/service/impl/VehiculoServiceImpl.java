@@ -1,6 +1,5 @@
 package ar.edu.unq.spring.service.impl;
 
-import ar.edu.unq.spring.modelo.Mantenimiento;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.modelo.exception.VehiculoNoRegistradoException;
 import ar.edu.unq.spring.persistence.VehiculoDAO;
@@ -25,12 +24,12 @@ public class VehiculoServiceImpl implements VehiculoService {
     }
 
     @Override
-    public void guardar(Vehiculo vehiculo) {
+    public Vehiculo guardar(Vehiculo vehiculo) {
         Set<ConstraintViolation<Vehiculo>> errores = validator.validate(vehiculo);
         if(!errores.isEmpty()) {
             throw new IllegalArgumentException("Los campos ingresados son invalidos");
         }
-        vehiculoDAO.save(vehiculo);
+       return vehiculoDAO.save(vehiculo);
     }
 
     @Override
@@ -56,15 +55,5 @@ public class VehiculoServiceImpl implements VehiculoService {
         vehiculoDAO.delete(vehiculoAEliminar);
     }
 
-    @Override
-    public void agregarMantenimiento(String patente, Mantenimiento mantenimiento) {
-        Vehiculo recuperado = vehiculoDAO.findByPatente(patente)
-                .orElseThrow(VehiculoNoRegistradoException::new);
-//se supone que hago una query para encontrar el mantenimiento asociado al vehiculo y saber si es del
-        //tipo que quiere agregar nuevo, si isPresent exception
-        mantenimientoDAO.tieneVehiculoElMantenimiento(recuperado.getId(), mantenimiento.getNombre());
-        recuperado.guardarMantenimiento(mantenimiento);
 
-        vehiculoDAO.save(recuperado);
-    }
 }

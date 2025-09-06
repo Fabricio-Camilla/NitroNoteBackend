@@ -89,7 +89,7 @@ public class VehiculoServiceTest {
     public void seActualizaElKilometrajeDeUnVehiculoYaRegistrado(){
         vehiculoService.guardar(vehiculo);
 
-        vehiculo.actualizarKilometros(300000);
+        vehiculo.setKilometros(300000);
 
         vehiculoService.guardar(vehiculo);
 
@@ -103,30 +103,8 @@ public class VehiculoServiceTest {
         vehiculoService.guardar(vehiculo);
 
         assertThrows(CantidadDeKilometrosMenorException.class, () -> {
-            vehiculo.actualizarKilometros(200);
+            vehiculo.setKilometros(200);
         });
-    }
-
-    @Test
-    public void test(){
-        vehiculoService.guardar(vehiculo);
-
-        vehiculo.guardarMantenimiento(new Mantenimiento("Cambio aceite"));
-
-        vehiculoService.guardar(vehiculo);
-
-        var v = vehiculoService.recuperar(vehiculo.getPatente());
-
-        assertFalse(v.getMantenimientos().isEmpty());
-
-        v.guardarMantenimiento(new Mantenimiento("Cambio aceite"));
-
-        vehiculoService.guardar(vehiculo);
-
-        var v2 = vehiculoService.recuperar(vehiculo.getPatente());
-
-        assertEquals(1 , v2.getMantenimientos().size());
-
     }
 
     @AfterEach

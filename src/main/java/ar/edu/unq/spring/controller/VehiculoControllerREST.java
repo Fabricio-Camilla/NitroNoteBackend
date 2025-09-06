@@ -1,21 +1,44 @@
 package ar.edu.unq.spring.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ar.edu.unq.spring.controller.dto.VehiculoDTO;
+import ar.edu.unq.spring.controller.dto.VehiculoRequestDTO;
+import ar.edu.unq.spring.modelo.Vehiculo;
+import ar.edu.unq.spring.service.interfaces.VehiculoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/vehiculos")
+@RequestMapping("/vehiculo")
 public class VehiculoControllerREST {
 
-    @GetMapping()
-    public List<String> getAllVehiculos(){
-        return new ArrayList<String>();
+    private VehiculoService vehiculoService;
+
+    public VehiculoControllerREST(VehiculoService vehiculoService) {
+        this.vehiculoService = vehiculoService;
     }
 
+    @PostMapping()
+    public ResponseEntity<String> crearVehiculo(@Validated @RequestBody VehiculoRequestDTO vehiculo) {
+        this.vehiculoService.guardar(vehiculo.aModelo());
+        return ResponseEntity.status(HttpStatus.CREATED).body("Vehiculo creado con exito");
+    }
+
+    @GetMapping()
+    public List<VehiculoDTO> getAllVehiculos(){
+        return this.vehiculoService.recuperarTodos().stream()
+                .map(VehiculoDTO::desdeModelo)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{patente}")
+    public ResponseEntity<VehiculoDTO> getVehiculoByPatente(@PathVariable String patente) {
+        Vehiculo vehiculo = this.vehiculoService.recuperar(patente);
+        return ResponseEntity.ok(VehiculoDTO.desdeModelo(vehiculo));
+    }
 }

@@ -21,15 +21,13 @@ public class VehiculoServiceImpl implements VehiculoService {
     public VehiculoServiceImpl(VehiculoDAO vehiculoDAO,  Validator validator) {
         this.vehiculoDAO = vehiculoDAO;
         this.validator = validator;
-    }
-
-    @Override
+    } @Override
     public Vehiculo guardar(Vehiculo vehiculo) {
         Set<ConstraintViolation<Vehiculo>> errores = validator.validate(vehiculo);
         if(!errores.isEmpty()) {
             throw new IllegalArgumentException("Los campos ingresados son invalidos");
         }
-       return vehiculoDAO.save(vehiculo);
+        return vehiculoDAO.save(vehiculo);
     }
 
     @Override

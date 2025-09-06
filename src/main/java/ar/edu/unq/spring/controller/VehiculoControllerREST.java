@@ -4,7 +4,6 @@ import ar.edu.unq.spring.controller.dto.VehiculoDTO;
 import ar.edu.unq.spring.controller.dto.VehiculoRequestDTO;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.service.interfaces.VehiculoService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -42,5 +41,4 @@ public class VehiculoControllerREST {
         Vehiculo vehiculo = this.vehiculoService.recuperar(patente);
         return ResponseEntity.ok(VehiculoDTO.desdeModelo(vehiculo));
     }
-
 }

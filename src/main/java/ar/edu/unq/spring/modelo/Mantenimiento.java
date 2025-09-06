@@ -1,24 +1,36 @@
 package ar.edu.unq.spring.modelo;
 
-import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity @NoArgsConstructor @Setter
+import java.time.LocalDate;
+
 @Getter
+@Setter
 public class Mantenimiento {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name ="vehiculo_id")
-    private Vehiculo vehiculo;
-
     private String nombre;
+    private LocalDate fechaARealizar;
+    private LocalDate fechaDeRealizacion;
+    private int kmARealizar;
+    private boolean finalizado = false;
 
-    public Mantenimiento(String nombre) {
+    public Mantenimiento() {}
+
+    public Mantenimiento(String nombre, LocalDate fechaARealizar) {
         this.nombre = nombre;
+        this.fechaARealizar = fechaARealizar;
+    }
+
+    public Mantenimiento(String nombre, LocalDate fechaARealizar, int kmARealizar) {
+        this.nombre = nombre;
+        this.fechaARealizar = fechaARealizar;
+        this.kmARealizar = kmARealizar;
+    }
+
+    public void finalizarMantenimiento(){
+        this.finalizado = true;
+        this.fechaDeRealizacion = LocalDate.now();
     }
 }

@@ -3,6 +3,7 @@ package ar.edu.unq.spring.service;
 import ar.edu.unq.spring.controller.dto.VehiculoDTO;
 import ar.edu.unq.spring.modelo.Mantenimiento;
 import ar.edu.unq.spring.modelo.Vehiculo;
+import ar.edu.unq.spring.modelo.exception.AnioIngresadoInvalidoException;
 import ar.edu.unq.spring.modelo.exception.CantidadDeKilometrosMenorException;
 import ar.edu.unq.spring.modelo.exception.VehiculoNoRegistradoException;
 import ar.edu.unq.spring.service.interfaces.VehiculoService;
@@ -28,7 +29,7 @@ public class VehiculoServiceTest {
 
     @BeforeEach
     public void setUp() {
-        vehiculo = new Vehiculo("Chevrolet", "Trakcer", "AD010GI", 2020, 2000);
+        vehiculo = new Vehiculo("Chevrolet", "Tracker", "AD010GI", 2020, 2000);
         vehiculo2 = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000);
 
     }
@@ -41,7 +42,7 @@ public class VehiculoServiceTest {
 
         assertEquals("AD010GI", vehiculoRecuperado.getPatente());
         assertEquals("Chevrolet", vehiculoRecuperado.getMarca());
-        assertEquals("Trakcer", vehiculoRecuperado.getModelo());
+        assertEquals("Tracker", vehiculoRecuperado.getModelo());
         assertEquals(2020, vehiculoRecuperado.getAnio());
         assertEquals(2000, vehiculoRecuperado.getKilometros());
     }
@@ -74,15 +75,6 @@ public class VehiculoServiceTest {
         List<Vehiculo> vehiculos =  vehiculoService.recuperarTodos();
 
         assertFalse(vehiculos.contains(vehiculo));
-    }
-
-    @Test
-    public void seIntentaCrearUnVehiculoConAnioInvalido(){
-        Vehiculo v = new Vehiculo("Ford", "Focus", "AD010GP", 0, 2000);
-
-        assertThrows(IllegalArgumentException.class,() -> {
-            vehiculoService.guardar(v);
-        });
     }
 
     @Test

@@ -2,8 +2,7 @@ package ar.edu.unq.spring.controller.exceptionHandler;
 
 
 import ar.edu.unq.spring.controller.VehiculoControllerREST;
-import ar.edu.unq.spring.modelo.exception.AnioIngresadoInvalidoException;
-import ar.edu.unq.spring.modelo.exception.CantidadDeKilometrosInvalidaException;
+import ar.edu.unq.spring.modelo.exception.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -42,6 +41,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CantidadDeKilometrosInvalidaException.class)
     public ResponseEntity<BodyError> handleKilometrosMenosACeroInvalido(HttpServletRequest request ){
         BodyError body = new BodyError(HttpStatus.CONFLICT, "La cantidad de kilometros tiene que ser mayor o igual a 0", request.getRequestURI());
+        return new ResponseEntity<>( body, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(MarcaInexistenteException.class)
+    public ResponseEntity<BodyError> handleMarcaInexistente(HttpServletRequest request ){
+        BodyError body = new BodyError(HttpStatus.CONFLICT, "La marca ingresada no existe", request.getRequestURI());
+        return new ResponseEntity<>( body, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ModeloInexistenteException.class)
+    public ResponseEntity<BodyError> handleModeloInexistente(HttpServletRequest request ){
+        BodyError body = new BodyError(HttpStatus.CONFLICT, "El modelo ingresado no existe", request.getRequestURI());
+        return new ResponseEntity<>( body, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(VehiculoNoRegistradoException.class)
+    public ResponseEntity<BodyError> handleVehiculoNoRegistrado(HttpServletRequest request ){
+        BodyError body = new BodyError(HttpStatus.CONFLICT, "El vehiculo no existe", request.getRequestURI());
         return new ResponseEntity<>( body, HttpStatus.CONFLICT);
     }
 

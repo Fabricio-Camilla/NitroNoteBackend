@@ -28,8 +28,8 @@ public class Mantenimiento {
     public Mantenimiento(String nombre, LocalDate fechaARealizar, Vehiculo vehiculo, int kmARealizar) {
         this.nombre = nombre;
         this.fechaARealizar = fechaARealizar;
-        this.kmARealizar = kmARealizar;
         this.vehiculo = vehiculo;
+        this.kmARealizar = kmARealizar;
     }
 
     public void finalizarMantenimiento(){

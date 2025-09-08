@@ -31,7 +31,7 @@ public record VehiculoRequestDTO (Long id,
         return new Vehiculo(
                 this.marca.isBlank() ? null : this.marca,
                 this.modelo.isBlank() ? null : this.modelo,
-                this.patente.isBlank() ? null : this.patente,
+                this.patente.isBlank() ? null : this.patente.toUpperCase(),
                 this.anio,
                 this.kilometros);
     }

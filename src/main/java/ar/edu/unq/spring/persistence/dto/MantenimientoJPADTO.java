@@ -1,6 +1,7 @@
 package ar.edu.unq.spring.persistence.dto;
 
 import ar.edu.unq.spring.modelo.Mantenimiento;
+import ar.edu.unq.spring.modelo.Vehiculo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -23,6 +24,8 @@ public class MantenimientoJPADTO {
     private LocalDate fechaDeRealizacion;
     private int kmARealizar;
     private boolean finalizado = false;
+    @ManyToOne
+    private Vehiculo vehiculo;
 
 
     public static MantenimientoJPADTO desdeModelo(Mantenimiento mantenimiento) {
@@ -33,14 +36,16 @@ public class MantenimientoJPADTO {
         dto.fechaDeRealizacion = mantenimiento.getFechaDeRealizacion();
         dto.kmARealizar = mantenimiento.getKmARealizar();
         dto.finalizado = mantenimiento.isFinalizado();
+        dto.vehiculo = mantenimiento.getVehiculo();
         return dto;
     }
 
     public Mantenimiento aModelo() {
-        Mantenimiento mantenimiento = new Mantenimiento(nombre, fechaARealizar, kmARealizar);
+        Mantenimiento mantenimiento = new Mantenimiento(nombre, fechaARealizar, vehiculo, kmARealizar);
         mantenimiento.setId(id);
         mantenimiento.setFechaDeRealizacion(fechaDeRealizacion);
         mantenimiento.setFinalizado(finalizado);
+        mantenimiento.setVehiculo(vehiculo);
         return mantenimiento;
     }
 }

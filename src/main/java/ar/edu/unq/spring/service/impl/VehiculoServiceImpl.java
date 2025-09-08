@@ -16,7 +16,7 @@ import java.util.Set;
 public class VehiculoServiceImpl implements VehiculoService {
 
     private final Validator validator;
-    private VehiculoDAO vehiculoDAO;
+    private final VehiculoDAO vehiculoDAO;
 
     public VehiculoServiceImpl(VehiculoDAO vehiculoDAO,  Validator validator) {
         this.vehiculoDAO = vehiculoDAO;

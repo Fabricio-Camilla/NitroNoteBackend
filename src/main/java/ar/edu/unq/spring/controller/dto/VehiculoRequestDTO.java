@@ -10,17 +10,17 @@ import lombok.NonNull;
 public record VehiculoRequestDTO (Long id,
                                   @NonNull
                                   @NotBlank(message = "La patente no puede estar vacia")
-                                  @Pattern(regexp = "^[A-Za-z]{2}[0-9]{3}[A-Za-z]{2}$")
+                                  @Pattern(regexp = "^([A-Za-z]{2}[0-9]{3}[A-Za-z]{2}|[A-Za-z]{3}[0-9]{3})$")
                                   String patente,
 
                                   @NonNull
                                   @NotBlank(message = "La marca no puede estar vacia")
-                                  @Pattern(regexp = "^[A-Za-z]+$")
+                                  @Pattern(regexp = "^[A-Za-z0-9\\- ]+$")
                                   String marca,
 
                                   @NonNull
                                   @NotBlank(message = "El modelo no puede estar vacio")
-                                  @Pattern(regexp = "^[A-Za-z]+$")
+                                  @Pattern(regexp = "^[A-Za-z0-9]+$")
                                   String modelo,
 
                                   int anio,

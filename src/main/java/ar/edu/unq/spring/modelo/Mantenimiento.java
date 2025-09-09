@@ -15,17 +15,20 @@ public class Mantenimiento {
     private LocalDate fechaDeRealizacion;
     private int kmARealizar;
     private boolean finalizado = false;
+    private Vehiculo vehiculo;
 
     public Mantenimiento() {}
 
-    public Mantenimiento(String nombre, LocalDate fechaARealizar) {
+    public Mantenimiento(String nombre, LocalDate fechaARealizar, Vehiculo vehiculo) {
         this.nombre = nombre;
         this.fechaARealizar = fechaARealizar;
+        this.vehiculo = vehiculo;
     }
 
-    public Mantenimiento(String nombre, LocalDate fechaARealizar, int kmARealizar) {
+    public Mantenimiento(String nombre, LocalDate fechaARealizar, Vehiculo vehiculo, int kmARealizar) {
         this.nombre = nombre;
         this.fechaARealizar = fechaARealizar;
+        this.vehiculo = vehiculo;
         this.kmARealizar = kmARealizar;
     }
 

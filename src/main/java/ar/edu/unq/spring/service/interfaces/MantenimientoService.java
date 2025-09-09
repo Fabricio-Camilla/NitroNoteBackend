@@ -1,6 +1,7 @@
 package ar.edu.unq.spring.service.interfaces;
 
 import ar.edu.unq.spring.modelo.Mantenimiento;
+import ar.edu.unq.spring.modelo.Vehiculo;
 
 import java.util.Set;
 

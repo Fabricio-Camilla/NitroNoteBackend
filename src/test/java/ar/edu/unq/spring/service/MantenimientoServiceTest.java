@@ -1,7 +1,10 @@
 package ar.edu.unq.spring.service;
 
 import ar.edu.unq.spring.modelo.Mantenimiento;
+import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.service.interfaces.MantenimientoService;
+import ar.edu.unq.spring.service.interfaces.VehiculoService;
+import lombok.NonNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,21 +21,28 @@ import java.util.Set;
 public class MantenimientoServiceTest {
     @Autowired
     private MantenimientoService mantenimientoService;
+    @Autowired
+    private VehiculoService vehiculoService;
 
     private Mantenimiento serviceAnual;
     private Mantenimiento cambioCorrea;
     private Mantenimiento frenos;
 
+    private Vehiculo vehiculo;
+
     @BeforeEach
     public void prepare() {
+        //Creamos un auto
+        vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000);
+        vehiculoService.guardar(vehiculo);
         // Creamos algunos mantenimientos de ejemplo (sin ID aún)
-        serviceAnual = new Mantenimiento("Service anual", LocalDate.now().plusMonths(1));
+        serviceAnual = new Mantenimiento("Service anual", LocalDate.now().plusMonths(1), vehiculo);
         serviceAnual.setKmARealizar(10000);
 
-        cambioCorrea = new Mantenimiento("Cambio de correa", LocalDate.now().plusMonths(6));
+        cambioCorrea = new Mantenimiento("Cambio de correa", LocalDate.now().plusMonths(6), vehiculo);
         cambioCorrea.setKmARealizar(60000);
 
-        frenos = new Mantenimiento("Cambio de pastillas de freno", LocalDate.now().plusWeeks(2));
+        frenos = new Mantenimiento("Cambio de pastillas de freno", LocalDate.now().plusWeeks(2), vehiculo);
         frenos.setKmARealizar(0);
 
         // Persistimos dos de ellos en la preparación

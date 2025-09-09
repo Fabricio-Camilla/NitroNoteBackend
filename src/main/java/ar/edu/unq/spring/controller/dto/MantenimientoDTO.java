@@ -1,6 +1,7 @@
 package ar.edu.unq.spring.controller.dto;
 
 import ar.edu.unq.spring.modelo.Mantenimiento;
+import ar.edu.unq.spring.modelo.Vehiculo;
 
 import java.time.LocalDate;
 
@@ -10,7 +11,8 @@ public record MantenimientoDTO(
         LocalDate fechaARealizar,
         LocalDate fechaDeRealizacion,
         Integer kmARealizar,
-        boolean finalizado
+        boolean finalizado,
+        Vehiculo vehiculo
 ) {
 
     public static MantenimientoDTO desdeModelo(Mantenimiento mantenimiento) {
@@ -20,7 +22,8 @@ public record MantenimientoDTO(
                 mantenimiento.getFechaARealizar(),
                 mantenimiento.getFechaDeRealizacion(),
                 mantenimiento.getKmARealizar(),
-                mantenimiento.isFinalizado()
+                mantenimiento.isFinalizado(),
+                mantenimiento.getVehiculo()
         );
     }
 
@@ -33,6 +36,7 @@ public record MantenimientoDTO(
         mantenimiento.setFechaDeRealizacion(this.fechaDeRealizacion);
         mantenimiento.setKmARealizar(this.kmARealizar != null ? this.kmARealizar : 0);
         mantenimiento.setFinalizado(this.finalizado);
+        mantenimiento.setVehiculo(this.vehiculo);
         return mantenimiento;
     }
 }

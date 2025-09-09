@@ -1,6 +1,7 @@
 package ar.edu.unq.spring.service.impl;
 
 import ar.edu.unq.spring.modelo.Mantenimiento;
+import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.persistence.MantenimientoDAO;
 import ar.edu.unq.spring.persistence.dto.MantenimientoJPADTO;
 import ar.edu.unq.spring.service.interfaces.MantenimientoService;

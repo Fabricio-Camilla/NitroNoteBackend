@@ -37,11 +37,11 @@ public class MantenimientoServiceImpl implements MantenimientoService {
     }
 
     @Override
-    public Long guardarMantenimiento(Mantenimiento mantenimiento) {
+    public Mantenimiento guardarMantenimiento(Mantenimiento mantenimiento) {
         MantenimientoJPADTO mantenimientoJPADTO = MantenimientoJPADTO.desdeModelo(mantenimiento);
         mantenimientoDAO.save(mantenimientoJPADTO);
         mantenimiento.setId(mantenimientoJPADTO.getId());
-        return mantenimiento.getId();
+        return mantenimiento;
     }
 
     @Override

@@ -24,9 +24,9 @@ public class VehiculoControllerREST {
     }
 
     @PostMapping()
-    public ResponseEntity<String> crearVehiculo(@Validated @RequestBody VehiculoRequestDTO vehiculo) {
-        this.vehiculoService.guardar(vehiculo.aModelo());
-        return ResponseEntity.status(HttpStatus.CREATED).body("Vehiculo creado con exito");
+    public ResponseEntity<Vehiculo> crearVehiculo(@Validated @RequestBody VehiculoRequestDTO vehiculo) {
+        Vehiculo vehiculoPers = this.vehiculoService.guardar(vehiculo.aModelo());
+        return ResponseEntity.status(HttpStatus.CREATED).body(vehiculoPers);
     }
 
     @GetMapping()

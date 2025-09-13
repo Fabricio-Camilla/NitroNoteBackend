@@ -19,7 +19,6 @@ import java.util.Set;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@Transactional // Es para hacer rollback antes de cada test
 public class MantenimientoServiceTest {
     @Autowired
     private MantenimientoService mantenimientoService;
@@ -55,6 +54,7 @@ public class MantenimientoServiceTest {
     @AfterEach
     public void clean() {
         mantenimientoService.clearAll();
+        vehiculoService.deleteAll();
     }
 
     @Test

@@ -41,4 +41,23 @@ public class VehiculoControllerREST {
         Vehiculo vehiculo = this.vehiculoService.recuperar(patente);
         return ResponseEntity.ok(VehiculoDTO.desdeModelo(vehiculo));
     }
+
+    @DeleteMapping("/{patente}")
+    public ResponseEntity<String > deleteVehicle(@PathVariable("patente") String patente) {
+
+        this.vehiculoService.eliminar(patente);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("OK");
+    }
+
+    @PutMapping("/{patente}")
+    public ResponseEntity<String > editVehicle(@PathVariable("patente") String patente) {
+
+        Vehiculo vehicle = this.vehiculoService.recuperar(patente);
+        this.vehiculoService.guardar(vehicle);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("OK");
+    }
+
+
 }

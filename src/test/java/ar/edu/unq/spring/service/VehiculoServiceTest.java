@@ -99,8 +99,8 @@ public class VehiculoServiceTest {
         });
     }
 
-    @AfterEach
-    public void tearDown() {
+   @AfterEach
+   public void tearDown() {
         vehiculoService.deleteAll();
-    }
+   }
 }

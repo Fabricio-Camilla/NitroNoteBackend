@@ -53,5 +53,15 @@ public class VehiculoServiceImpl implements VehiculoService {
         vehiculoDAO.delete(vehiculoAEliminar);
     }
 
+    @Override
+    public Vehiculo actualizar(Vehiculo vehiculo) {
+        Vehiculo vehiculoActualizar = vehiculoDAO.findByPatente(vehiculo.getPatente())
+                .orElseThrow(VehiculoNoRegistradoException::new);
+
+        vehiculoActualizar.setKilometros(vehiculo.getKilometros());
+
+        return vehiculoDAO.save(vehiculoActualizar);
+    }
+
 
 }

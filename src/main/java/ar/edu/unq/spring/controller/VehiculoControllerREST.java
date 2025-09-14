@@ -50,11 +50,9 @@ public class VehiculoControllerREST {
         return ResponseEntity.status(HttpStatus.CREATED).body("OK");
     }
 
-    @PutMapping("/{patente}")
-    public ResponseEntity<String > editVehicle(@PathVariable("patente") String patente) {
-
-        Vehiculo vehicle = this.vehiculoService.recuperar(patente);
-        this.vehiculoService.guardar(vehicle);
+    @PutMapping()
+    public ResponseEntity<String > editVehicle(@RequestBody VehiculoRequestDTO vehiculo) {
+        this.vehiculoService.actualizar(vehiculo.aModelo());
 
         return ResponseEntity.status(HttpStatus.CREATED).body("OK");
     }

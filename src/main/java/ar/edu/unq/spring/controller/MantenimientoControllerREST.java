@@ -1,6 +1,7 @@
 package ar.edu.unq.spring.controller;
 
 import ar.edu.unq.spring.controller.dto.MantenimientoDTO;
+import ar.edu.unq.spring.modelo.Mantenimiento;
 import ar.edu.unq.spring.service.interfaces.MantenimientoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/mantenimiento")
 public class MantenimientoControllerREST {
@@ -20,7 +22,7 @@ public class MantenimientoControllerREST {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Long createMantenimiento(@RequestBody MantenimientoDTO mantenimiento){
+    public Mantenimiento createMantenimiento(@RequestBody MantenimientoDTO mantenimiento){
         return mantenimientoService.guardarMantenimiento(mantenimiento.aModelo());
     }
 

@@ -15,4 +15,6 @@ public interface VehiculoService {
     List<Vehiculo> recuperarTodos();
 
     void eliminar(String patente);
+
+    Vehiculo actualizar(Vehiculo vehiculo);
 }

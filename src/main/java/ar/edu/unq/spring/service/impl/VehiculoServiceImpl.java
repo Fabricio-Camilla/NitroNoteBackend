@@ -47,10 +47,17 @@ public class VehiculoServiceImpl implements VehiculoService {
 
     @Override
     public void eliminar(String patente) {
-        Vehiculo vehiculoAEliminar = vehiculoDAO.findByPatente(patente)
+        vehiculoDAO.eliminarByPatente(patente);
+    }
+
+    @Override
+    public Vehiculo actualizar(Vehiculo vehiculo) {
+        Vehiculo vehiculoActualizar = vehiculoDAO.findByPatente(vehiculo.getPatente())
                 .orElseThrow(VehiculoNoRegistradoException::new);
 
-        vehiculoDAO.delete(vehiculoAEliminar);
+        vehiculoActualizar.setKilometros(vehiculo.getKilometros());
+
+        return vehiculoDAO.save(vehiculoActualizar);
     }
 
 

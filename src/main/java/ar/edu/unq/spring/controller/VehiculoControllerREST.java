@@ -24,9 +24,9 @@ public class VehiculoControllerREST {
     }
 
     @PostMapping()
-    public ResponseEntity<String> crearVehiculo(@Validated @RequestBody VehiculoRequestDTO vehiculo) {
-        this.vehiculoService.guardar(vehiculo.aModelo());
-        return ResponseEntity.status(HttpStatus.CREATED).body("Vehiculo creado con exito");
+    public ResponseEntity<Vehiculo> crearVehiculo(@Validated @RequestBody VehiculoRequestDTO vehiculo) {
+        Vehiculo vehiculoPers = this.vehiculoService.guardar(vehiculo.aModelo());
+        return ResponseEntity.status(HttpStatus.CREATED).body(vehiculoPers);
     }
 
     @GetMapping()
@@ -41,4 +41,21 @@ public class VehiculoControllerREST {
         Vehiculo vehiculo = this.vehiculoService.recuperar(patente);
         return ResponseEntity.ok(VehiculoDTO.desdeModelo(vehiculo));
     }
+
+    @DeleteMapping("/{patente}")
+    public ResponseEntity<String > deleteVehicle(@PathVariable("patente") String patente) {
+
+        this.vehiculoService.eliminar(patente);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("OK");
+    }
+
+    @PutMapping()
+    public ResponseEntity<String > editVehicle(@RequestBody VehiculoRequestDTO vehiculo) {
+        this.vehiculoService.actualizar(vehiculo.aModelo());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("OK");
+    }
+
+
 }

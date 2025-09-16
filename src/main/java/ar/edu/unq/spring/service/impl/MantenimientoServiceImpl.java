@@ -8,6 +8,7 @@ import ar.edu.unq.spring.persistence.dto.MantenimientoJPADTO;
 import ar.edu.unq.spring.persistence.dto.VehiculoJPADTO;
 import ar.edu.unq.spring.service.interfaces.MantenimientoService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -41,16 +42,33 @@ public class MantenimientoServiceImpl implements MantenimientoService {
     }
 
     @Override
-    public Mantenimiento guardarMantenimiento(Mantenimiento mantenimiento, Long vehiculoId) {
-        // 1. Traer el vehículo existente
+    public Mantenimiento crearMantenimiento(Mantenimiento mantenimiento, Long vehiculoId) {
         VehiculoJPADTO vehiculoDTO = vehiculoDAO.findById(vehiculoId)
                 .orElseThrow(() -> new RuntimeException("Vehiculo no encontrado"));
 
-        MantenimientoJPADTO mantenimientoJPADTO = MantenimientoJPADTO.desdeModelo(mantenimiento);
+        // Asociar el vehículo al mantenimiento ANTES de convertirlo a DTO
         mantenimiento.setVehiculo(vehiculoDTO.aModelo());
+
+        MantenimientoJPADTO mantenimientoJPADTO = MantenimientoJPADTO.desdeModelo(mantenimiento);
+        MantenimientoJPADTO guardado = mantenimientoDAO.save(mantenimientoJPADTO);
+
+        mantenimiento.setId(guardado.getId());
+        return mantenimiento;
+    }
+
+    @Override
+    public Mantenimiento guardarMantenimiento(Mantenimiento mantenimiento, Long vehiculoId) {
+        vincularVehiculo(mantenimiento, vehiculoId);
+        MantenimientoJPADTO mantenimientoJPADTO = MantenimientoJPADTO.desdeModelo(mantenimiento);
         MantenimientoJPADTO guardado = mantenimientoDAO.save(mantenimientoJPADTO);
         mantenimiento.setId(guardado.getId());
         return mantenimiento;
+    }
+
+    private void vincularVehiculo(Mantenimiento mantenimiento, Long vehiculoId) {
+        VehiculoJPADTO vehiculoDTO = vehiculoDAO.findById(vehiculoId)
+                .orElseThrow(() -> new RuntimeException("Vehiculo no encontrado"));
+        mantenimiento.setVehiculo(vehiculoDTO.aModelo());
     }
 
     @Override
@@ -83,6 +101,5 @@ public class MantenimientoServiceImpl implements MantenimientoService {
     public void clearAll() {
         mantenimientoDAO.deleteAll();
     }
-
 
 }

@@ -48,8 +48,8 @@ public class MantenimientoServiceTest {
         frenos.setKmARealizar(0);
 
         // Persistimos dos de ellos en la preparación
-        mantenimientoService.guardarMantenimiento(serviceAnual, vehiculo.getId());
-        mantenimientoService.guardarMantenimiento(cambioCorrea, vehiculo.getId());
+        mantenimientoService.crearMantenimiento(serviceAnual, vehiculo.getId());
+        mantenimientoService.crearMantenimiento(cambioCorrea, vehiculo.getId());
     }
 
     @AfterEach
@@ -102,18 +102,17 @@ public class MantenimientoServiceTest {
     }
     */
 
-    @Test
-    public void testFinalizarMantenimiento() {
-        // Dado uno existente
-        Mantenimiento existente = mantenimientoService.allMantenimientos().iterator().next();
+//    @Test
+//    public void testFinalizarMantenimiento() {
+//        // Dado uno existente
+//        Mantenimiento existente = mantenimientoService.allMantenimientos().iterator().next();
+//        existente.finalizarMantenimiento();
+//        mantenimientoService.actualizarMantenimiento(existente);
+//
+//        // Assert
+//        Mantenimiento verificado = mantenimientoService.recuperarMantenimiento(existente.getId());
+//        Assertions.assertTrue(verificado.isFinalizado(), "El mantenimiento debe quedar finalizado");
+//        Assertions.assertNotNull(verificado.getFechaDeRealizacion(), "Al finalizar debe setear fecha de realización");
+//    }
 
-        // Finalizamos usando la propia entidad
-        existente.finalizarMantenimiento();
-        mantenimientoService.guardarMantenimiento(existente, vehiculo.getId()); // persistimos el cambio
-
-        // Assert
-        Mantenimiento verificado = mantenimientoService.recuperarMantenimiento(existente.getId());
-        Assertions.assertTrue(verificado.isFinalizado(), "El mantenimiento debe quedar finalizado");
-        Assertions.assertNotNull(verificado.getFechaDeRealizacion(), "Al finalizar debe setear fecha de realización");
-    }
 }

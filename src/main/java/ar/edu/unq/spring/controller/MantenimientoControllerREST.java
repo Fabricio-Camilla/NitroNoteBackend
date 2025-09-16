@@ -24,8 +24,9 @@ public class MantenimientoControllerREST {
     @ResponseStatus(HttpStatus.CREATED)
     public Mantenimiento createMantenimiento(@PathVariable Long vehiculoId,
                                              @RequestBody MantenimientoDTO mantenimiento){
-        return mantenimientoService.guardarMantenimiento(mantenimiento.aModelo(), vehiculoId);
+        return mantenimientoService.crearMantenimiento(mantenimiento.aModelo(), vehiculoId);
     }
+
 
     @GetMapping("/{id}")
     public MantenimientoDTO getMantenimiento(@PathVariable("id") Long id) {

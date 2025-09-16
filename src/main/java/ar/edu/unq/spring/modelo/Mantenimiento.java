@@ -25,10 +25,9 @@ public class Mantenimiento {
         this.vehiculo = vehiculo;
     }
 
-    public Mantenimiento(String nombre, LocalDate fechaARealizar, Vehiculo vehiculo, int kmARealizar) {
+    public Mantenimiento(String nombre, LocalDate fechaARealizar, int kmARealizar) {
         this.nombre = nombre;
         this.fechaARealizar = fechaARealizar;
-        this.vehiculo = vehiculo;
         this.kmARealizar = kmARealizar;
     }
 

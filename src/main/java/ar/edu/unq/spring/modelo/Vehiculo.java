@@ -11,10 +11,13 @@ import lombok.NonNull;
 import lombok.Setter;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-@Entity @NoArgsConstructor @Getter @Setter
+@NoArgsConstructor @Getter @Setter
 public class Vehiculo {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +36,7 @@ public class Vehiculo {
     @Min(1990) @Max(2025)
     private int anio;
 
+    private List<Mantenimiento> mantenimientos;
 
     public Vehiculo(@NonNull String marca, @NonNull String modelo, @NonNull String patente, int anio, int kilometros) {
         setMarca(marca);
@@ -40,6 +44,7 @@ public class Vehiculo {
         setPatente(patente);
         this.anio = validarAnio(anio);
         this.kilometros = validarKilometros(kilometros);
+        this.mantenimientos = new ArrayList<>();
     }
 
     public void setPatente(String patente) {

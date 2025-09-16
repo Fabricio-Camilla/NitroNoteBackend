@@ -3,6 +3,7 @@ package ar.edu.unq.spring.service.impl;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.modelo.exception.VehiculoNoRegistradoException;
 import ar.edu.unq.spring.persistence.VehiculoDAO;
+import ar.edu.unq.spring.persistence.dto.VehiculoJPADTO;
 import ar.edu.unq.spring.service.interfaces.VehiculoService;
 import jakarta.validation.ConstraintViolation;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import jakarta.validation.Validator;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class VehiculoServiceImpl implements VehiculoService {
@@ -21,18 +23,21 @@ public class VehiculoServiceImpl implements VehiculoService {
     public VehiculoServiceImpl(VehiculoDAO vehiculoDAO,  Validator validator) {
         this.vehiculoDAO = vehiculoDAO;
         this.validator = validator;
-    } @Override
+    }
+
+    @Override
     public Vehiculo guardar(Vehiculo vehiculo) {
         Set<ConstraintViolation<Vehiculo>> errores = validator.validate(vehiculo);
         if(!errores.isEmpty()) {
-            throw new IllegalArgumentException("Los campos ingresados son invalidos");
+            throw new IllegalArgumentException("Los campos ingresados son inválidos");
         }
-        return vehiculoDAO.save(vehiculo);
+        VehiculoJPADTO dto = VehiculoJPADTO.desdeModelo(vehiculo);
+        return vehiculoDAO.save(dto).aModelo();
     }
 
     @Override
     public Vehiculo recuperar(String patente) {
-        return vehiculoDAO.findByPatente(patente).orElseThrow(VehiculoNoRegistradoException::new);
+        return vehiculoDAO.findByPatente(patente).orElseThrow(VehiculoNoRegistradoException::new).aModelo();
     }
 
     @Override
@@ -42,7 +47,7 @@ public class VehiculoServiceImpl implements VehiculoService {
 
     @Override
     public List<Vehiculo> recuperarTodos() {
-        return vehiculoDAO.findAll();
+        return vehiculoDAO.findAll().stream().map(VehiculoJPADTO::aModelo).collect(Collectors.toList());
     }
 
     @Override
@@ -51,13 +56,13 @@ public class VehiculoServiceImpl implements VehiculoService {
     }
 
     @Override
-    public Vehiculo actualizar(Vehiculo vehiculo) {
+    public void actualizar(Vehiculo vehiculo) {
         Vehiculo vehiculoActualizar = vehiculoDAO.findByPatente(vehiculo.getPatente())
-                .orElseThrow(VehiculoNoRegistradoException::new);
+                .orElseThrow(VehiculoNoRegistradoException::new).aModelo();
 
         vehiculoActualizar.setKilometros(vehiculo.getKilometros());
 
-        return vehiculoDAO.save(vehiculoActualizar);
+        vehiculoDAO.save(VehiculoJPADTO.desdeModelo(vehiculoActualizar)).aModelo();
     }
 
 

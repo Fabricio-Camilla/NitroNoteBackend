@@ -35,6 +35,7 @@ public class MantenimientoServiceTest {
     public void prepare() {
         //Creamos un auto
         vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000);
+
         vehiculoService.guardar(vehiculo);
         // Creamos algunos mantenimientos de ejemplo (sin ID aún)
         serviceAnual = new Mantenimiento("Service anual", LocalDate.now().plusMonths(1), vehiculo);

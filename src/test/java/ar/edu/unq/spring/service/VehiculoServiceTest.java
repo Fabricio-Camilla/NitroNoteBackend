@@ -83,7 +83,7 @@ public class VehiculoServiceTest {
 
         vehiculo.setKilometros(300000);
 
-        vehiculoService.guardar(vehiculo);
+        vehiculoService.actualizar(vehiculo);
 
         Vehiculo recuperado = vehiculoService.recuperar(vehiculo.getPatente());
 

@@ -40,7 +40,10 @@ public class VehiculoJPADTO {
         dto.patente = vehiculo.getPatente();
         dto.kilometros = vehiculo.getKilometros();
         dto.anio = vehiculo.getAnio();
-        dto.mantenimientos = vehiculo.getMantenimientos().stream().map(MantenimientoJPADTO::desdeModelo).toList();
+        dto.mantenimientos = vehiculo.getMantenimientos()
+                .stream()
+                .map(MantenimientoJPADTO::desdeModeloSimple)
+                .toList();
         return dto;
     }
 

@@ -41,12 +41,25 @@ public class MantenimientoJPADTO {
         return dto;
     }
 
+    public static MantenimientoJPADTO desdeModeloSimple(Mantenimiento mantenimiento) {
+        MantenimientoJPADTO dto = new MantenimientoJPADTO();
+        dto.id = mantenimiento.getId();
+        dto.nombre = mantenimiento.getNombre();
+        dto.fechaARealizar = mantenimiento.getFechaARealizar();
+        dto.fechaDeRealizacion = mantenimiento.getFechaDeRealizacion();
+        dto.kmARealizar = mantenimiento.getKmARealizar();
+        dto.finalizado = mantenimiento.isFinalizado();
+        return dto;
+    }
+
     public Mantenimiento aModelo() {
         Mantenimiento mantenimiento = new Mantenimiento(nombre, fechaARealizar, kmARealizar);
         mantenimiento.setId(id);
         mantenimiento.setFechaDeRealizacion(fechaDeRealizacion);
         mantenimiento.setFinalizado(finalizado);
-        mantenimiento.setVehiculo(vehiculo.aModelo());
+        if(vehiculo != null) {
+            mantenimiento.setVehiculo(vehiculo.aModelo());
+        }
         return mantenimiento;
     }
 }

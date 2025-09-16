@@ -32,7 +32,10 @@ public class VehiculoServiceImpl implements VehiculoService {
             throw new IllegalArgumentException("Los campos ingresados son inválidos");
         }
         VehiculoJPADTO dto = VehiculoJPADTO.desdeModelo(vehiculo);
-        return vehiculoDAO.save(dto).aModelo();
+        vehiculoDAO.save(dto);
+        vehiculo.setId(dto.getId());
+
+        return vehiculo;
     }
 
     @Override

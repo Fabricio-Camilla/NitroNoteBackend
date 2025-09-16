@@ -57,9 +57,9 @@ public class MantenimientoJPADTO {
         mantenimiento.setId(id);
         mantenimiento.setFechaDeRealizacion(fechaDeRealizacion);
         mantenimiento.setFinalizado(finalizado);
-        if(vehiculo != null) {
-            mantenimiento.setVehiculo(vehiculo.aModelo());
-        }
+        // No setear el vehículo aca, se hace desde el service
         return mantenimiento;
     }
+
+
 }

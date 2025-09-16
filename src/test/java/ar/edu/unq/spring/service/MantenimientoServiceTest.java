@@ -48,8 +48,8 @@ public class MantenimientoServiceTest {
         frenos.setKmARealizar(0);
 
         // Persistimos dos de ellos en la preparación
-        mantenimientoService.guardarMantenimiento(serviceAnual);
-        mantenimientoService.guardarMantenimiento(cambioCorrea);
+        mantenimientoService.guardarMantenimiento(serviceAnual, vehiculo.getId());
+        mantenimientoService.guardarMantenimiento(cambioCorrea, vehiculo.getId());
     }
 
     @AfterEach
@@ -61,7 +61,7 @@ public class MantenimientoServiceTest {
     @Test
     public void testCrearUnMantenimiento() {
         // Act: guardamos el tercero
-        mantenimientoService.guardarMantenimiento(frenos);
+        mantenimientoService.guardarMantenimiento(frenos, vehiculo.getId());
 
         Mantenimiento frenosRecuperado = mantenimientoService.recuperarMantenimiento(frenos.getId());
 
@@ -84,7 +84,7 @@ public class MantenimientoServiceTest {
         Assertions.assertEquals(2, iniciales.size(), "Debe haber 2 mantenimientos iniciales");
 
         // Guardamos el tercero
-        mantenimientoService.guardarMantenimiento(frenos);
+        mantenimientoService.guardarMantenimiento(frenos, vehiculo.getId());
 
         // Assert: ahora deberían ser 3
         Set<Mantenimiento> todos = mantenimientoService.allMantenimientos();
@@ -109,7 +109,7 @@ public class MantenimientoServiceTest {
 
         // Finalizamos usando la propia entidad
         existente.finalizarMantenimiento();
-        mantenimientoService.guardarMantenimiento(existente); // persistimos el cambio
+        mantenimientoService.guardarMantenimiento(existente, vehiculo.getId()); // persistimos el cambio
 
         // Assert
         Mantenimiento verificado = mantenimientoService.recuperarMantenimiento(existente.getId());

@@ -36,5 +36,4 @@ public class Mantenimiento {
         this.fechaDeRealizacion = LocalDate.now();
     }
 
-
 }

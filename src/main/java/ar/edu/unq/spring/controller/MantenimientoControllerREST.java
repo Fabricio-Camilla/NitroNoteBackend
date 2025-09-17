@@ -1,5 +1,6 @@
 package ar.edu.unq.spring.controller;
 
+import ar.edu.unq.spring.controller.dto.CreateMantenimientoDTO;
 import ar.edu.unq.spring.controller.dto.MantenimientoDTO;
 import ar.edu.unq.spring.modelo.Mantenimiento;
 import ar.edu.unq.spring.service.interfaces.MantenimientoService;
@@ -22,8 +23,8 @@ public class MantenimientoControllerREST {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Mantenimiento createMantenimiento(@RequestBody MantenimientoDTO mantenimiento){
-        return mantenimientoService.guardarMantenimiento(mantenimiento.aModelo());
+    public Mantenimiento createMantenimiento(@RequestBody CreateMantenimientoDTO createMantenimientoDTO) {
+        return mantenimientoService.guardarMantenimiento(createMantenimientoDTO);
     }
 
     @GetMapping("/{id}")

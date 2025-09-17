@@ -36,6 +36,12 @@ public class VehiculoServiceImpl implements VehiculoService {
     }
 
     @Override
+    public Vehiculo recuperarPorId(Long id) {
+        return vehiculoDAO.findById(id)
+                .orElseThrow(() -> new VehiculoNoRegistradoException("Vehículo no encontrado con ID: " + id));
+    }
+
+    @Override
     public void deleteAll() {
         vehiculoDAO.deleteAll();
     }

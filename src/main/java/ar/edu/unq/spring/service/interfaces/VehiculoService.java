@@ -10,6 +10,8 @@ public interface VehiculoService {
 
     Vehiculo recuperar(String patente);
 
+    Vehiculo recuperarPorId(Long id);
+
     void deleteAll();
 
     List<Vehiculo> recuperarTodos();

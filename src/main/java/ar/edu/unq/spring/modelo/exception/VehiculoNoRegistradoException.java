@@ -1,9 +1,11 @@
 package ar.edu.unq.spring.modelo.exception;
 
-public class VehiculoNoRegistradoException extends RuntimeException{
+public class VehiculoNoRegistradoException extends RuntimeException {
+    public VehiculoNoRegistradoException(String message) {
+        super(message);
+    }
 
-    @Override
-    public String getMessage() {
-        return "Vehiculo no registrado";
+    public VehiculoNoRegistradoException() {
+        super("Vehículo no registrado");
     }
 }

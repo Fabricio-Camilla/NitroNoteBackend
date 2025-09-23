@@ -84,9 +84,8 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         existente.setKmARealizar(mantenimiento.getKmARealizar());
 
         MantenimientoJPADTO dto = MantenimientoJPADTO.desdeModelo(existente);
-        mantenimientoDAO.save(dto);
+        return mantenimientoDAO.save(dto).aModelo();
 
-        return existente;
     }
 
     @Override

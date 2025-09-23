@@ -8,7 +8,6 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Entity(name = "Vehiculo" )
@@ -50,7 +49,9 @@ public class VehiculoJPADTO {
     public Vehiculo aModelo() {
         Vehiculo vehiculo = new Vehiculo(marca, modelo, patente, anio, kilometros);
         vehiculo.setId(id);
-        vehiculo.setMantenimientos(mantenimientos.stream().map(MantenimientoJPADTO::aModelo).collect(Collectors.toList()));
+        vehiculo.setMantenimientos(mantenimientos.stream()
+                .map(m -> m.aModelo(vehiculo))
+                .toList());
         return vehiculo;
     }
 

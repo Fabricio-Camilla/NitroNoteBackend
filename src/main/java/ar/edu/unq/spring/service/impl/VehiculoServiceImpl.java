@@ -55,7 +55,10 @@ public class VehiculoServiceImpl implements VehiculoService {
 
     @Override
     public void eliminar(String patente) {
-        vehiculoDAO.eliminarByPatente(patente);
+        VehiculoJPADTO vehiculoEliminar = vehiculoDAO.findByPatente(patente)
+                .orElseThrow(VehiculoNoRegistradoException::new);
+
+        vehiculoDAO.delete(vehiculoEliminar);
     }
 
     @Override

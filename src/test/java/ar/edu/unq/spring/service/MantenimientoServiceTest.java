@@ -52,11 +52,6 @@ public class MantenimientoServiceTest {
         mantenimientoService.crearMantenimiento(cambioCorrea, vehiculo.getId());
     }
 
-    @AfterEach
-    public void clean() {
-        mantenimientoService.clearAll();
-        vehiculoService.deleteAll();
-    }
 
     @Test
     public void testCrearUnMantenimiento() {
@@ -102,17 +97,22 @@ public class MantenimientoServiceTest {
     }
     */
 
-//    @Test
-//    public void testFinalizarMantenimiento() {
-//        // Dado uno existente
-//        Mantenimiento existente = mantenimientoService.allMantenimientos().iterator().next();
-//        existente.finalizarMantenimiento();
-//        mantenimientoService.actualizarMantenimiento(existente);
-//
-//        // Assert
-//        Mantenimiento verificado = mantenimientoService.recuperarMantenimiento(existente.getId());
-//        Assertions.assertTrue(verificado.isFinalizado(), "El mantenimiento debe quedar finalizado");
-//        Assertions.assertNotNull(verificado.getFechaDeRealizacion(), "Al finalizar debe setear fecha de realización");
-//    }
+    @Test
+    public void testFinalizarMantenimiento() {
+        // Dado uno existente
+        Mantenimiento existente = mantenimientoService.allMantenimientos().iterator().next();
+        existente.finalizarMantenimiento();
+        mantenimientoService.actualizarMantenimiento(existente);
 
+        // Assert
+        Mantenimiento verificado = mantenimientoService.recuperarMantenimiento(existente.getId());
+        Assertions.assertTrue(verificado.isFinalizado(), "El mantenimiento debe quedar finalizado");
+        Assertions.assertNotNull(verificado.getFechaARealizar(), "Al finalizar debe setear fecha de realización");
+    }
+
+    @AfterEach
+    public void clean() {
+        mantenimientoService.clearAll();
+        vehiculoService.deleteAll();
+    }
 }

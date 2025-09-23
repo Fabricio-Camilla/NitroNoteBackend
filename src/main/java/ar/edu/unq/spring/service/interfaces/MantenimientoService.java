@@ -10,7 +10,7 @@ public interface MantenimientoService {
     //Esto de abajo devolvia Long, pelotudos
     Mantenimiento guardarMantenimiento(Mantenimiento mantenimiento, Long vehiculoId);
     Mantenimiento crearMantenimiento(Mantenimiento mantenimiento, Long vehiculoId);
-    public Mantenimiento actualizarMantenimiento(Mantenimiento mantenimiento);
+    Mantenimiento actualizarMantenimiento(Mantenimiento mantenimiento);
     Mantenimiento recuperarMantenimiento(Long mantenimientoId);
     void deleteMantenimiento(Mantenimiento mantenimiento);
     void clearAll();

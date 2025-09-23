@@ -18,12 +18,5 @@ public interface VehiculoDAO extends JpaRepository<VehiculoJPADTO, Long> {
     )
      Optional<VehiculoJPADTO> findByPatente(@Param("patente") String patente);
 
-    @Modifying
-    @Transactional
-    @Query(
-            "DELETE FROM Vehiculo v WHERE v.patente = :patente "
-    )
-
-    void eliminarByPatente(@Param("patente") String patente);
 
 }

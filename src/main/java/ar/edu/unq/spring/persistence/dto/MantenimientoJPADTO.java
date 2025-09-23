@@ -25,8 +25,8 @@ public class MantenimientoJPADTO {
     private int kmARealizar;
     private boolean finalizado = false;
 
-    @ManyToOne
-    @JoinColumn (nullable = false, name = "mantenimiento_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn (nullable = true, name = "vehiculo_id")
     private VehiculoJPADTO vehiculo;
 
     public static MantenimientoJPADTO desdeModelo(Mantenimiento mantenimiento) {
@@ -57,9 +57,20 @@ public class MantenimientoJPADTO {
         mantenimiento.setId(id);
         mantenimiento.setFechaDeRealizacion(fechaDeRealizacion);
         mantenimiento.setFinalizado(finalizado);
-        // No setear el vehículo aca, se hace desde el service
+        if(vehiculo != null) {
+            mantenimiento.setVehiculo(vehiculo.aModelo());
+        }
         return mantenimiento;
     }
 
+
+    public Mantenimiento aModelo(Vehiculo vehiculo) {
+        Mantenimiento mantenimiento = new Mantenimiento(nombre, fechaARealizar, kmARealizar);
+        mantenimiento.setId(id);
+        mantenimiento.setFechaDeRealizacion(fechaDeRealizacion);
+        mantenimiento.setFinalizado(finalizado);
+        mantenimiento.setVehiculo(vehiculo);
+        return mantenimiento;
+    }
 
 }

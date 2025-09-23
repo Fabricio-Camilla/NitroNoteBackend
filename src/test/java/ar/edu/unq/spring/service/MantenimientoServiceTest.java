@@ -35,6 +35,7 @@ public class MantenimientoServiceTest {
     public void prepare() {
         //Creamos un auto
         vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000);
+
         vehiculoService.guardar(vehiculo);
         // Creamos algunos mantenimientos de ejemplo (sin ID aún)
         serviceAnual = new Mantenimiento("Service anual", LocalDate.now().plusMonths(1), vehiculo);
@@ -47,20 +48,15 @@ public class MantenimientoServiceTest {
         frenos.setKmARealizar(0);
 
         // Persistimos dos de ellos en la preparación
-        mantenimientoService.guardarMantenimiento(serviceAnual);
-        mantenimientoService.guardarMantenimiento(cambioCorrea);
+        mantenimientoService.crearMantenimiento(serviceAnual, vehiculo.getId());
+        mantenimientoService.crearMantenimiento(cambioCorrea, vehiculo.getId());
     }
 
-    @AfterEach
-    public void clean() {
-        mantenimientoService.clearAll();
-        vehiculoService.deleteAll();
-    }
 
     @Test
     public void testCrearUnMantenimiento() {
         // Act: guardamos el tercero
-        mantenimientoService.guardarMantenimiento(frenos);
+        mantenimientoService.guardarMantenimiento(frenos, vehiculo.getId());
 
         Mantenimiento frenosRecuperado = mantenimientoService.recuperarMantenimiento(frenos.getId());
 
@@ -83,7 +79,7 @@ public class MantenimientoServiceTest {
         Assertions.assertEquals(2, iniciales.size(), "Debe haber 2 mantenimientos iniciales");
 
         // Guardamos el tercero
-        mantenimientoService.guardarMantenimiento(frenos);
+        mantenimientoService.guardarMantenimiento(frenos, vehiculo.getId());
 
         // Assert: ahora deberían ser 3
         Set<Mantenimiento> todos = mantenimientoService.allMantenimientos();
@@ -105,14 +101,18 @@ public class MantenimientoServiceTest {
     public void testFinalizarMantenimiento() {
         // Dado uno existente
         Mantenimiento existente = mantenimientoService.allMantenimientos().iterator().next();
-
-        // Finalizamos usando la propia entidad
         existente.finalizarMantenimiento();
-        mantenimientoService.guardarMantenimiento(existente); // persistimos el cambio
+        mantenimientoService.actualizarMantenimiento(existente);
 
         // Assert
         Mantenimiento verificado = mantenimientoService.recuperarMantenimiento(existente.getId());
         Assertions.assertTrue(verificado.isFinalizado(), "El mantenimiento debe quedar finalizado");
-        Assertions.assertNotNull(verificado.getFechaDeRealizacion(), "Al finalizar debe setear fecha de realización");
+        Assertions.assertNotNull(verificado.getFechaARealizar(), "Al finalizar debe setear fecha de realización");
+    }
+
+    @AfterEach
+    public void clean() {
+        mantenimientoService.clearAll();
+        vehiculoService.deleteAll();
     }
 }

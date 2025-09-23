@@ -24,9 +24,10 @@ public class MantenimientoJPADTO {
     private LocalDate fechaDeRealizacion;
     private int kmARealizar;
     private boolean finalizado = false;
-    @ManyToOne
-    private Vehiculo vehiculo;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn (nullable = true, name = "vehiculo_id")
+    private VehiculoJPADTO vehiculo;
 
     public static MantenimientoJPADTO desdeModelo(Mantenimiento mantenimiento) {
         MantenimientoJPADTO dto = new MantenimientoJPADTO();
@@ -36,16 +37,40 @@ public class MantenimientoJPADTO {
         dto.fechaDeRealizacion = mantenimiento.getFechaDeRealizacion();
         dto.kmARealizar = mantenimiento.getKmARealizar();
         dto.finalizado = mantenimiento.isFinalizado();
-        dto.vehiculo = mantenimiento.getVehiculo();
+        dto.vehiculo = VehiculoJPADTO.desdeModelo(mantenimiento.getVehiculo());
+        return dto;
+    }
+
+    public static MantenimientoJPADTO desdeModeloSimple(Mantenimiento mantenimiento) {
+        MantenimientoJPADTO dto = new MantenimientoJPADTO();
+        dto.id = mantenimiento.getId();
+        dto.nombre = mantenimiento.getNombre();
+        dto.fechaARealizar = mantenimiento.getFechaARealizar();
+        dto.fechaDeRealizacion = mantenimiento.getFechaDeRealizacion();
+        dto.kmARealizar = mantenimiento.getKmARealizar();
+        dto.finalizado = mantenimiento.isFinalizado();
         return dto;
     }
 
     public Mantenimiento aModelo() {
-        Mantenimiento mantenimiento = new Mantenimiento(nombre, fechaARealizar, vehiculo, kmARealizar);
+        Mantenimiento mantenimiento = new Mantenimiento(nombre, fechaARealizar, kmARealizar);
+        mantenimiento.setId(id);
+        mantenimiento.setFechaDeRealizacion(fechaDeRealizacion);
+        mantenimiento.setFinalizado(finalizado);
+        if(vehiculo != null) {
+            mantenimiento.setVehiculo(vehiculo.aModelo());
+        }
+        return mantenimiento;
+    }
+
+
+    public Mantenimiento aModelo(Vehiculo vehiculo) {
+        Mantenimiento mantenimiento = new Mantenimiento(nombre, fechaARealizar, kmARealizar);
         mantenimiento.setId(id);
         mantenimiento.setFechaDeRealizacion(fechaDeRealizacion);
         mantenimiento.setFinalizado(finalizado);
         mantenimiento.setVehiculo(vehiculo);
         return mantenimiento;
     }
+
 }

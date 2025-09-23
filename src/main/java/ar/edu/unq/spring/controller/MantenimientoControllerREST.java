@@ -20,11 +20,13 @@ public class MantenimientoControllerREST {
         this.mantenimientoService = mantenimientoService;
     }
 
-    @PostMapping
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public Mantenimiento createMantenimiento(@RequestBody MantenimientoDTO mantenimiento){
-        return mantenimientoService.guardarMantenimiento(mantenimiento.aModelo());
+    @PostMapping("/{vehiculoId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mantenimiento createMantenimiento(@PathVariable Long vehiculoId,
+                                             @RequestBody MantenimientoDTO mantenimiento){
+        return mantenimientoService.crearMantenimiento(mantenimiento.aModelo(), vehiculoId);
     }
+
 
     @GetMapping("/{id}")
     public MantenimientoDTO getMantenimiento(@PathVariable("id") Long id) {
@@ -41,11 +43,13 @@ public class MantenimientoControllerREST {
 
     // UPDATE
     @PutMapping("/{id}")
-    public MantenimientoDTO updateMantenimiento(@PathVariable("id") Long id, @RequestBody MantenimientoDTO mantenimiento) {
-        var modelo = mantenimiento.aModelo();
+    public MantenimientoDTO updateMantenimiento(@PathVariable("id") Long id,
+                                                @RequestBody MantenimientoDTO mantenimientoDTO) {
+        var modelo = mantenimientoDTO.aModelo();
         modelo.setId(id);
-        mantenimientoService.guardarMantenimiento(modelo);
-        return MantenimientoDTO.desdeModelo(mantenimientoService.recuperarMantenimiento(id));
+
+        var actualizado = mantenimientoService.actualizarMantenimiento(modelo);
+        return MantenimientoDTO.desdeModelo(actualizado);
     }
 
     // PATCH (finalizar)
@@ -54,8 +58,9 @@ public class MantenimientoControllerREST {
     public void finalizarMantenimiento(@PathVariable("id") Long id) {
         var mantenimiento = mantenimientoService.recuperarMantenimiento(id);
         mantenimiento.finalizarMantenimiento();
-        mantenimientoService.guardarMantenimiento(mantenimiento);
+        mantenimientoService.actualizarMantenimiento(mantenimiento);
     }
+
 
     // DELETE
     @DeleteMapping("/{id}")

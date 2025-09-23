@@ -16,5 +16,5 @@ public interface VehiculoService {
 
     void eliminar(String patente);
 
-    Vehiculo actualizar(Vehiculo vehiculo);
+    void actualizar(Vehiculo vehiculo);
 }

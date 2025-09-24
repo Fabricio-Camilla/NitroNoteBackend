@@ -5,6 +5,8 @@ import ar.edu.unq.spring.persistence.dto.UsuarioJPADTO;
 public record RegisterRequestDTO(String nombre, String email, String password) {
 
     public UsuarioJPADTO aModelo() {
-        return new UsuarioJPADTO(nombre,email,password);
+        var user = new UsuarioJPADTO(nombre,email,password);
+        user.setRole("ROLE_USER");
+        return user;
     }
 }

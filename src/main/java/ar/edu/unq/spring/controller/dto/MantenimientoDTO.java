@@ -12,7 +12,7 @@ public record MantenimientoDTO(
         LocalDate fechaDeRealizacion,
         Integer kmARealizar,
         boolean finalizado,
-        Long vehiculoId
+        String vehiculoId
 ) {
 
     public static MantenimientoDTO desdeModelo(Mantenimiento mantenimiento) {
@@ -23,7 +23,7 @@ public record MantenimientoDTO(
                 mantenimiento.getFechaDeRealizacion(),
                 mantenimiento.getKmARealizar(),
                 mantenimiento.isFinalizado(),
-                mantenimiento.getVehiculo() != null ? mantenimiento.getVehiculo().getId() : null
+                mantenimiento.getVehiculo() != null ? mantenimiento.getVehiculo().getPatente() : null
         );
     }
 

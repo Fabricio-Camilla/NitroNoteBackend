@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
-    private UsuarioDAO usuarioDAO;
+    private final UsuarioDAO usuarioDAO;
     private final PasswordEncoder passwordEncoder;
 
     public UsuarioServiceImpl(UsuarioDAO usuarioDAO, PasswordEncoder passwordEncoder) {
@@ -22,4 +22,5 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioJPADTO.setPassword(passwordEncoder.encode(usuarioJPADTO.getPassword()));
         usuarioDAO.save(usuarioJPADTO);
     }
+
 }

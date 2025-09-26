@@ -29,7 +29,7 @@ public class VehiculoControllerREST {
         return ResponseEntity.status(HttpStatus.CREATED).body(vehiculoPers);
     }
 
-    @GetMapping()
+    @GetMapping("/all")
     public List<VehiculoDTO> getAllVehiculos(){
         return this.vehiculoService.recuperarTodos().stream()
                 .map(VehiculoDTO::desdeModelo)

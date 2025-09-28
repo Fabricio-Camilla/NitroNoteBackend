@@ -1,6 +1,7 @@
 package ar.edu.unq.spring.controller;
 
 import ar.edu.unq.spring.controller.dto.LoginRequestDTO;
+import ar.edu.unq.spring.controller.dto.LoginResponseDTO;
 import ar.edu.unq.spring.controller.dto.RegisterRequestDTO;
 import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.persistence.dto.UsuarioJPADTO;
@@ -16,15 +17,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 public class UserControllerREST {
 
-    private SecurityContextRepository ctxRepo; //TODO: para setear el contexto de la sesion con el login
     private UsuarioService userService;
     private JwtService jwtService;
     private AuthenticationManager authenticationManager;
@@ -33,7 +31,6 @@ public class UserControllerREST {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
-        this.ctxRepo = new HttpSessionSecurityContextRepository();
     }
 
     @PostMapping("/register")
@@ -43,18 +40,17 @@ public class UserControllerREST {
     }
 
     @PostMapping("/login")
-    public UserDetails login (@RequestBody LoginRequestDTO loginDTO, HttpServletResponse response){
+    public LoginResponseDTO login (@RequestBody LoginRequestDTO loginDTO, HttpServletResponse response){
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDTO.email(),
                 loginDTO.password()));
 
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        String  token = jwtService.generateToken(userDetails);
+        response.setHeader("Authorization",  "Bearer " + token);
 
-        response.setHeader("Authorization",  "Bearer " + jwtService.generateToken(userDetails));
-
-        return userDetails;
+        return LoginResponseDTO.desdeModelo(token, userDetails);
     }
-
 
     @GetMapping("/user")
     public ResponseEntity<Usuario> getUser(){

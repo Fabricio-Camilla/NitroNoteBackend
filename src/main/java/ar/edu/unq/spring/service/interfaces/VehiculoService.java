@@ -2,6 +2,7 @@ package ar.edu.unq.spring.service.interfaces;
 
 import ar.edu.unq.spring.modelo.Vehiculo;
 
+import java.util.Arrays;
 import java.util.List;
 
 public interface VehiculoService {
@@ -17,4 +18,6 @@ public interface VehiculoService {
     void eliminar(String patente);
 
     void actualizar(Vehiculo vehiculo);
+
+    List<Vehiculo> vehiculosByUserId(Long userId);
 }

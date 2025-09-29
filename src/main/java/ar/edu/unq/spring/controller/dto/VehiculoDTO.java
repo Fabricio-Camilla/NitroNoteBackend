@@ -11,7 +11,8 @@ public record VehiculoDTO(Long id,
                           @NonNull String modelo,
                           int anio,
                           int kilometros,
-                          List<MantenimientoDTO> mantenimientos) {
+                          List<MantenimientoDTO> mantenimientos,
+                          Long usuarioID) {
 
     public static VehiculoDTO desdeModelo(Vehiculo vehiculo) {
         return new VehiculoDTO(
@@ -21,6 +22,7 @@ public record VehiculoDTO(Long id,
                 vehiculo.getModelo(),
                 vehiculo.getAnio(),
                 vehiculo.getKilometros(),
-                vehiculo.getMantenimientos().stream().map(MantenimientoDTO::desdeModelo).toList());
+                vehiculo.getMantenimientos().stream().map(MantenimientoDTO::desdeModelo).toList(),
+                vehiculo.getUsuarioID());
     }
 }

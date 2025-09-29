@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/vehiculo")
 public class VehiculoControllerREST {
 
-    private VehiculoService vehiculoService;
+    private final VehiculoService vehiculoService;
 
     public VehiculoControllerREST(VehiculoService vehiculoService) {
         this.vehiculoService = vehiculoService;
@@ -29,17 +29,18 @@ public class VehiculoControllerREST {
         return ResponseEntity.status(HttpStatus.CREATED).body(vehiculoPers);
     }
 
+    @GetMapping("/{userId}")
+    public List<VehiculoDTO> getVehiculoDeUserById(@PathVariable Long userId) {
+        return this.vehiculoService.vehiculosByUserId(userId).stream()
+                .map(VehiculoDTO::desdeModelo)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("/all")
     public List<VehiculoDTO> getAllVehiculos(){
         return this.vehiculoService.recuperarTodos().stream()
                 .map(VehiculoDTO::desdeModelo)
                 .collect(Collectors.toList());
-    }
-
-    @GetMapping("/{patente}")
-    public ResponseEntity<VehiculoDTO> getVehiculoByPatente(@PathVariable String patente) {
-        Vehiculo vehiculo = this.vehiculoService.recuperar(patente);
-        return ResponseEntity.ok(VehiculoDTO.desdeModelo(vehiculo));
     }
 
     @DeleteMapping("/{patente}")

@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:8081")
 public class UserControllerREST {
 
-    private UsuarioService userService;
-    private JwtService jwtService;
-    private AuthenticationManager authenticationManager;
+    private final UsuarioService userService;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     public UserControllerREST(UsuarioService userService, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.userService = userService;

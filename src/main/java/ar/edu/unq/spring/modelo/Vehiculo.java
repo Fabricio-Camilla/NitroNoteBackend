@@ -20,7 +20,6 @@ import static java.lang.Math.min;
 @NoArgsConstructor @Getter @Setter
 public class Vehiculo {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String marca;
@@ -38,10 +37,13 @@ public class Vehiculo {
 
     private List<Mantenimiento> mantenimientos;
 
-    public Vehiculo(@NonNull String marca, @NonNull String modelo, @NonNull String patente, int anio, int kilometros) {
+    private Long usuarioID;
+
+    public Vehiculo(@NonNull String marca, @NonNull String modelo, @NonNull String patente, int anio, int kilometros, @NonNull Long usuarioID) {
         setMarca(marca);
         setModelo(modelo);
         setPatente(patente);
+        this.usuarioID = usuarioID;
         this.anio = validarAnio(anio);
         this.kilometros = validarKilometros(kilometros);
         this.mantenimientos = new ArrayList<>();

@@ -1,10 +1,12 @@
 package ar.edu.unq.spring.persistence.dto;
 
+import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,9 @@ public class VehiculoJPADTO {
     @Min(1990) @Max(2025)
     private int anio;
 
+    @Column(nullable = false)
+    private Long usuarioID;
+
     @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<MantenimientoJPADTO> mantenimientos = new ArrayList<MantenimientoJPADTO>();
 
@@ -43,11 +48,21 @@ public class VehiculoJPADTO {
                 .stream()
                 .map(MantenimientoJPADTO::desdeModeloSimple)
                 .toList();
+        dto.usuarioID = vehiculo.getUsuarioID();
         return dto;
     }
 
     public Vehiculo aModelo() {
-        Vehiculo vehiculo = new Vehiculo(marca, modelo, patente, anio, kilometros);
+        Vehiculo vehiculo = new Vehiculo(marca, modelo, patente, anio, kilometros, usuarioID);
+        vehiculo.setId(id);
+        vehiculo.setMantenimientos(mantenimientos.stream()
+                .map(m -> m.aModelo(vehiculo))
+                .toList());
+        return vehiculo;
+    }
+
+    public Vehiculo aModelo(Usuario usuario){
+        Vehiculo vehiculo = new Vehiculo(marca, modelo, patente, anio, kilometros, usuarioID);
         vehiculo.setId(id);
         vehiculo.setMantenimientos(mantenimientos.stream()
                 .map(m -> m.aModelo(vehiculo))

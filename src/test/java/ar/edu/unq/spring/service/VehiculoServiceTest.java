@@ -1,11 +1,10 @@
 package ar.edu.unq.spring.service;
 
-import ar.edu.unq.spring.controller.dto.VehiculoDTO;
-import ar.edu.unq.spring.modelo.Mantenimiento;
+import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.modelo.Vehiculo;
-import ar.edu.unq.spring.modelo.exception.AnioIngresadoInvalidoException;
 import ar.edu.unq.spring.modelo.exception.CantidadDeKilometrosMenorException;
 import ar.edu.unq.spring.modelo.exception.VehiculoNoRegistradoException;
+import ar.edu.unq.spring.service.interfaces.UsuarioService;
 import ar.edu.unq.spring.service.interfaces.VehiculoService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.concurrent.CancellationException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,19 +24,23 @@ public class VehiculoServiceTest {
 
     private Vehiculo vehiculo;
     private Vehiculo vehiculo2;
+    private Usuario usuario;
+    @Autowired
+    private UsuarioService usuarioService;
 
     @BeforeEach
     public void setUp() {
-        vehiculo = new Vehiculo("Chevrolet", "Tracker", "AD010GI", 2020, 2000);
-        vehiculo2 = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000);
-
+        usuario = new Usuario( "unNombre", "unMail", "unPassword");
+        Usuario usuario1 = usuarioService.register(usuario);
+        vehiculo = new Vehiculo("Chevrolet", "Tracker", "AD010GI", 2020, 2000, usuario1.getId());
+        vehiculo2 = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000, usuario1.getId());
     }
 
     @Test
     public void recuperoUnVehiculoRecienCreado(){
-        vehiculoService.guardar(vehiculo);
 
-        Vehiculo vehiculoRecuperado = vehiculoService.recuperar("AD010GI");
+
+        Vehiculo vehiculoRecuperado = vehiculoService.guardar(vehiculo);;
 
         assertEquals("AD010GI", vehiculoRecuperado.getPatente());
         assertEquals("Chevrolet", vehiculoRecuperado.getMarca());
@@ -102,5 +104,6 @@ public class VehiculoServiceTest {
    @AfterEach
    public void tearDown() {
         vehiculoService.deleteAll();
+        usuarioService.clearAll();
    }
 }

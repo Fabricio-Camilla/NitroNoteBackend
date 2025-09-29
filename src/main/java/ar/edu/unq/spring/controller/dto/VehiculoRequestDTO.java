@@ -1,5 +1,6 @@
 package ar.edu.unq.spring.controller.dto;
 
+import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -25,7 +26,9 @@ public record VehiculoRequestDTO (Long id,
 
                                   int anio,
 
-                                  int kilometros ){
+                                  int kilometros,
+
+                                  Long usuarioID){
 
     public Vehiculo aModelo(){
         return new Vehiculo(
@@ -33,6 +36,8 @@ public record VehiculoRequestDTO (Long id,
                 this.modelo.isBlank() ? null : this.modelo,
                 this.patente.isBlank() ? null : this.patente.toUpperCase(),
                 this.anio,
-                this.kilometros);
+                this.kilometros,
+                this.usuarioID
+        );
     }
 }

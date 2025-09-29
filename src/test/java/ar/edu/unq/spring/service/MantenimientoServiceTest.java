@@ -1,10 +1,11 @@
 package ar.edu.unq.spring.service;
 
 import ar.edu.unq.spring.modelo.Mantenimiento;
+import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.service.interfaces.MantenimientoService;
+import ar.edu.unq.spring.service.interfaces.UsuarioService;
 import ar.edu.unq.spring.service.interfaces.VehiculoService;
-import lombok.NonNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -24,17 +24,21 @@ public class MantenimientoServiceTest {
     private MantenimientoService mantenimientoService;
     @Autowired
     private VehiculoService vehiculoService;
+    @Autowired
+    private UsuarioService usuarioService;
 
     private Mantenimiento serviceAnual;
     private Mantenimiento cambioCorrea;
     private Mantenimiento frenos;
-
+    private Usuario usuario;
     private Vehiculo vehiculo;
 
     @BeforeEach
     public void prepare() {
+        usuario = new Usuario("unNombre", "unMail", "unPassword");
+        Usuario usuario1 = usuarioService.register(usuario);
         //Creamos un auto
-        vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000);
+        vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000, usuario1.getId());
 
         vehiculoService.guardar(vehiculo);
         // Creamos algunos mantenimientos de ejemplo (sin ID aún)
@@ -114,5 +118,6 @@ public class MantenimientoServiceTest {
     public void clean() {
         mantenimientoService.clearAll();
         vehiculoService.deleteAll();
+        usuarioService.clearAll();
     }
 }

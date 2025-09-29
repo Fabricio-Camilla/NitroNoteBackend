@@ -40,7 +40,8 @@ public class VehiculoServiceImpl implements VehiculoService {
 
     @Override
     public Vehiculo recuperar(String patente) {
-        return vehiculoDAO.findByPatente(patente).orElseThrow(VehiculoNoRegistradoException::new).aModelo();
+        var ve = vehiculoDAO.findByPatente(patente).orElseThrow(VehiculoNoRegistradoException::new);
+        return ve.aModelo();
     }
 
     @Override
@@ -69,6 +70,11 @@ public class VehiculoServiceImpl implements VehiculoService {
         vehiculoActualizar.setKilometros(vehiculo.getKilometros());
 
         vehiculoDAO.save(VehiculoJPADTO.desdeModelo(vehiculoActualizar)).aModelo();
+    }
+
+    @Override
+    public List<Vehiculo> vehiculosByUserId(Long userId) {
+        return vehiculoDAO.findVehiculoUserById(userId).stream().map(VehiculoJPADTO::aModelo).collect(Collectors.toList());
     }
 
 

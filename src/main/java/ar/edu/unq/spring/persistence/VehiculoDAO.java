@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -19,4 +20,8 @@ public interface VehiculoDAO extends JpaRepository<VehiculoJPADTO, Long> {
      Optional<VehiculoJPADTO> findByPatente(@Param("patente") String patente);
 
 
+    @Query(
+            "FROM Vehiculo v WHERE v.usuarioID = :userId"
+    )
+    List<VehiculoJPADTO> findVehiculoUserById(@Param("userId") Long userId);
 }

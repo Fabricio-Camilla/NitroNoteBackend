@@ -1,5 +1,6 @@
 package ar.edu.unq.spring.service.modelo;
 
+import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.modelo.exception.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,11 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class VehiculoTest {
 
     private Vehiculo vehiculo;
+    private Usuario usuario;
 
     @BeforeEach
     public void setUp() {
-
-        vehiculo = new Vehiculo("Chevrolet", "Tracker", "AD010GI", 2020, 2000);
+        usuario = new Usuario("unNombre", "unMail", "unPassword");
+        vehiculo = new Vehiculo("Chevrolet", "Tracker", "AD010GI", 2020, 2000, 1L);
     }
 
     @Test
@@ -75,7 +77,8 @@ public class VehiculoTest {
                     "Tracker",
                     "AD010GI",
                     2020,
-                    -1);
+                    -1,
+                    1L);
         });
     }
 

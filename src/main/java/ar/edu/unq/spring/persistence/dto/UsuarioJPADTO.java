@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,18 +31,22 @@ public class UsuarioJPADTO implements UserDetails {
 
     private String role;
 
-    public UsuarioJPADTO(String nombre, String email, String password) {
-        this.nombre = nombre;
-        this.email = email;
-        this.password = password;
-    }
-    public UsuarioJPADTO(String email, String password) {
-        this.email = email;
-        this.password = password;
+
+    public static UsuarioJPADTO desdeModelo(Usuario usuario) {
+        UsuarioJPADTO usuarioJPADTO = new UsuarioJPADTO();
+        usuarioJPADTO.setNombre(usuario.getNombre());
+        usuarioJPADTO.setEmail(usuario.getEmail());
+        usuarioJPADTO.setPassword(usuario.getPassword());
+        usuarioJPADTO.setRole(usuario.getRole());
+        usuarioJPADTO.setId(usuario.getId());
+        return usuarioJPADTO;
     }
 
     public Usuario aModelo(){
-        return new Usuario(nombre, email, password);
+        Usuario usuario = new Usuario(nombre, email, password);
+        usuario.setRole(role);
+        usuario.setId(id);
+        return usuario;
     }
 
     @Override

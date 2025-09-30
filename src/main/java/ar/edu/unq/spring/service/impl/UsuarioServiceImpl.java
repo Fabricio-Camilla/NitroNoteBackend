@@ -20,8 +20,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario register(Usuario usuario) {
+        if (usuarioDAO.findByEmail(usuario.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("El usuario ya existe");
+        }
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-        UsuarioJPADTO dto =UsuarioJPADTO.desdeModelo(usuario);
+        UsuarioJPADTO dto = UsuarioJPADTO.desdeModelo(usuario);
         usuarioDAO.save(dto);
         usuario.setId(dto.getId());
         return usuario;

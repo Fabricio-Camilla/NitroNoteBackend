@@ -34,9 +34,13 @@ public class UserControllerREST {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequestDTO registerDTO){
-        userService.register(registerDTO.aModelo());
-        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado con exito");
+    public ResponseEntity<String> register(@RequestBody RegisterRequestDTO registerDTO) {
+        try {
+            userService.register(registerDTO.aModelo());
+            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado con éxito");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("El usuario ya existe");
+        }
     }
 
     @PostMapping("/login")

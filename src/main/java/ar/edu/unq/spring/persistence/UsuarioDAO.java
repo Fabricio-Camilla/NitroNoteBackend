@@ -9,9 +9,6 @@ import java.util.Optional;
 
 public interface UsuarioDAO extends JpaRepository<UsuarioJPADTO, Long> {
 
-    @Query(
-            "SELECT u FROM Usuario u WHERE u.email = :username"
-    )
-    Optional<UsuarioJPADTO> findByEmail(@Param("username") String username);
+    Optional<UsuarioJPADTO> findByEmail(String email);
 
 }

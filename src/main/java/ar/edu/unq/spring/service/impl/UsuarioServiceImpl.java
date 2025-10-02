@@ -25,10 +25,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         UsuarioJPADTO dto = UsuarioJPADTO.desdeModelo(usuario);
-        usuarioDAO.save(dto);
-        usuario.setId(dto.getId());
-        return usuario;
+        UsuarioJPADTO guardado = usuarioDAO.save(dto);
+        return guardado.aModelo();
     }
+
 
     @Override
     public Usuario recuperarUsuario(String email) {

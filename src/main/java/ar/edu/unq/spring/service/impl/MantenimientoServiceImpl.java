@@ -1,15 +1,14 @@
 package ar.edu.unq.spring.service.impl;
 
 import ar.edu.unq.spring.modelo.Mantenimiento;
-import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.persistence.MantenimientoDAO;
 import ar.edu.unq.spring.persistence.VehiculoDAO;
 import ar.edu.unq.spring.persistence.dto.MantenimientoJPADTO;
 import ar.edu.unq.spring.persistence.dto.VehiculoJPADTO;
 import ar.edu.unq.spring.service.interfaces.MantenimientoService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,6 +30,12 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         return mantenimientoDAO.findById(mantenimientoId)
                 .orElseThrow(()-> new NoSuchElementException("Mantenimiento not found with id: " + mantenimientoId))
                 .aModelo();
+    }
+
+    public List<Mantenimiento> recuperarPorUsuario(Long usuarioID) {
+        return mantenimientoDAO.findByVehiculoUsuarioID(usuarioID).stream()
+                .map(MantenimientoJPADTO::aModelo)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -87,6 +92,18 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         return mantenimientoDAO.save(dto).aModelo();
 
     }
+
+    @Override
+    public void finalizarMantenimiento(Long id) {
+        MantenimientoJPADTO dto = mantenimientoDAO.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Mantenimiento no encontrado con id: " + id));
+
+        Mantenimiento existente = dto.aModelo();
+        existente.finalizarMantenimiento(); // set finalizado=true, fechaDeRealizacion=now
+
+        mantenimientoDAO.save(MantenimientoJPADTO.desdeModelo(existente));
+    }
+
 
     @Override
     public void deleteMantenimiento(Mantenimiento mantenimiento) {

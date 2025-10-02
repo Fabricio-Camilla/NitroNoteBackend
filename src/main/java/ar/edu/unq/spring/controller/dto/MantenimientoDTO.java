@@ -8,8 +8,8 @@ import java.time.LocalDate;
 public record MantenimientoDTO(
         Long id,
         String nombre,
-        LocalDate fechaARealizar,
-        LocalDate fechaDeRealizacion,
+        String fechaARealizar,
+        String fechaDeRealizacion,
         Integer kmARealizar,
         boolean finalizado,
         String vehiculoId
@@ -19,11 +19,11 @@ public record MantenimientoDTO(
         return new MantenimientoDTO(
                 mantenimiento.getId(),
                 mantenimiento.getNombre(),
-                mantenimiento.getFechaARealizar(),
-                mantenimiento.getFechaDeRealizacion(),
+                mantenimiento.getFechaARealizar() != null ? mantenimiento.getFechaARealizar().toString() : "",
+                mantenimiento.getFechaDeRealizacion() != null ? mantenimiento.getFechaDeRealizacion().toString() : "",
                 mantenimiento.getKmARealizar(),
                 mantenimiento.isFinalizado(),
-                mantenimiento.getVehiculo() != null ? mantenimiento.getVehiculo().getPatente() : null
+                mantenimiento.getVehiculo() != null ? mantenimiento.getVehiculo().getPatente() : ""
         );
     }
 
@@ -31,11 +31,18 @@ public record MantenimientoDTO(
         Mantenimiento mantenimiento = new Mantenimiento();
         mantenimiento.setId(this.id);
         mantenimiento.setNombre(this.nombre);
-        mantenimiento.setFechaARealizar(this.fechaARealizar);
-        mantenimiento.setFechaDeRealizacion(this.fechaDeRealizacion);
+        mantenimiento.setFechaARealizar(
+                (this.fechaARealizar != null && !this.fechaARealizar.isBlank())
+                        ? LocalDate.parse(this.fechaARealizar)
+                        : null
+        );
+        mantenimiento.setFechaDeRealizacion(
+                (this.fechaDeRealizacion != null && !this.fechaDeRealizacion.isBlank())
+                        ? LocalDate.parse(this.fechaDeRealizacion)
+                        : null
+        );
         mantenimiento.setKmARealizar(this.kmARealizar != null ? this.kmARealizar : 0);
         mantenimiento.setFinalizado(this.finalizado);
-        //No seteamos el vehículo acá
         return mantenimiento;
     }
 }

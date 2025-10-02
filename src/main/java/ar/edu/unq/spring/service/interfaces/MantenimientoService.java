@@ -3,6 +3,7 @@ package ar.edu.unq.spring.service.interfaces;
 import ar.edu.unq.spring.modelo.Mantenimiento;
 import ar.edu.unq.spring.modelo.Vehiculo;
 
+import java.util.List;
 import java.util.Set;
 
 public interface MantenimientoService {
@@ -12,8 +13,10 @@ public interface MantenimientoService {
     Mantenimiento crearMantenimiento(Mantenimiento mantenimiento, Long vehiculoId);
     Mantenimiento actualizarMantenimiento(Mantenimiento mantenimiento);
     Mantenimiento recuperarMantenimiento(Long mantenimientoId);
+    void finalizarMantenimiento(Long id);
     void deleteMantenimiento(Mantenimiento mantenimiento);
     void clearAll();
+    List<Mantenimiento> recuperarPorUsuario(Long usuarioId);
     //getAllHechas()
     //getAllInProgress()
 }

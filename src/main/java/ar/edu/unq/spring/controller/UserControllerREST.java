@@ -60,6 +60,12 @@ public class UserControllerREST {
         return LoginResponseDTO.desdeModelo(token, userDetails);
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout (){
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.ok().body("Sesión cerrada con éxito");
+    }
+
     @GetMapping("/user")
     public ResponseEntity<Usuario> getUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -77,7 +83,6 @@ public class UserControllerREST {
         String email = authentication.getName();
         Usuario usuario = userService.recuperarUsuario(email);
 
-        // Actualizar solo campos permitidos
         usuario.setNombre(usuarioRequest.getNombre());
         usuario.setEmail(usuarioRequest.getEmail());
 
@@ -86,7 +91,7 @@ public class UserControllerREST {
         }
 
         Usuario actualizado = userService.actualizarUsuario(usuario);
-        actualizado.setPassword(null); // nunca devolvemos password
+        actualizado.setPassword(null);
 
         return ResponseEntity.ok(actualizado);
     }

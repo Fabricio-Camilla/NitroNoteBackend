@@ -2,8 +2,11 @@ package ar.edu.unq.spring.controller;
 
 import ar.edu.unq.spring.controller.dto.MantenimientoDTO;
 import ar.edu.unq.spring.modelo.Mantenimiento;
+import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.service.interfaces.MantenimientoService;
+import ar.edu.unq.spring.service.interfaces.UsuarioService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -15,9 +18,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/mantenimiento")
 public class MantenimientoControllerREST {
     private final MantenimientoService mantenimientoService;
+    private final UsuarioService usuarioService;
 
-    public MantenimientoControllerREST(MantenimientoService mantenimientoService) {
+    public MantenimientoControllerREST(MantenimientoService mantenimientoService,
+                                       UsuarioService usuarioService) {
         this.mantenimientoService = mantenimientoService;
+        this.usuarioService = usuarioService;
     }
 
     @PostMapping("/{vehiculoId}")
@@ -40,6 +46,16 @@ public class MantenimientoControllerREST {
                 .map(MantenimientoDTO::desdeModelo)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
+
+    @GetMapping("/mine")
+    public List<MantenimientoDTO> getMantenimientosUsuario(Authentication authentication) {
+        String email = authentication.getName();
+        Usuario usuario = usuarioService.recuperarUsuario(email);
+        return mantenimientoService.recuperarPorUsuario(usuario.getId()).stream()
+                .map(MantenimientoDTO::desdeModelo)
+                .collect(Collectors.toList());
+    }
+
 
     // UPDATE
     @PutMapping("/{id}")

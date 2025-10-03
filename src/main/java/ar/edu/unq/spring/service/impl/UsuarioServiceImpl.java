@@ -25,14 +25,23 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         UsuarioJPADTO dto = UsuarioJPADTO.desdeModelo(usuario);
-        usuarioDAO.save(dto);
-        usuario.setId(dto.getId());
-        return usuario;
+        UsuarioJPADTO guardado = usuarioDAO.save(dto);
+        return guardado.aModelo();
     }
+
 
     @Override
     public Usuario recuperarUsuario(String email) {
-        return usuarioDAO.findByEmail(email).orElseThrow().aModelo(); //TODO: paja de hacer exception
+        return usuarioDAO.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"))
+                .aModelo();
+    }
+
+    @Override
+    public Usuario actualizarUsuario(Usuario usuario) {
+        UsuarioJPADTO dto = UsuarioJPADTO.desdeModelo(usuario);
+        UsuarioJPADTO guardado = usuarioDAO.save(dto);
+        return guardado.aModelo();
     }
 
     @Override

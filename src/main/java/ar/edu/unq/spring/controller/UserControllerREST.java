@@ -15,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +27,14 @@ public class UserControllerREST {
     private final UsuarioService userService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserControllerREST(UsuarioService userService, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public UserControllerREST(UsuarioService userService, JwtService jwtService,
+                              AuthenticationManager authenticationManager,PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/register")
@@ -63,6 +67,28 @@ public class UserControllerREST {
         UsuarioJPADTO user = (UsuarioJPADTO) auth.getPrincipal();
 
         return ResponseEntity.ok(user.aModelo());
+    }
+
+    @PutMapping("/user")
+    public ResponseEntity<Usuario> updateUser(
+            Authentication authentication,
+            @RequestBody Usuario usuarioRequest) {
+
+        String email = authentication.getName();
+        Usuario usuario = userService.recuperarUsuario(email);
+
+        // Actualizar solo campos permitidos
+        usuario.setNombre(usuarioRequest.getNombre());
+        usuario.setEmail(usuarioRequest.getEmail());
+
+        if (usuarioRequest.getPassword() != null && !usuarioRequest.getPassword().isBlank()) {
+            usuario.setPassword(passwordEncoder.encode(usuarioRequest.getPassword()));
+        }
+
+        Usuario actualizado = userService.actualizarUsuario(usuario);
+        actualizado.setPassword(null); // nunca devolvemos password
+
+        return ResponseEntity.ok(actualizado);
     }
 
 

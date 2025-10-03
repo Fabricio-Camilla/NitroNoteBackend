@@ -27,11 +27,11 @@ public class UsuarioServiceTest {
 
     @BeforeEach
     public void setUp() {
-        usuario = new Usuario("unNombre", "unMail", "unPassword");
-
-        Usuario usuario1 = usuarioService.register(usuario);
+        Usuario usuario1 = usuarioService.register(new Usuario("unNombre", "unMail", "unPassword"));
+        usuario = usuario1;
         vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000, usuario1.getId());
     }
+
 
     @Test
     public void unUsuarioRecienGuardadoNoTieneVehiculos(){
@@ -42,12 +42,49 @@ public class UsuarioServiceTest {
 
     @Test
     public void aUnUsuarioSeLeGuardaUnVehiculo(){
+
         vehiculoService.guardar(vehiculo);
 
         var vehiculosDeUser = vehiculoService.vehiculosByUserId(usuario.getId());
 
         assertEquals(1, vehiculosDeUser.size());
     }
+
+    @Test
+    public void registrarUsuarioNuevoGuardaConPasswordEncriptada() {
+        Usuario usuario = new Usuario("Juan", "juan@mail.com", "12345678");
+        Usuario guardado = usuarioService.register(usuario);
+
+        assertNotNull(guardado.getId());
+        assertNotEquals("12345678", guardado.getPassword());
+    }
+
+    @Test
+    public void registrarUsuarioDuplicadoLanzaExcepcion() {
+        Usuario usuario1 = new Usuario("Ana", "ana@mail.com", "123456789");
+        usuarioService.register(usuario1);
+
+        Usuario usuario2 = new Usuario("Otra Ana", "ana@mail.com", "987654321");
+
+        assertThrows(IllegalArgumentException.class, () -> usuarioService.register(usuario2));
+    }
+
+    @Test
+    public void recuperarUsuarioInexistenteLanzaExcepcion() {
+        assertThrows(RuntimeException.class, () -> usuarioService.recuperarUsuario("noexiste@mail.com"));
+    }
+
+
+    @Test
+    public void actualizarUsuarioModificaDatos() {
+        Usuario usuario = usuarioService.register(new Usuario("Laura", "laura@mail.com", "pass"));
+        usuario.setNombre("Laura Modificada");
+
+        Usuario actualizado = usuarioService.actualizarUsuario(usuario);
+
+        assertEquals("Laura Modificada", actualizado.getNombre());
+    }
+
 
     @AfterEach
     public void tearDown() {

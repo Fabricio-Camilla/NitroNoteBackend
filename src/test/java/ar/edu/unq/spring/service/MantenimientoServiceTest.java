@@ -15,7 +15,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -36,10 +40,10 @@ public class MantenimientoServiceTest {
     @BeforeEach
     public void prepare() {
         usuario = new Usuario("unNombre", "unMail", "unPassword");
-        Usuario usuario1 = usuarioService.register(usuario);
+        usuario = usuarioService.register(usuario);
         //Creamos un auto
-        vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000, usuario1.getId());
-
+        vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000, usuario.getId());
+        vehiculo.setUsuarioID(usuario.getId());
         vehiculoService.guardar(vehiculo);
         // Creamos algunos mantenimientos de ejemplo (sin ID aún)
         serviceAnual = new Mantenimiento("Service anual", LocalDate.now().plusMonths(1), vehiculo);
@@ -90,16 +94,28 @@ public class MantenimientoServiceTest {
         Assertions.assertEquals(3, todos.size(), "Deben haberse creado 3 mantenimientos en total");
     }
 
-    /*
     @Test
-    public void testReglaDeNegocio_NombreObligatorio() {
-        Mantenimiento invalido = new Mantenimiento(" ", LocalDate.now().plusDays(10));
-        // Si tu Service valida y lanza IllegalArgumentException (o una custom), verificamos eso:
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mantenimientoService.guardarMantenimiento(invalido);
-        }, "Debe rechazar mantenimientos sin nombre válido");
+    public void testRecuperarMantenimientoInexistenteLanzaExcepcion() {
+        assertThrows(NoSuchElementException.class,
+                () -> mantenimientoService.recuperarMantenimiento(9999L));
     }
-    */
+
+    @Test
+    public void testRecuperarMantenimientosPorUsuario() {
+        List<Mantenimiento> mantenimientos = mantenimientoService.recuperarPorUsuario(usuario.getId());
+        Assertions.assertEquals(2, mantenimientos.size(), "Debe devolver los mantenimientos del usuario");
+    }
+
+
+
+    @Test
+    public void testEliminarMantenimientoSinIDLanzaExcepcion() {
+        Mantenimiento mantenimiento = new Mantenimiento("Sin ID", LocalDate.now(), vehiculo);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> mantenimientoService.deleteMantenimiento(mantenimiento));
+    }
+
 
     @Test
     public void testFinalizarMantenimiento() {
@@ -113,6 +129,8 @@ public class MantenimientoServiceTest {
         Assertions.assertTrue(verificado.isFinalizado(), "El mantenimiento debe quedar finalizado");
         Assertions.assertNotNull(verificado.getFechaARealizar(), "Al finalizar debe setear fecha de realización");
     }
+
+
 
     @AfterEach
     public void clean() {

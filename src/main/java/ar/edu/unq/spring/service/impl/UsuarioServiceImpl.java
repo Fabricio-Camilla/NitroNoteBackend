@@ -7,6 +7,8 @@ import ar.edu.unq.spring.service.interfaces.UsuarioService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
@@ -39,6 +41,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario actualizarUsuario(Usuario usuario) {
+        Optional<UsuarioJPADTO> usuarioExistente = usuarioDAO.findByEmail(usuario.getEmail());
+        if (usuarioExistente.isPresent() && !usuarioExistente.get().getId().equals(usuario.getId())) {
+            throw new IllegalArgumentException("El email ya se encuentra registrado");
+        }
         UsuarioJPADTO dto = UsuarioJPADTO.desdeModelo(usuario);
         UsuarioJPADTO guardado = usuarioDAO.save(dto);
         return guardado.aModelo();

@@ -76,9 +76,17 @@ public class UserControllerREST {
     }
 
     @PutMapping("/user")
-    public ResponseEntity<Usuario> updateUser(
+    public ResponseEntity<?> updateUser(
             Authentication authentication,
             @RequestBody Usuario usuarioRequest) {
+
+        // Validación de contraseña en el backend
+        if (usuarioRequest.getPassword() != null && !usuarioRequest.getPassword().isBlank()) {
+            if (usuarioRequest.getPassword().length() < 8) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("La contraseña debe tener más de 8 caracteres");
+            }
+        }
 
         String email = authentication.getName();
         Usuario usuario = userService.recuperarUsuario(email);

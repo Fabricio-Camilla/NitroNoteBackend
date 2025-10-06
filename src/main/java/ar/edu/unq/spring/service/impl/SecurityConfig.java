@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/register", "/login", "/vehiculo/all").permitAll()
                         .requestMatchers("/**").hasRole("USER")
                 )
+                .logout(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)

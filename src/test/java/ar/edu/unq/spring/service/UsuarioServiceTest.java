@@ -85,6 +85,27 @@ public class UsuarioServiceTest {
         assertEquals("Laura Modificada", actualizado.getNombre());
     }
 
+    @Test
+    public void actualizarPreferenciasDeNotificacionPorEmail() {
+        // Registrar usuario nuevo (por defecto emailNotificationsEnabled = false)
+        Usuario nuevo = usuarioService.register(new Usuario("Carlos", "carlos@gmail.com", "password123"));
+
+        Usuario recuperado = usuarioService.recuperarUsuario("carlos@gmail.com");
+        assertFalse(recuperado.isEmailNotificationsEnabled(),
+                "Por defecto el usuario no debería tener notificaciones por email habilitadas");
+
+        // Actualizar preferencias (habilitar notificaciones por email)
+        recuperado.setEmailNotificationsEnabled(true);
+        Usuario actualizado = usuarioService.actualizarUsuario(recuperado);
+
+        // Recuperar de nuevo para comprobar persistencia real
+        Usuario desdeBD = usuarioService.recuperarUsuario("carlos@gmail.com");
+
+        assertTrue(actualizado.isEmailNotificationsEnabled(),
+                "El usuario actualizado debería tener las notificaciones por email activadas");
+        assertTrue(desdeBD.isEmailNotificationsEnabled(),
+                "El valor debería persistir correctamente en la base de datos");
+    }
 
     @AfterEach
     public void tearDown() {

@@ -24,7 +24,6 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @Transactional
-@Disabled("Evita enviar correos en entorno CI")
 public class NotificationServiceTest {
 
     @Autowired

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Recordatorio de mantenimiento</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(90deg, #007bff, #00c4ff);
+      color: #fff;
+      text-align: center;
+      padding: 25px 15px;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .content {
+      padding: 25px;
+      line-height: 1.6;
+    }
+    .content h2 {
+      color: #007bff;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .highlight {
+      background: #e8f2ff;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+      border-left: 4px solid #007bff;
+    }
+    .footer {
+      background: #f1f3f6;
+      color: #666;
+      font-size: 12px;
+      text-align: center;
+      padding: 15px;
+    }
+    .button {
+      display: inline-block;
+      background: #007bff;
+      color: #fff !important;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🚗 NitroNote</h1>
+    <p>Tu asistente de mantenimiento vehicular</p>
+  </div>
+
+  <div class="content">
+    <h2>Hola {{nombreUsuario}} 👋</h2>
+    <p>Tenés un mantenimiento pendiente:</p>
+
+    <div class="highlight">
+      <strong>{{nombreMantenimiento}}</strong><br/>
+      Vehículo: {{marcaVehiculo}} {{modeloVehiculo}} ({{patenteVehiculo}})<br/>
+      Fecha programada: <b>{{fecha}}</b>
+    </div>
+
+    <p>
+      Te recomendamos realizar este mantenimiento a tiempo para evitar futuros problemas.
+    </p>
+
+    <a href="#" class="button">Ver en NitroNote</a>
+  </div>
+
+  <div class="footer">
+    <p>⚙️ Este recordatorio fue generado automáticamente por NitroNote.</p>
+    <p>Si no querés recibir estos avisos, podés desactivarlos en Perfil → Notificaciones.</p>
+  </div>
+</div>
+</body>
+</html>

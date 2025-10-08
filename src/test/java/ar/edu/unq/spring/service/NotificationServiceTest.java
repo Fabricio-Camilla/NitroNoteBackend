@@ -66,7 +66,6 @@ public class NotificationServiceTest {
 
     @Test
     public void seEnviaUnEmailCuandoHayMantenimientoVenciendoHoy() {
-        // Ejecutar la lógica principal
         notificationService.enviarRecordatoriosDelDia();
 
         // Verificamos que se envió el mail al usuario correcto
@@ -95,7 +94,6 @@ public class NotificationServiceTest {
         entityManager.flush();
         entityManager.clear();
 
-        // Ejecutar lógica
         notificationService.enviarRecordatoriosDelDia();
 
         // Verificar que no se envió nada

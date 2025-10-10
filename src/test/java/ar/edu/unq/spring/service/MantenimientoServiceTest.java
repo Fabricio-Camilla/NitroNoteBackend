@@ -128,6 +128,7 @@ public class MantenimientoServiceTest {
         Mantenimiento verificado = mantenimientoService.recuperarMantenimiento(existente.getId());
         Assertions.assertTrue(verificado.isFinalizado(), "El mantenimiento debe quedar finalizado");
         Assertions.assertNotNull(verificado.getFechaARealizar(), "Al finalizar debe setear fecha de realización");
+        Assertions.assertEquals(LocalDate.now(), verificado.getFechaDeRealizacion());
     }
 
 

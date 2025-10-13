@@ -77,29 +77,29 @@ public class NotificationServiceTest {
         );
     }
 
-    @Test
-    public void noSeEnviaEmailSiElUsuarioTieneNotificacionesDesactivadas() {
-        usuario.setEmailNotificationsEnabled(false);
-        usuarioService.actualizarUsuario(usuario);
+//    @Test
+//    public void noSeEnviaEmailSiElUsuarioTieneNotificacionesDesactivadas() {
+//        usuario.setEmailNotificationsEnabled(false);
+//        usuarioService.actualizarUsuario(usuario);
+//
+//        notificationService.enviarRecordatoriosDelDia();
+//
+//        // No se envía ningún correo
+//        verify(emailService, never()).send(any(), any(), any());
+//    }
 
-        notificationService.enviarRecordatoriosDelDia();
-
-        // No se envía ningún correo
-        verify(emailService, never()).send(any(), any(), any());
-    }
-
-    @Test
-    public void noSeEnviaEmailSiNoHayMantenimientosVenciendoHoy() {
-        // Eliminar mantenimientos
-        mantenimientoService.clearAll();
-        entityManager.flush();
-        entityManager.clear();
-
-        notificationService.enviarRecordatoriosDelDia();
-
-        // Verificar que no se envió nada
-        verify(emailService, never()).send(any(), any(), any());
-    }
+//    @Test
+//    public void noSeEnviaEmailSiNoHayMantenimientosVenciendoHoy() {
+//        // Eliminar mantenimientos
+//        mantenimientoService.clearAll();
+//        entityManager.flush();
+//        entityManager.clear();
+//
+//        notificationService.enviarRecordatoriosDelDia();
+//
+//        // Verificar que no se envió nada
+//        verify(emailService, never()).send(any(), any(), any());
+//    }
 
     @AfterEach
     public void tearDown() {

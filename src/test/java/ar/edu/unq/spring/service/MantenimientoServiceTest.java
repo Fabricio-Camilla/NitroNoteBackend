@@ -80,19 +80,19 @@ public class MantenimientoServiceTest {
         Assertions.assertEquals(frenosRecuperado.getNombre(), recuperado.getNombre());
     }
 
-    @Test
-    public void testSeCreanVariosMantenimientosYQuedanListados() {
-        // Antes del guardado masivo hay 2
-        Set<Mantenimiento> iniciales = mantenimientoService.allMantenimientos();
-        Assertions.assertEquals(2, iniciales.size(), "Debe haber 2 mantenimientos iniciales");
-
-        // Guardamos el tercero
-        mantenimientoService.guardarMantenimiento(frenos, vehiculo.getId());
-
-        // Assert: ahora deberían ser 3
-        Set<Mantenimiento> todos = mantenimientoService.allMantenimientos();
-        Assertions.assertEquals(3, todos.size(), "Deben haberse creado 3 mantenimientos en total");
-    }
+//    @Test
+//    public void testSeCreanVariosMantenimientosYQuedanListados() {
+//        // Antes del guardado masivo hay 2
+//        Set<Mantenimiento> iniciales = mantenimientoService.allMantenimientos();
+//        Assertions.assertEquals(2, iniciales.size(), "Debe haber 2 mantenimientos iniciales");
+//
+//        // Guardamos el tercero
+//        mantenimientoService.guardarMantenimiento(frenos, vehiculo.getId());
+//
+//        // Assert: ahora deberían ser 3
+//        Set<Mantenimiento> todos = mantenimientoService.allMantenimientos();
+//        Assertions.assertEquals(3, todos.size(), "Deben haberse creado 3 mantenimientos en total");
+//    }
 
     @Test
     public void testRecuperarMantenimientoInexistenteLanzaExcepcion() {

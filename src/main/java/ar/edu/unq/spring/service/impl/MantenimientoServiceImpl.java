@@ -87,6 +87,8 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         existente.setFechaARealizar(mantenimiento.getFechaARealizar());
         existente.setFinalizado(mantenimiento.isFinalizado());
         existente.setKmARealizar(mantenimiento.getKmARealizar());
+        existente.setFechaDeRealizacion(mantenimiento.getFechaDeRealizacion());
+        existente.setNombre(mantenimiento.getNombre());
 
         MantenimientoJPADTO dto = MantenimientoJPADTO.desdeModelo(existente);
         return mantenimientoDAO.save(dto).aModelo();

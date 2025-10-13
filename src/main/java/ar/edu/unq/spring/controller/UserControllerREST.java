@@ -2,6 +2,7 @@ package ar.edu.unq.spring.controller;
 
 import ar.edu.unq.spring.controller.dto.LoginRequestDTO;
 import ar.edu.unq.spring.controller.dto.LoginResponseDTO;
+import ar.edu.unq.spring.controller.dto.NotificationPrefsDTO;
 import ar.edu.unq.spring.controller.dto.RegisterRequestDTO;
 import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.persistence.dto.UsuarioJPADTO;
@@ -109,5 +110,20 @@ public class UserControllerREST {
             }
             throw e;
         }
+    }
+
+    @PatchMapping("/user/notification-preferences")
+    public ResponseEntity<?> updateNotificationEmailPreferences(
+            Authentication authentication,
+            @RequestBody NotificationPrefsDTO prefs) {
+
+        String email = authentication.getName();
+
+        Usuario actualizado = userService.actualizarPreferenciasNotificacion(
+                email,
+                prefs.isEmailEnabled()
+        );
+
+        return ResponseEntity.ok(actualizado);
     }
 }

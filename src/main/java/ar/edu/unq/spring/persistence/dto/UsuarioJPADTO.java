@@ -31,6 +31,8 @@ public class UsuarioJPADTO implements UserDetails {
 
     private String role;
 
+    @Column(name = "email_notifications_enabled", nullable = false)
+    private boolean emailNotificationsEnabled;
 
     public static UsuarioJPADTO desdeModelo(Usuario usuario) {
         UsuarioJPADTO usuarioJPADTO = new UsuarioJPADTO();
@@ -39,12 +41,14 @@ public class UsuarioJPADTO implements UserDetails {
         usuarioJPADTO.setPassword(usuario.getPassword());
         usuarioJPADTO.setRole(usuario.getRole());
         usuarioJPADTO.setId(usuario.getId());
+        usuarioJPADTO.setEmailNotificationsEnabled(usuario.isEmailNotificationsEnabled());
         return usuarioJPADTO;
     }
 
     public Usuario aModelo(){
         Usuario usuario = new Usuario(nombre, email, password);
         usuario.setRole(role);
+        usuario.setEmailNotificationsEnabled(emailNotificationsEnabled);
         usuario.setId(id);
         return usuario;
     }

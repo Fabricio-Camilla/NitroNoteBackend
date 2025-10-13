@@ -41,13 +41,32 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario actualizarUsuario(Usuario usuario) {
-        Optional<UsuarioJPADTO> usuarioExistente = usuarioDAO.findByEmail(usuario.getEmail());
-        if (usuarioExistente.isPresent() && !usuarioExistente.get().getId().equals(usuario.getId())) {
-            throw new IllegalArgumentException("El email ya se encuentra registrado");
+        UsuarioJPADTO existente = usuarioDAO.findById(usuario.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        if (!existente.getEmail().equals(usuario.getEmail())) {
+            Optional<UsuarioJPADTO> otro = usuarioDAO.findByEmail(usuario.getEmail());
+            if (otro.isPresent() && !otro.get().getId().equals(usuario.getId())) {
+                throw new IllegalArgumentException("El email ya se encuentra registrado");
+            }
+            existente.setEmail(usuario.getEmail());
         }
-        UsuarioJPADTO dto = UsuarioJPADTO.desdeModelo(usuario);
-        UsuarioJPADTO guardado = usuarioDAO.save(dto);
+
+        existente.setNombre(usuario.getNombre());
+        existente.setRole(usuario.getRole());
+        existente.setPassword(usuario.getPassword());
+        existente.setEmailNotificationsEnabled(usuario.isEmailNotificationsEnabled());
+
+        UsuarioJPADTO guardado = usuarioDAO.save(existente);
         return guardado.aModelo();
+    }
+
+
+    @Override
+    public Usuario actualizarPreferenciasNotificacion(String email, boolean emailEnabled) {
+        Usuario usuario = recuperarUsuario(email);
+        usuario.setEmailNotificationsEnabled(emailEnabled);
+        return actualizarUsuario(usuario);
     }
 
     @Override

@@ -23,10 +23,13 @@ public class Usuario {
     
     private String role;
 
+    private boolean emailNotificationsEnabled;
+
     public Usuario(String nombre, String email, String password) {
         this.nombre = nombre;
         this.email = email;
         this.password = password;
         this.vehiculos = new ArrayList<Vehiculo>();
+        this.emailNotificationsEnabled = false;
     }
 }

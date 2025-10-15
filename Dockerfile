@@ -1,5 +1,5 @@
 # Etapa 1: build con Gradle
-FROM gradle:8.3-jdk21 AS builder
+FROM gradle:8.3-jdk21-slim AS builder
 WORKDIR /app
 
 # Copiamos los archivos de Gradle

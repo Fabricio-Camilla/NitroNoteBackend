@@ -9,6 +9,8 @@ COPY gradle gradle/
 # Copiamos el código fuente
 COPY src src/
 
+RUN chmod +x gradlew
+
 # Construimos el archivo JAR
 RUN ./gradlew clean build -x test
 

@@ -7,3 +7,4 @@
 build/*
 .idea
 /out/*
+src/test/java/resources/application-test.properties

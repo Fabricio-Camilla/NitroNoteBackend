@@ -38,6 +38,12 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
-
+sourceSets {
+    test {
+        resources {
+            srcDirs = ['src/test/java/resources']
+        }
+    }
+}
 sourceCompatibility = JavaVersion.VERSION_21
 targetCompatibility = JavaVersion.VERSION_21

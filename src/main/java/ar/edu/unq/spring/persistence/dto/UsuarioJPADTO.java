@@ -34,6 +34,12 @@ public class UsuarioJPADTO implements UserDetails {
     @Column(name = "email_notifications_enabled", nullable = false)
     private boolean emailNotificationsEnabled;
 
+    @Column(name = "expo_push_token")
+    private String expoPushToken;
+
+    @Column(name = "push_enabled")
+    private boolean pushEnabled;
+
     public static UsuarioJPADTO desdeModelo(Usuario usuario) {
         UsuarioJPADTO usuarioJPADTO = new UsuarioJPADTO();
         usuarioJPADTO.setNombre(usuario.getNombre());
@@ -82,4 +88,5 @@ public class UsuarioJPADTO implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

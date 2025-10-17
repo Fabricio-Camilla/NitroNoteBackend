@@ -7,4 +7,6 @@ import lombok.Setter;
 @Setter
 public class NotificationPrefsDTO {
     private boolean emailEnabled;
+    private boolean pushEnabled;
+    private String expoPushToken;
 }

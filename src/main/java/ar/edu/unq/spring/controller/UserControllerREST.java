@@ -113,7 +113,7 @@ public class UserControllerREST {
     }
 
     @PatchMapping("/user/notification-preferences")
-    public ResponseEntity<?> updateNotificationEmailPreferences(
+    public ResponseEntity<?> updateNotificationPreferences(
             Authentication authentication,
             @RequestBody NotificationPrefsDTO prefs) {
 
@@ -121,9 +121,26 @@ public class UserControllerREST {
 
         Usuario actualizado = userService.actualizarPreferenciasNotificacion(
                 email,
-                prefs.isEmailEnabled()
+                prefs
         );
 
         return ResponseEntity.ok(actualizado);
     }
+
+
+//    @PatchMapping("/user/notification-preferences")
+//    public ResponseEntity<?> updateNotificationEmailPreferences(
+//            Authentication authentication,
+//            @RequestBody NotificationPrefsDTO prefs) {
+//
+//        String email = authentication.getName();
+//
+//        Usuario actualizado = userService.actualizarPreferenciasNotificacion(
+//                email,
+//                prefs.isEmailEnabled()
+//        );
+//
+//        return ResponseEntity.ok(actualizado);
+//    }
+
 }

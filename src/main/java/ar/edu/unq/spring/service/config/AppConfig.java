@@ -9,7 +9,7 @@ public class AppConfig implements WebMvcConfigurer {
 
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://nitronotebackend-production.up.railway.app")
+                .allowedOrigins("localhost:8081")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS");
     }
 }

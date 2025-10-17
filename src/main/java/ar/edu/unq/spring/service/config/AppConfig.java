@@ -1,4 +1,4 @@
-package ar.edu.unq.spring.service;
+package ar.edu.unq.spring.service.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

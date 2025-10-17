@@ -3,6 +3,7 @@ package ar.edu.unq.spring.service;
 import ar.edu.unq.spring.modelo.Mantenimiento;
 import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.modelo.Vehiculo;
+import ar.edu.unq.spring.service.config.NitroNoteTest;
 import ar.edu.unq.spring.service.interfaces.MantenimientoService;
 import ar.edu.unq.spring.service.interfaces.UsuarioService;
 import ar.edu.unq.spring.service.interfaces.VehiculoService;
@@ -11,19 +12,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@TestPropertySource(locations = "classpath:application-test.properties")
-@SpringBootTest
+@NitroNoteTest
 public class MantenimientoServiceTest {
     @Autowired
     private MantenimientoService mantenimientoService;

@@ -3,6 +3,7 @@ package ar.edu.unq.spring.service;
 import ar.edu.unq.spring.modelo.Mantenimiento;
 import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.modelo.Vehiculo;
+import ar.edu.unq.spring.service.config.NitroNoteTest;
 import ar.edu.unq.spring.service.interfaces.EmailService;
 import ar.edu.unq.spring.service.interfaces.MantenimientoService;
 import ar.edu.unq.spring.service.interfaces.NotificationService;
@@ -11,10 +12,8 @@ import ar.edu.unq.spring.service.interfaces.VehiculoService;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +21,7 @@ import java.time.LocalDate;
 
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@NitroNoteTest
 @Transactional
 public class NotificationServiceTest {
 
@@ -77,29 +76,29 @@ public class NotificationServiceTest {
         );
     }
 
-//    @Test
-//    public void noSeEnviaEmailSiElUsuarioTieneNotificacionesDesactivadas() {
-//        usuario.setEmailNotificationsEnabled(false);
-//        usuarioService.actualizarUsuario(usuario);
-//
-//        notificationService.enviarRecordatoriosDelDia();
-//
-//        // No se envía ningún correo
-//        verify(emailService, never()).send(any(), any(), any());
-//    }
+    @Test
+    public void noSeEnviaEmailSiElUsuarioTieneNotificacionesDesactivadas() {
+        usuario.setEmailNotificationsEnabled(false);
+        usuarioService.actualizarUsuario(usuario);
 
-//    @Test
-//    public void noSeEnviaEmailSiNoHayMantenimientosVenciendoHoy() {
-//        // Eliminar mantenimientos
-//        mantenimientoService.clearAll();
-//        entityManager.flush();
-//        entityManager.clear();
-//
-//        notificationService.enviarRecordatoriosDelDia();
-//
-//        // Verificar que no se envió nada
-//        verify(emailService, never()).send(any(), any(), any());
-//    }
+        notificationService.enviarRecordatoriosDelDia();
+
+        // No se envía ningún correo
+        verify(emailService, never()).send(any(), any(), any());
+    }
+
+    @Test
+    public void noSeEnviaEmailSiNoHayMantenimientosVenciendoHoy() {
+        // Eliminar mantenimientos
+        mantenimientoService.clearAll();
+        entityManager.flush();
+        entityManager.clear();
+
+        notificationService.enviarRecordatoriosDelDia();
+
+        // Verificar que no se envió nada
+        verify(emailService, never()).send(any(), any(), any());
+    }
 
     @AfterEach
     public void tearDown() {

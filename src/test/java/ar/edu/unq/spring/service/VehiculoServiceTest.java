@@ -4,19 +4,19 @@ import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.modelo.exception.CantidadDeKilometrosMenorException;
 import ar.edu.unq.spring.modelo.exception.VehiculoNoRegistradoException;
+import ar.edu.unq.spring.service.config.NitroNoteTest;
 import ar.edu.unq.spring.service.interfaces.UsuarioService;
 import ar.edu.unq.spring.service.interfaces.VehiculoService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@NitroNoteTest
 public class VehiculoServiceTest {
 
     @Autowired

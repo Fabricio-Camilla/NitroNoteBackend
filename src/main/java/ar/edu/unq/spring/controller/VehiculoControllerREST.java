@@ -2,6 +2,7 @@ package ar.edu.unq.spring.controller;
 
 import ar.edu.unq.spring.controller.dto.VehiculoDTO;
 import ar.edu.unq.spring.controller.dto.VehiculoRequestDTO;
+import ar.edu.unq.spring.controller.dto.VehiculoSimpleDTO;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.service.interfaces.VehiculoService;
 import org.springframework.http.HttpStatus;
@@ -58,5 +59,10 @@ public class VehiculoControllerREST {
         return ResponseEntity.status(HttpStatus.CREATED).body("OK");
     }
 
+    @GetMapping("by-patente/{patente}")
+    public VehiculoSimpleDTO getVehiculo(@PathVariable("patente") String patente){
+        return VehiculoSimpleDTO.desdeModelo(this.vehiculoService.recuperar(patente));
+//uso VehiculoSimple para no traer todos los mantenimeintos, no se usa en otro lado como para necestiarlos por ahora
 
+    }
 }

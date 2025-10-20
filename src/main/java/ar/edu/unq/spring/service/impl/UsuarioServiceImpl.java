@@ -61,13 +61,22 @@ public class UsuarioServiceImpl implements UsuarioService {
         return guardado.aModelo();
     }
 
-
     @Override
-    public Usuario actualizarPreferenciasNotificacion(String email, boolean emailEnabled) {
+    public Usuario actualizarPreferenciasNotificacion(String email, boolean emailEnabled,
+                                                      boolean pushEnabled, String pushToken) {
         Usuario usuario = recuperarUsuario(email);
         usuario.setEmailNotificationsEnabled(emailEnabled);
+        usuario.setPushNotificationsEnabled(pushEnabled);
+        usuario.setPushToken(pushToken);
         return actualizarUsuario(usuario);
     }
+
+//    @Override
+//    public Usuario actualizarPreferenciasNotificacion(String email, boolean emailEnabled) {
+//        Usuario usuario = recuperarUsuario(email);
+//        usuario.setEmailNotificationsEnabled(emailEnabled);
+//        return actualizarUsuario(usuario);
+//    }
 
     @Override
     public void clearAll() {

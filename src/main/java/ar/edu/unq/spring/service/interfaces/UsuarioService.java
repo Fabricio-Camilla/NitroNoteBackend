@@ -6,6 +6,8 @@ public interface UsuarioService {
     Usuario register(Usuario usuario);
     Usuario recuperarUsuario(String email);
     Usuario actualizarUsuario(Usuario usuario);
-    Usuario actualizarPreferenciasNotificacion(String email, boolean emailEnabled);
+    Usuario actualizarPreferenciasNotificacion(String email, boolean emailEnabled,
+                                               boolean pushEnabled, String pushToken);
+
     void clearAll();
 }

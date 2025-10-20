@@ -23,4 +23,8 @@ public interface MantenimientoDAO extends JpaRepository<MantenimientoJPADTO, Lon
       AND m.finalizado = false
 """)
     List<MantenimientoJPADTO> findMantenimientosQueVencenHoy(LocalDate hoy);
+
+    @Query("SELECT m FROM Mantenimiento m WHERE m.fechaARealizar = :fecha AND m.finalizado = false")
+    List<MantenimientoJPADTO> findMantenimientosQueVencenEnFecha(@Param("fecha") LocalDate fecha);
+
 }

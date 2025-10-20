@@ -12,18 +12,14 @@ import java.util.List;
 public class Usuario {
 
     private Long id;
-
     private String nombre;
-
     private String email;
-
     private String password;
-
     private List<Vehiculo> vehiculos;
-    
     private String role;
-
     private boolean emailNotificationsEnabled;
+    private boolean pushNotificationsEnabled;
+    private String pushToken;
 
     public Usuario(String nombre, String email, String password) {
         this.nombre = nombre;
@@ -31,5 +27,7 @@ public class Usuario {
         this.password = password;
         this.vehiculos = new ArrayList<Vehiculo>();
         this.emailNotificationsEnabled = false;
+        this.pushNotificationsEnabled = false;
+        this.pushToken = null;
     }
 }

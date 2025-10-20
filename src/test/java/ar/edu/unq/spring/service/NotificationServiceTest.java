@@ -59,13 +59,13 @@ public class NotificationServiceTest {
 
         // Crear mantenimiento que vence hoy
         Mantenimiento mantenimiento = new Mantenimiento(
-                "Cambio de aceite", LocalDate.now(), 15000);
+                "Cambio de aceite", LocalDate.now().plusDays(1), 15000);
         mantenimiento.setVehiculo(vehiculo);
         mantenimientoService.guardarMantenimiento(mantenimiento, vehiculo.getId());
     }
 
     @Test
-    public void seEnviaUnEmailCuandoHayMantenimientoVenciendoHoy() {
+    public void seEnviaUnEmailCuandoHayMantenimientoVenciendoManana() {
         notificationService.enviarRecordatoriosDelDia();
 
         // Verificamos que se envió el mail al usuario correcto
@@ -88,7 +88,7 @@ public class NotificationServiceTest {
     }
 
     @Test
-    public void noSeEnviaEmailSiNoHayMantenimientosVenciendoHoy() {
+    public void noSeEnviaEmailSiNoHayMantenimientosVenciendoManiana() {
         // Eliminar mantenimientos
         mantenimientoService.clearAll();
         entityManager.flush();

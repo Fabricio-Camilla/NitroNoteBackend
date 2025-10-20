@@ -64,12 +64,12 @@ public class VehiculoServiceImpl implements VehiculoService {
 
     @Override
     public void actualizar(Vehiculo vehiculo) {
-        Vehiculo vehiculoActualizar = vehiculoDAO.findByPatente(vehiculo.getPatente())
-                .orElseThrow(VehiculoNoRegistradoException::new).aModelo();
+        VehiculoJPADTO vehiculoActualizar = vehiculoDAO.findByPatente(vehiculo.getPatente())
+                .orElseThrow(VehiculoNoRegistradoException::new);
 
         vehiculoActualizar.setKilometros(vehiculo.getKilometros());
 
-        vehiculoDAO.save(VehiculoJPADTO.desdeModelo(vehiculoActualizar)).aModelo();
+        vehiculoDAO.save(vehiculoActualizar);
     }
 
     @Override

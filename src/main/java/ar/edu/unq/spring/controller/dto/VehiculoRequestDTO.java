@@ -1,5 +1,6 @@
 package ar.edu.unq.spring.controller.dto;
 
+import ar.edu.unq.spring.modelo.Mantenimiento;
 import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import jakarta.validation.constraints.Max;
@@ -7,6 +8,11 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public record VehiculoRequestDTO (Long id,
                                   @NonNull
@@ -28,10 +34,12 @@ public record VehiculoRequestDTO (Long id,
 
                                   int kilometros,
 
-                                  Long usuarioID){
+                                  Long usuarioID,
+
+                                  List<MantenimientoDTO> mantenimientos){
 
     public Vehiculo aModelo(){
-        return new Vehiculo(
+        Vehiculo vehiculo= new Vehiculo(
                 this.marca.isBlank() ? null : this.marca,
                 this.modelo.isBlank() ? null : this.modelo,
                 this.patente.isBlank() ? null : this.patente.toUpperCase(),
@@ -39,5 +47,9 @@ public record VehiculoRequestDTO (Long id,
                 this.kilometros,
                 this.usuarioID
         );
+        vehiculo.setMantenimientos(this.mantenimientos == null ? new ArrayList<Mantenimiento>() : this.mantenimientos.stream()
+                .map(m -> m.aModelo(vehiculo)).toList());
+
+        return vehiculo;
     }
 }

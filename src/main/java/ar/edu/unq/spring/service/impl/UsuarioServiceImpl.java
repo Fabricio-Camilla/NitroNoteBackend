@@ -56,6 +56,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         existente.setRole(usuario.getRole());
         existente.setPassword(usuario.getPassword());
         existente.setEmailNotificationsEnabled(usuario.isEmailNotificationsEnabled());
+        existente.setPushNotificationsEnabled(usuario.isPushNotificationsEnabled());
+        existente.setPushToken(usuario.getPushToken());
 
         UsuarioJPADTO guardado = usuarioDAO.save(existente);
         return guardado.aModelo();

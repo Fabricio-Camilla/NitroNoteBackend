@@ -1,10 +1,12 @@
 package ar.edu.unq.spring.service;
 
+import ar.edu.unq.spring.modelo.Mantenimiento;
 import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.modelo.Vehiculo;
 import ar.edu.unq.spring.modelo.exception.CantidadDeKilometrosMenorException;
 import ar.edu.unq.spring.modelo.exception.VehiculoNoRegistradoException;
 import ar.edu.unq.spring.service.config.NitroNoteTest;
+import ar.edu.unq.spring.service.interfaces.MantenimientoService;
 import ar.edu.unq.spring.service.interfaces.UsuarioService;
 import ar.edu.unq.spring.service.interfaces.VehiculoService;
 import org.junit.jupiter.api.AfterEach;
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +30,8 @@ public class VehiculoServiceTest {
     private Usuario usuario;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private MantenimientoService mantenimientoService;
 
     @BeforeEach
     public void setUp() {
@@ -99,6 +104,21 @@ public class VehiculoServiceTest {
         assertThrows(CantidadDeKilometrosMenorException.class, () -> {
             vehiculo.setKilometros(200);
         });
+    }
+
+    @Test
+    public void unVehiculoConMantenimientos(){
+        var veh = vehiculoService.guardar(vehiculo);
+        Mantenimiento mantenimiento =  new Mantenimiento("Cambio de pastillas de freno", LocalDate.now().plusWeeks(2), 2010);
+
+        mantenimientoService.crearMantenimiento(mantenimiento, veh.getId());
+
+        var veh1 = vehiculoService.recuperar(vehiculo.getPatente());
+
+        veh1.setKilometros(30000);
+        vehiculoService.actualizar(veh1);
+
+        assertFalse(veh1.getMantenimientos().isEmpty());
     }
 
    @AfterEach

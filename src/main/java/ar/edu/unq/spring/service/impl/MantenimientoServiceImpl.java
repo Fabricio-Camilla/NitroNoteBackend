@@ -58,6 +58,7 @@ public class MantenimientoServiceImpl implements MantenimientoService {
         MantenimientoJPADTO guardado = mantenimientoDAO.save(mantenimientoJPADTO);
 
         mantenimiento.setId(guardado.getId());
+        //vehiculoDAO.save(vehiculoDTO)
         return mantenimiento;
     }
 

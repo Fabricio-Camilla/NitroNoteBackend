@@ -34,11 +34,11 @@ public class UsuarioJPADTO implements UserDetails {
     @Column(name = "email_notifications_enabled", nullable = false)
     private boolean emailNotificationsEnabled;
 
-    @Column(name = "expo_push_token")
-    private String expoPushToken;
+    @Column(name = "push_notifications_enabled", nullable = false)
+    private boolean pushNotificationsEnabled;
 
-    @Column(name = "push_enabled")
-    private boolean pushEnabled;
+    @Column(name = "push_token")
+    private String pushToken;
 
     public static UsuarioJPADTO desdeModelo(Usuario usuario) {
         UsuarioJPADTO usuarioJPADTO = new UsuarioJPADTO();
@@ -48,6 +48,8 @@ public class UsuarioJPADTO implements UserDetails {
         usuarioJPADTO.setRole(usuario.getRole());
         usuarioJPADTO.setId(usuario.getId());
         usuarioJPADTO.setEmailNotificationsEnabled(usuario.isEmailNotificationsEnabled());
+        usuarioJPADTO.setPushNotificationsEnabled(usuario.isPushNotificationsEnabled());
+        usuarioJPADTO.setPushToken(usuario.getPushToken());
         return usuarioJPADTO;
     }
 
@@ -55,6 +57,8 @@ public class UsuarioJPADTO implements UserDetails {
         Usuario usuario = new Usuario(nombre, email, password);
         usuario.setRole(role);
         usuario.setEmailNotificationsEnabled(emailNotificationsEnabled);
+        usuario.setPushNotificationsEnabled(pushNotificationsEnabled);
+        usuario.setPushToken(pushToken);
         usuario.setId(id);
         return usuario;
     }

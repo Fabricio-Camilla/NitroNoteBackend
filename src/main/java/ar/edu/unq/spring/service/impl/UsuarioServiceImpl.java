@@ -1,6 +1,5 @@
 package ar.edu.unq.spring.service.impl;
 
-import ar.edu.unq.spring.controller.dto.NotificationPrefsDTO;
 import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.persistence.UsuarioDAO;
 import ar.edu.unq.spring.persistence.dto.UsuarioJPADTO;
@@ -63,20 +62,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario actualizarPreferenciasNotificacion(String email, NotificationPrefsDTO prefs) {
-        UsuarioJPADTO usuario = usuarioDAO.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con email: " + email));
-
-        // ✅ actualizar preferencias
-        usuario.setEmailNotificationsEnabled(prefs.isEmailEnabled());
-        usuario.setPushEnabled(prefs.isPushEnabled());
-        usuario.setExpoPushToken(prefs.getExpoPushToken());
-
-        usuarioDAO.save(usuario);
-        return usuario.aModelo();
+    public Usuario actualizarPreferenciasNotificacion(String email, boolean emailEnabled,
+                                                      boolean pushEnabled, String pushToken) {
+        Usuario usuario = recuperarUsuario(email);
+        usuario.setEmailNotificationsEnabled(emailEnabled);
+        usuario.setPushNotificationsEnabled(pushEnabled);
+        usuario.setPushToken(pushToken);
+        return actualizarUsuario(usuario);
     }
-
-
 
 //    @Override
 //    public Usuario actualizarPreferenciasNotificacion(String email, boolean emailEnabled) {

@@ -15,10 +15,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @NitroNoteTest
@@ -45,6 +47,8 @@ public class NotificationServiceTest {
 
     private Usuario usuario;
     private Vehiculo vehiculo;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @BeforeEach
     public void setUp() {
@@ -99,6 +103,23 @@ public class NotificationServiceTest {
         // Verificar que no se envió nada
         verify(emailService, never()).send(any(), any(), any());
     }
+
+    @Test
+    public void seCambiaLaPrefrenciaDeNotificacionPush(){
+        usuarioService.register(new Usuario("fabri", "fabri@test.com", "12345678"));
+        var user = usuarioService.actualizarPreferenciasNotificacion(
+                "fabri@test.com",
+                true,
+                true ,
+                "ExponentPushToken[ehiLoqF3CdiUqrsQZMZfWU]");
+
+        assertTrue(user.isPushNotificationsEnabled());
+
+
+    }
+
+
+
 
     @AfterEach
     public void tearDown() {

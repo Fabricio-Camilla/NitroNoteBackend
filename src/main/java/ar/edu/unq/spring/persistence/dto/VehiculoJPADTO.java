@@ -7,13 +7,14 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Entity(name = "Vehiculo" )
-
+@Setter
 public class VehiculoJPADTO {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -60,9 +60,7 @@ public class VehiculoControllerREST {
     }
 
     @GetMapping("by-patente/{patente}")
-    public VehiculoSimpleDTO getVehiculo(@PathVariable("patente") String patente){
-        return VehiculoSimpleDTO.desdeModelo(this.vehiculoService.recuperar(patente));
-//uso VehiculoSimple para no traer todos los mantenimeintos, no se usa en otro lado como para necestiarlos por ahora
-
+    public VehiculoDTO getVehiculo(@PathVariable("patente") String patente){
+        return VehiculoDTO.desdeModelo(this.vehiculoService.recuperar(patente));
     }
 }

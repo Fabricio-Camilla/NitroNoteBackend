@@ -52,7 +52,7 @@ public class NotificationServiceImpl implements NotificationService {
     public void enviarRecordatoriosDelDia() {
         LocalDate hoy = LocalDate.now();
         LocalDate manana = hoy.plusDays(1);
-
+        System.out.println("Hoy: " + manana);
         // Buscar mantenimientos que vencen mañana (recordatorio con 1 día de anticipación)
         List<MantenimientoJPADTO> vencenManana = mantenimientoDAO.findMantenimientosQueVencenEnFecha(manana);
 
@@ -122,7 +122,7 @@ public class NotificationServiceImpl implements NotificationService {
             data.put("maintenanceId", mant.getId());
             data.put("type", "maintenance_reminder");
             data.put("redirectTo", "MantenimientoDetails");
-
+            System.out.println("Token " + usuario.getPushToken());
             expoPushService.sendPushNotification(
                     usuario.getPushToken(),
                     titulo,

@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -31,8 +30,9 @@ public class VehiculoJPADTO {
     @Min(1990) @Max(2025)
     private int anio;
 
-    @Column(nullable = false)
-    private Long usuarioID;
+    @JoinColumn(nullable = false, name = "usuario_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private UsuarioJPADTO usuario;
 
     @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<MantenimientoJPADTO> mantenimientos = new ArrayList<MantenimientoJPADTO>();
@@ -49,12 +49,12 @@ public class VehiculoJPADTO {
                 .stream()
                 .map(MantenimientoJPADTO::desdeModeloSimple)
                 .toList();
-        dto.usuarioID = vehiculo.getUsuarioID();
+        dto.usuario = UsuarioJPADTO.desdeModelo(vehiculo.getUsuario());
         return dto;
     }
 
     public Vehiculo aModelo() {
-        Vehiculo vehiculo = new Vehiculo(marca, modelo, patente, anio, kilometros, usuarioID);
+        Vehiculo vehiculo = new Vehiculo(marca, modelo, patente, anio, kilometros, usuario.aModelo());
         vehiculo.setId(id);
         vehiculo.setMantenimientos(mantenimientos.stream()
                 .map(m -> m.aModelo(vehiculo))
@@ -62,8 +62,8 @@ public class VehiculoJPADTO {
         return vehiculo;
     }
 
-    public Vehiculo aModelo(Usuario usuario){
-        Vehiculo vehiculo = new Vehiculo(marca, modelo, patente, anio, kilometros, usuarioID);
+    public  Vehiculo aModelo(Usuario usuario){
+        Vehiculo vehiculo = new Vehiculo(marca, modelo, patente, anio, kilometros, usuario);
         vehiculo.setId(id);
         vehiculo.setMantenimientos(mantenimientos.stream()
                 .map(m -> m.aModelo(vehiculo))

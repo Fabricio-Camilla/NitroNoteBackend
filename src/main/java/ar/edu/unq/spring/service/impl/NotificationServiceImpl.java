@@ -60,7 +60,7 @@ public class NotificationServiceImpl implements NotificationService {
             var vehiculo = mant.getVehiculo();
             if (vehiculo == null) continue;
 
-            Long usuarioId = vehiculo.getUsuarioID();
+            Long usuarioId = vehiculo.getUsuario().getId();
             if (usuarioId == null) continue;
 
             UsuarioJPADTO usuario = usuarioDAO.findById(usuarioId).orElse(null);

@@ -21,7 +21,7 @@ public interface VehiculoDAO extends JpaRepository<VehiculoJPADTO, Long> {
 
 
     @Query(
-            "FROM Vehiculo v WHERE v.usuarioID = :userId"
+            "FROM Vehiculo v WHERE v.usuario.id = :userId"
     )
     List<VehiculoJPADTO> findVehiculoUserById(@Param("userId") Long userId);
 }

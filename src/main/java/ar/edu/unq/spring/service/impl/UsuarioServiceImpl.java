@@ -85,4 +85,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioDAO.deleteAll();
     }
 
+    @Override
+    public Usuario findById(Long userId) {
+        return usuarioDAO.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"))
+                .aModelo();
+    }
+
 }

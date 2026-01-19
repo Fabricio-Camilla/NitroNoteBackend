@@ -2,6 +2,7 @@ package ar.edu.unq.spring.modelo;
 
 import ar.edu.unq.spring.modelo.exception.*;
 import ar.edu.unq.spring.modelo.utils.MarcasModeloAutos;
+import ar.edu.unq.spring.persistence.UsuarioDAO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -37,13 +38,13 @@ public class Vehiculo {
 
     private List<Mantenimiento> mantenimientos;
 
-    private Long usuarioID;
+    private Usuario usuario;
 
-    public Vehiculo(@NonNull String marca, @NonNull String modelo, @NonNull String patente, int anio, int kilometros, @NonNull Long usuarioID) {
+    public Vehiculo(@NonNull String marca, @NonNull String modelo, @NonNull String patente, int anio, int kilometros, @NonNull Usuario usuario) {
         setMarca(marca);
         setModelo(modelo);
         setPatente(patente);
-        this.usuarioID = usuarioID;
+        this.usuario = usuario;
         this.anio = validarAnio(anio);
         this.kilometros = validarKilometros(kilometros);
         this.mantenimientos = new ArrayList<>();
@@ -109,4 +110,7 @@ public class Vehiculo {
         this.anio = validarAnio(anio);
     }
 
+    public void vincularmeAUsuario() {
+        this.getUsuario().agregarVehiculo(this);
+    }
 }

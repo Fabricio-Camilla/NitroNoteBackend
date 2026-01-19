@@ -39,8 +39,8 @@ public class MantenimientoServiceTest {
         usuario = new Usuario("unNombre", "unMail", "unPassword");
         usuario = usuarioService.register(usuario);
         //Creamos un auto
-        vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000, usuario.getId());
-        vehiculo.setUsuarioID(usuario.getId());
+        vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000, usuario);
+        //vehiculo.setUsuarioID(usuario.getId());
         vehiculoService.guardar(vehiculo);
         // Creamos algunos mantenimientos de ejemplo (sin ID aún)
         serviceAnual = new Mantenimiento("Service anual", LocalDate.now().plusMonths(1), vehiculo);

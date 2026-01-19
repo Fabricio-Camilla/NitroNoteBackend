@@ -31,6 +31,7 @@ public class VehiculoServiceImpl implements VehiculoService {
         if(!errores.isEmpty()) {
             throw new IllegalArgumentException("Los campos ingresados son inválidos");
         }
+        vehiculo.vincularmeAUsuario();
         VehiculoJPADTO dto = VehiculoJPADTO.desdeModelo(vehiculo);
         vehiculoDAO.save(dto);
         vehiculo.setId(dto.getId());

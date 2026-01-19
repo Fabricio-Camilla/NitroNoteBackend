@@ -1,6 +1,7 @@
 package ar.edu.unq.spring.persistence.dto;
 
 import ar.edu.unq.spring.modelo.Usuario;
+import ar.edu.unq.spring.modelo.Vehiculo;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity(name = "Usuario")
 @NoArgsConstructor
@@ -30,6 +32,9 @@ public class UsuarioJPADTO implements UserDetails {
     private String password;
 
     private String role;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<VehiculoJPADTO> vehiculos = new ArrayList<>();
 
     @Column(name = "email_notifications_enabled", nullable = false)
     private boolean emailNotificationsEnabled;
@@ -60,6 +65,7 @@ public class UsuarioJPADTO implements UserDetails {
         usuario.setPushNotificationsEnabled(pushNotificationsEnabled);
         usuario.setPushToken(pushToken);
         usuario.setId(id);
+        usuario.setVehiculos(vehiculos.stream().map(v -> v.aModelo(usuario)).collect(Collectors.toList()));
         return usuario;
     }
 
@@ -93,4 +99,9 @@ public class UsuarioJPADTO implements UserDetails {
         return true;
     }
 
+    public Usuario aModeloSimple() { //se podria hacer un dto nuevo para no mostrar password
+        Usuario usuario = new Usuario(nombre, email, password);
+        usuario.setId(id);
+        return usuario;
+    }
 }

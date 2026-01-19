@@ -12,6 +12,6 @@ public record VehiculoSimpleDTO(Long id, String patente,  String marca, String m
                 vehiculo.getModelo(),
                 vehiculo.getAnio(),
                 vehiculo.getKilometros(),
-                vehiculo.getUsuarioID());
+                vehiculo.getUsuario().getId());
     }
 }

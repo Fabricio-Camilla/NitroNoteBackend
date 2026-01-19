@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface MantenimientoDAO extends JpaRepository<MantenimientoJPADTO, Long> {
 
-    @Query("SELECT m FROM Mantenimiento m WHERE m.vehiculo.usuarioID = :usuarioId")
+    @Query("SELECT m FROM Mantenimiento m WHERE m.vehiculo.usuario.id = :usuarioId")
     List<MantenimientoJPADTO> findByVehiculoUsuarioID(@Param("usuarioId") Long usuarioId);
 
     @Query("""

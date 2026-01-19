@@ -39,13 +39,30 @@ public record VehiculoRequestDTO (Long id,
                                   List<MantenimientoDTO> mantenimientos){
 
     public Vehiculo aModelo(){
+        Usuario usuario = new Usuario();
+        usuario.setId(usuarioID);
         Vehiculo vehiculo= new Vehiculo(
                 this.marca.isBlank() ? null : this.marca,
                 this.modelo.isBlank() ? null : this.modelo,
                 this.patente.isBlank() ? null : this.patente.toUpperCase(),
                 this.anio,
                 this.kilometros,
-                this.usuarioID
+                usuario
+        );
+        vehiculo.setMantenimientos(this.mantenimientos == null ? new ArrayList<Mantenimiento>() : this.mantenimientos.stream()
+                .map(m -> m.aModelo(vehiculo)).toList());
+
+        return vehiculo;
+    }
+
+    public Vehiculo aModelo(Usuario user) {
+        Vehiculo vehiculo = new Vehiculo(
+                this.marca.isBlank() ? null : this.marca,
+                this.modelo.isBlank() ? null : this.modelo,
+                this.patente.isBlank() ? null : this.patente.toUpperCase(),
+                this.anio,
+                this.kilometros,
+                user
         );
         vehiculo.setMantenimientos(this.mantenimientos == null ? new ArrayList<Mantenimiento>() : this.mantenimientos.stream()
                 .map(m -> m.aModelo(vehiculo)).toList());

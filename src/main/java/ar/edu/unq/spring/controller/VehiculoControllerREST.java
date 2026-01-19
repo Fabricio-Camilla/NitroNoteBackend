@@ -1,9 +1,13 @@
 package ar.edu.unq.spring.controller;
 
+import ar.edu.unq.spring.controller.dto.UsuarioSimpleDTO;
 import ar.edu.unq.spring.controller.dto.VehiculoDTO;
 import ar.edu.unq.spring.controller.dto.VehiculoRequestDTO;
 import ar.edu.unq.spring.controller.dto.VehiculoSimpleDTO;
+import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.modelo.Vehiculo;
+import ar.edu.unq.spring.persistence.dto.UsuarioJPADTO;
+import ar.edu.unq.spring.service.interfaces.UsuarioService;
 import ar.edu.unq.spring.service.interfaces.VehiculoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +23,18 @@ import java.util.stream.Collectors;
 public class VehiculoControllerREST {
 
     private final VehiculoService vehiculoService;
+    private final UsuarioService  usuarioService;
 
-    public VehiculoControllerREST(VehiculoService vehiculoService) {
+    public VehiculoControllerREST(VehiculoService vehiculoService, UsuarioService usuarioService) {
         this.vehiculoService = vehiculoService;
+        this.usuarioService = usuarioService;
     }
 
     @PostMapping()
-    public ResponseEntity<Vehiculo> crearVehiculo(@Validated @RequestBody VehiculoRequestDTO vehiculo) {
-        Vehiculo vehiculoPers = this.vehiculoService.guardar(vehiculo.aModelo());
-        return ResponseEntity.status(HttpStatus.CREATED).body(vehiculoPers);
+    public ResponseEntity<VehiculoSimpleDTO> crearVehiculo(@Validated @RequestBody VehiculoRequestDTO vehiculo) {
+        Usuario user = this.usuarioService.findById(vehiculo.usuarioID());
+        Vehiculo vehiculoPers = this.vehiculoService.guardar(vehiculo.aModelo(user));
+        return ResponseEntity.status(HttpStatus.CREATED).body(VehiculoSimpleDTO.desdeModelo(vehiculoPers));
     }
 
     @GetMapping("/{userId}")

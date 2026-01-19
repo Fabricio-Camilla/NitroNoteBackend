@@ -30,7 +30,7 @@ public class UsuarioServiceTest {
     public void setUp() {
         Usuario usuario1 = usuarioService.register(new Usuario("unNombre", "unMail", "unPassword"));
         usuario = usuario1;
-        vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000, usuario1.getId());
+        vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000, usuario1);
     }
 
 
@@ -49,6 +49,13 @@ public class UsuarioServiceTest {
         var vehiculosDeUser = vehiculoService.vehiculosByUserId(usuario.getId());
 
         assertEquals(1, vehiculosDeUser.size());
+    }
+
+    @Test
+    public void seCreaUnVehiculoTeniendoUsuarioVinculado(){
+        var ve = vehiculoService.guardar(vehiculo);
+
+        assertTrue(ve.getUsuario().getVehiculos().contains(ve));
     }
 
     @Test

@@ -16,7 +16,7 @@ public class VehiculoTest {
     @BeforeEach
     public void setUp() {
         usuario = new Usuario("unNombre", "unMail", "unPassword");
-        vehiculo = new Vehiculo("Chevrolet", "Tracker", "AD010GI", 2020, 2000, 1L);
+        vehiculo = new Vehiculo("Chevrolet", "Tracker", "AD010GI", 2020, 2000, usuario);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class VehiculoTest {
                     "AD010GI",
                     2020,
                     -1,
-                    1L);
+                    usuario);
         });
     }
 

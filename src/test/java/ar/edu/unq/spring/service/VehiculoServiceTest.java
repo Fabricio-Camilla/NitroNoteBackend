@@ -37,8 +37,8 @@ public class VehiculoServiceTest {
     public void setUp() {
         usuario = new Usuario( "unNombre", "unMail", "unPassword");
         Usuario usuario1 = usuarioService.register(usuario);
-        vehiculo = new Vehiculo("Chevrolet", "Tracker", "AD010GI", 2020, 2000, usuario1.getId());
-        vehiculo2 = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000, usuario1.getId());
+        vehiculo = new Vehiculo("Chevrolet", "Tracker", "AD010GI", 2020, 2000, usuario1);
+        vehiculo2 = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000, usuario1);
     }
 
     @Test

@@ -2,6 +2,7 @@ package ar.edu.unq.spring.modelo;
 
 import ar.edu.unq.spring.persistence.dto.UsuarioJPADTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Usuario {
 
     private Long id;
@@ -30,5 +32,10 @@ public class Usuario {
         this.emailNotificationsEnabled = false;
         this.pushNotificationsEnabled = false;
         this.pushToken = null;
+    }
+
+
+    public void agregarVehiculo(Vehiculo vehiculo) {
+        this.getVehiculos().add(vehiculo);
     }
 }

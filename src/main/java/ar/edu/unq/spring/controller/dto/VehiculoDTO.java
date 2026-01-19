@@ -23,6 +23,6 @@ public record VehiculoDTO(Long id,
                 vehiculo.getAnio(),
                 vehiculo.getKilometros(),
                 vehiculo.getMantenimientos().stream().map(MantenimientoDTO::desdeModelo).toList(),
-                vehiculo.getUsuarioID());
+                vehiculo.getUsuario().getId());
     }
 }

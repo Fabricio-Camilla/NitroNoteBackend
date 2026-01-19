@@ -58,7 +58,7 @@ public class NotificationServiceTest {
         usuario = usuarioService.register(usuario);
 
         // Crear vehículo asociado
-        vehiculo = new Vehiculo("Toyota", "Corolla", "AD123BC", 2022, 10000, usuario.getId());
+        vehiculo = new Vehiculo("Toyota", "Corolla", "AD123BC", 2022, 10000, usuario);
         vehiculo = vehiculoService.guardar(vehiculo);
 
         // Crear mantenimiento que vence hoy

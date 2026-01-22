@@ -78,4 +78,18 @@ public class VehiculoTest {
         });
     }
 
+
+    @Test
+    public void eliminarUnVehiculo(){
+        Usuario user = new Usuario("Nombre", "email", "pass");
+        assertFalse(user.getVehiculos().contains(vehiculo));
+
+        user.agregarVehiculo(vehiculo);
+        vehiculo.setUsuario(user);
+
+        assertTrue(user.getVehiculos().contains(vehiculo));
+
+        user.eliminarVehiculo(vehiculo);
+        assertFalse(user.getVehiculos().contains(vehiculo));
+    }
 }

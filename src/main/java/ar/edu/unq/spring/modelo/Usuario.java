@@ -38,4 +38,19 @@ public class Usuario {
     public void agregarVehiculo(Vehiculo vehiculo) {
         this.getVehiculos().add(vehiculo);
     }
+
+    public void eliminarVehiculo(Vehiculo vehiculo) {
+        this.getVehiculos().remove(vehiculo);
+        vehiculo.setUsuario(null);
+    }
+
+    public void transferirVehiculoA(Vehiculo vehiculo, Usuario nuevoDuenio) {
+        this.eliminarVehiculo(vehiculo);
+        nuevoDuenio.agregarVehiculo(vehiculo);
+        vehiculo.setUsuario(nuevoDuenio);
+    }
+
+    public boolean tieneAlVehiculo(String patente) {
+       return this.getVehiculos().stream().anyMatch(vehiculo -> vehiculo.getPatente().equals(patente));
+    }
 }

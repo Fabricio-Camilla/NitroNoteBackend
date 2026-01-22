@@ -41,8 +41,7 @@ public class VehiculoServiceImpl implements VehiculoService {
 
     @Override
     public Vehiculo recuperar(String patente) {
-        var ve = vehiculoDAO.findByPatente(patente).orElseThrow(VehiculoNoRegistradoException::new);
-        return ve.aModelo();
+       return vehiculoDAO.findByPatente(patente).orElseThrow(VehiculoNoRegistradoException::new).aModelo();
     }
 
     @Override

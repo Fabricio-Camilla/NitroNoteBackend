@@ -1,9 +1,6 @@
 package ar.edu.unq.spring.controller;
 
-import ar.edu.unq.spring.controller.dto.LoginRequestDTO;
-import ar.edu.unq.spring.controller.dto.LoginResponseDTO;
-import ar.edu.unq.spring.controller.dto.NotificationPrefsDTO;
-import ar.edu.unq.spring.controller.dto.RegisterRequestDTO;
+import ar.edu.unq.spring.controller.dto.*;
 import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.persistence.dto.UsuarioJPADTO;
 import ar.edu.unq.spring.service.impl.JwtService;
@@ -127,6 +124,20 @@ public class UserControllerREST {
         );
         return ResponseEntity.ok(actualizado);
     }
+
+    @PutMapping("/user/transferir")
+    public ResponseEntity<?> transferirVehiculo(@RequestBody TransferenciaRequestDTO transferencia){
+        try {
+            Usuario user = userService.transferirVehiculo(
+                    transferencia.patente(),
+                    transferencia.emailDuenio(),
+                    transferencia.emailNuevoDuenio());
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
 
 
 //    @PatchMapping("/user/notification-preferences")

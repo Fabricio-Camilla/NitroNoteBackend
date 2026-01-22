@@ -1,8 +1,12 @@
 package ar.edu.unq.spring.service.impl;
 
 import ar.edu.unq.spring.modelo.Usuario;
+import ar.edu.unq.spring.modelo.Vehiculo;
+import ar.edu.unq.spring.modelo.exception.VehiculoNoRegistradoException;
 import ar.edu.unq.spring.persistence.UsuarioDAO;
+import ar.edu.unq.spring.persistence.VehiculoDAO;
 import ar.edu.unq.spring.persistence.dto.UsuarioJPADTO;
+import ar.edu.unq.spring.persistence.dto.VehiculoJPADTO;
 import ar.edu.unq.spring.service.interfaces.UsuarioService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,10 +18,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioDAO usuarioDAO;
     private final PasswordEncoder passwordEncoder;
+    private final VehiculoDAO vehiculoDAO;
 
-    public UsuarioServiceImpl(UsuarioDAO usuarioDAO, PasswordEncoder passwordEncoder) {
+    public UsuarioServiceImpl(UsuarioDAO usuarioDAO, PasswordEncoder passwordEncoder, VehiculoDAO vehiculoDAO) {
         this.usuarioDAO = usuarioDAO;
         this.passwordEncoder = passwordEncoder;
+        this.vehiculoDAO = vehiculoDAO;
     }
 
     @Override
@@ -90,6 +96,28 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioDAO.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"))
                 .aModelo();
+    }
+
+    @Override
+    public Usuario transferirVehiculo(String patente, String emailDueño, String emailNuevoDueño) {
+        Usuario duenio = usuarioDAO.findByEmail(emailDueño)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"))
+                .aModelo();
+        Usuario nuevoDuenio = usuarioDAO.findByEmail(emailNuevoDueño)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"))
+                .aModelo();
+
+        Vehiculo vehiculo = vehiculoDAO.findByPatente(patente)
+                .orElseThrow(VehiculoNoRegistradoException::new)
+                .aModelo();
+
+
+        duenio.transferirVehiculoA(vehiculo, nuevoDuenio);
+
+        usuarioDAO.save(UsuarioJPADTO.desdeModelo(duenio));
+        usuarioDAO.save(UsuarioJPADTO.desdeModelo(nuevoDuenio));
+        vehiculoDAO.save(VehiculoJPADTO.desdeModelo(vehiculo)); // este save no haria falta si tiene el cascade.
+        return nuevoDuenio;
     }
 
 }

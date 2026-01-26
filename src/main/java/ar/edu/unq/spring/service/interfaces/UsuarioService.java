@@ -11,4 +11,5 @@ public interface UsuarioService {
                                                boolean pushEnabled, String pushToken);
     void clearAll();
     Usuario findById(Long userId);
+    Usuario transferirVehiculo(String patente, String emailDueño, String emailNuevoDueño);
 }

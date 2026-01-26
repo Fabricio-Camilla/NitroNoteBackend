@@ -2,6 +2,7 @@ package ar.edu.unq.spring.service;
 
 import ar.edu.unq.spring.modelo.Usuario;
 import ar.edu.unq.spring.modelo.Vehiculo;
+import ar.edu.unq.spring.modelo.exception.VehiculoNoRegistradoException;
 import ar.edu.unq.spring.service.config.NitroNoteTest;
 import ar.edu.unq.spring.service.interfaces.UsuarioService;
 import ar.edu.unq.spring.service.interfaces.VehiculoService;
@@ -23,7 +24,7 @@ public class UsuarioServiceTest {
     private VehiculoService vehiculoService;
 
     private Usuario usuario;
-
+    private Usuario usuario2;
     private Vehiculo vehiculo;
 
     @BeforeEach
@@ -31,6 +32,7 @@ public class UsuarioServiceTest {
         Usuario usuario1 = usuarioService.register(new Usuario("unNombre", "unMail", "unPassword"));
         usuario = usuario1;
         vehiculo = new Vehiculo("Ford", "Focus", "AD010GA", 2021, 2000, usuario1);
+        usuario2 = usuarioService.register(new Usuario("unNombre2", "unMail2", "unPassword2"));
     }
 
 
@@ -114,6 +116,34 @@ public class UsuarioServiceTest {
         assertTrue(desdeBD.isEmailNotificationsEnabled(),
                 "El valor debería persistir correctamente en la base de datos");
     }
+
+    @Test
+    public void unUsuarioTransfiereUnVehiculoAOtro(){
+        var userNuevo = usuarioService.recuperarUsuario(usuario2.getEmail());
+        vehiculoService.guardar(vehiculo);
+        assertFalse(userNuevo.getVehiculos().contains(vehiculo));
+
+        var userN = usuarioService.transferirVehiculo(vehiculo.getPatente(),
+                                                          usuario.getEmail(),
+                                                          userNuevo.getEmail());
+
+        var userAnterior = usuarioService.recuperarUsuario(usuario.getEmail());
+        var vehiculo1 = vehiculoService.recuperar(vehiculo.getPatente());
+
+        assertEquals(vehiculo1.getUsuario().getEmail(), userN.getEmail());
+        assertTrue(userAnterior.getVehiculos().isEmpty());
+        assertTrue(userN.tieneAlVehiculo(vehiculo1.getPatente()));
+
+    }
+
+    @Test
+    public void unUsuarioIntentaTransferirVehiculoInexistente(){
+        vehiculoService.guardar(vehiculo);
+        assertThrows(VehiculoNoRegistradoException.class , () -> {
+            usuarioService.transferirVehiculo("AD111AD", usuario.getEmail(), usuario2.getEmail());
+        });
+    }
+
 
     @AfterEach
     public void tearDown() {

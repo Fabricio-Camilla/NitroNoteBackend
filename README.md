@@ -7,7 +7,7 @@ El objetivo principal de este proyecto es aplicar los conceptos aprendidos en la
 
 La problemática que se busca resolver con este proyecto es ayudar a los usuarios a recordar cuándo se deben realizar los diferentes mantenimientos de sus vehículos.
 
-Para garantizar la calidad del código, se realizó **Integración Continua** y se plantearon diferentes ![Casos de Prueba](https://docs.google.com/document/d/1k70KDYzo6DX6L0z7Z2AXrv4sVLccD-E4_hxvVzR54uM/edit?usp=sharing). 
+Para garantizar la calidad del código, se realizó **Integración Continua** y se plantearon diferentes [Casos de Prueba](https://docs.google.com/document/d/1k70KDYzo6DX6L0z7Z2AXrv4sVLccD-E4_hxvVzR54uM/edit?usp=sharing). 
 
 # Funcionalidades
 * Gestión de usuarios y autenticación mediante JWT

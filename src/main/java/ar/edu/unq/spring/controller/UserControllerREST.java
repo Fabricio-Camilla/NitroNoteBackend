@@ -54,8 +54,8 @@ public class UserControllerREST {
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         String  token = jwtService.generateToken(userDetails);
         response.setHeader("Authorization",  "Bearer " + token);
-
-        return LoginResponseDTO.desdeModelo(token, userDetails);
+        Usuario usuario = userService.recuperarUsuario(userDetails.getUsername());
+        return LoginResponseDTO.desdeModelo(token, usuario);
     }
 
     @PostMapping("/logout")
@@ -127,7 +127,7 @@ public class UserControllerREST {
 
     @PutMapping("/user/transferir")
     public ResponseEntity<?> transferirVehiculo(@RequestBody TransferenciaRequestDTO transferencia){
-        try {
+        try { //armar un dto como response solamente con lo que cambia del usuario.
             Usuario user = userService.transferirVehiculo(
                     transferencia.patente(),
                     transferencia.emailDuenio(),

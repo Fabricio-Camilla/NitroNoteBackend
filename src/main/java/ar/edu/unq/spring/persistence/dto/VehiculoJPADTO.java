@@ -49,7 +49,21 @@ public class VehiculoJPADTO {
                 .stream()
                 .map(MantenimientoJPADTO::desdeModeloSimple)
                 .toList();
-        dto.usuario = UsuarioJPADTO.desdeModelo(vehiculo.getUsuario());
+        dto.usuario = UsuarioJPADTO.desdeModeloSinVehiculo(vehiculo.getUsuario());
+        return dto;
+    }
+    public static VehiculoJPADTO desdeModeloSimple(Vehiculo vehiculo){
+        VehiculoJPADTO dto = new VehiculoJPADTO();
+        dto.id = vehiculo.getId();
+        dto.marca = vehiculo.getMarca();
+        dto.modelo = vehiculo.getModelo();
+        dto.patente = vehiculo.getPatente();
+        dto.kilometros = vehiculo.getKilometros();
+        dto.anio = vehiculo.getAnio();
+        dto.mantenimientos = vehiculo.getMantenimientos()
+                .stream()
+                .map(MantenimientoJPADTO::desdeModeloSimple)
+                .toList();
         return dto;
     }
 

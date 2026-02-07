@@ -55,6 +55,40 @@ public class UsuarioJPADTO implements UserDetails {
         usuarioJPADTO.setEmailNotificationsEnabled(usuario.isEmailNotificationsEnabled());
         usuarioJPADTO.setPushNotificationsEnabled(usuario.isPushNotificationsEnabled());
         usuarioJPADTO.setPushToken(usuario.getPushToken());
+        usuarioJPADTO.setVehiculos(usuario.getVehiculos()
+                .stream()
+                .map(VehiculoJPADTO::desdeModeloSimple)
+                .collect(Collectors.toList()));
+        return usuarioJPADTO;
+    }
+
+    public static UsuarioJPADTO desdeModeloSinVehiculo(Usuario usuario) {
+        UsuarioJPADTO usuarioJPADTO = new UsuarioJPADTO();
+        usuarioJPADTO.setNombre(usuario.getNombre());
+        usuarioJPADTO.setEmail(usuario.getEmail());
+        usuarioJPADTO.setPassword(usuario.getPassword());
+        usuarioJPADTO.setRole(usuario.getRole());
+        usuarioJPADTO.setId(usuario.getId());
+        usuarioJPADTO.setEmailNotificationsEnabled(usuario.isEmailNotificationsEnabled());
+        usuarioJPADTO.setPushNotificationsEnabled(usuario.isPushNotificationsEnabled());
+        usuarioJPADTO.setPushToken(usuario.getPushToken());
+        return usuarioJPADTO;
+    }
+
+    public static UsuarioJPADTO desdeModeloBasico(Usuario usuario) {
+        UsuarioJPADTO usuarioJPADTO = new UsuarioJPADTO();
+        usuarioJPADTO.setNombre(usuario.getNombre());
+        usuarioJPADTO.setEmail(usuario.getEmail());
+        usuarioJPADTO.setPassword(usuario.getPassword());
+        usuarioJPADTO.setRole(usuario.getRole());
+        usuarioJPADTO.setId(usuario.getId());
+        usuarioJPADTO.setEmailNotificationsEnabled(usuario.isEmailNotificationsEnabled());
+        usuarioJPADTO.setPushNotificationsEnabled(usuario.isPushNotificationsEnabled());
+        usuarioJPADTO.setPushToken(usuario.getPushToken());
+        usuarioJPADTO.setVehiculos(usuario.getVehiculos()
+                .stream()
+                .map(VehiculoJPADTO::desdeModelo)
+                .collect(Collectors.toList()));
         return usuarioJPADTO;
     }
 

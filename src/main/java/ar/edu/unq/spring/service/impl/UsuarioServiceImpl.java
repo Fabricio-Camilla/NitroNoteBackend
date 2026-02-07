@@ -114,9 +114,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         duenio.transferirVehiculoA(vehiculo, nuevoDuenio);
 
-        usuarioDAO.save(UsuarioJPADTO.desdeModelo(duenio));
-        usuarioDAO.save(UsuarioJPADTO.desdeModelo(nuevoDuenio));
-        vehiculoDAO.save(VehiculoJPADTO.desdeModelo(vehiculo)); // este save no haria falta si tiene el cascade.
+        usuarioDAO.save(UsuarioJPADTO.desdeModeloBasico(duenio));
+        usuarioDAO.save(UsuarioJPADTO.desdeModeloBasico(nuevoDuenio));
         return nuevoDuenio;
     }
 

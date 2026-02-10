@@ -2,6 +2,7 @@ package ar.edu.unq.spring.controller.dto;
 
 
 import ar.edu.unq.spring.modelo.Usuario;
+import ar.edu.unq.spring.persistence.dto.NotificacionJPADTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,8 +11,7 @@ public record UserLoginDTO(Long id,
                            String nombre,
                            String email,
                            String role,
-                           boolean emailNotificationsEnabled,
-                           boolean pushNotificationsEnabled,
+                           List<NotificacionJPADTO> notificaciones,
                            List<VehiculoLoginDTO> vehiculos) {
 
     public static UserLoginDTO desdeModelo(Usuario user) {
@@ -20,8 +20,10 @@ public record UserLoginDTO(Long id,
                 user.getNombre(),
                 user.getEmail(),
                 user.getRole(),
-                user.isEmailNotificationsEnabled(),
-                user.isPushNotificationsEnabled(),
+                user.getNotificationPreferences()
+                        .stream()
+                        .map(NotificacionJPADTO::desdeModelo)
+                        .collect(Collectors.toList()),
                 user.getVehiculos()
                         .stream()
                         .map(VehiculoLoginDTO::desdeModelo)

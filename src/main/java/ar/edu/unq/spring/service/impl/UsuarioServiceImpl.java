@@ -1,16 +1,20 @@
 package ar.edu.unq.spring.service.impl;
 
-import ar.edu.unq.spring.modelo.Usuario;
-import ar.edu.unq.spring.modelo.Vehiculo;
+import ar.edu.unq.spring.controller.dto.UserPrefsDTO;
+import ar.edu.unq.spring.modelo.*;
 import ar.edu.unq.spring.modelo.exception.VehiculoNoRegistradoException;
+import ar.edu.unq.spring.persistence.NotificacionDAO;
 import ar.edu.unq.spring.persistence.UsuarioDAO;
 import ar.edu.unq.spring.persistence.VehiculoDAO;
+import ar.edu.unq.spring.persistence.dto.NotificacionJPADTO;
+import ar.edu.unq.spring.persistence.dto.NotificationLogJPADTO;
 import ar.edu.unq.spring.persistence.dto.UsuarioJPADTO;
 import ar.edu.unq.spring.persistence.dto.VehiculoJPADTO;
 import ar.edu.unq.spring.service.interfaces.UsuarioService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,11 +23,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioDAO usuarioDAO;
     private final PasswordEncoder passwordEncoder;
     private final VehiculoDAO vehiculoDAO;
+    private final NotificacionDAO notificacionDAO;
 
-    public UsuarioServiceImpl(UsuarioDAO usuarioDAO, PasswordEncoder passwordEncoder, VehiculoDAO vehiculoDAO) {
+    public UsuarioServiceImpl(UsuarioDAO usuarioDAO, PasswordEncoder passwordEncoder, VehiculoDAO vehiculoDAO, NotificacionDAO notificacionDAO) {
         this.usuarioDAO = usuarioDAO;
         this.passwordEncoder = passwordEncoder;
         this.vehiculoDAO = vehiculoDAO;
+        this.notificacionDAO = notificacionDAO;
     }
 
     @Override
@@ -46,37 +52,64 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario actualizarUsuario(Usuario usuario) {
-        UsuarioJPADTO existente = usuarioDAO.findById(usuario.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    public Usuario actualizarUsuario(String emailAnetrior, UserPrefsDTO usuario) {
+        Usuario existente = usuarioDAO.findByEmail(emailAnetrior)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"))
+                .aModelo();
 
-        if (!existente.getEmail().equals(usuario.getEmail())) {
-            Optional<UsuarioJPADTO> otro = usuarioDAO.findByEmail(usuario.getEmail());
-            if (otro.isPresent() && !otro.get().getId().equals(usuario.getId())) {
-                throw new IllegalArgumentException("El email ya se encuentra registrado");
-            }
-            existente.setEmail(usuario.getEmail());
+        if (!existente.getEmail().equals(usuario.email())) {
+            usuarioDAO.findByEmail(usuario.email())
+                    .ifPresent(u -> {
+                        throw new IllegalArgumentException("El email ya está en uso por otro usuario");
+                    }
+            );
         }
 
-        existente.setNombre(usuario.getNombre());
-        existente.setRole(usuario.getRole());
-        existente.setPassword(usuario.getPassword());
-        existente.setEmailNotificationsEnabled(usuario.isEmailNotificationsEnabled());
-        existente.setPushNotificationsEnabled(usuario.isPushNotificationsEnabled());
-        existente.setPushToken(usuario.getPushToken());
+        NotificacionJPADTO noti =
+                notificacionDAO.findByTipo(TipoNotificacion.EMAIL, existente.getId())
+                                .orElseGet(() -> {
+                                    NotificacionEmail nuevaNotificacion = new NotificacionEmail(
+                                            usuario.emailEnabled(),
+                                            existente.getId());
+                                    return NotificacionJPADTO.desdeModelo(nuevaNotificacion);
+                                    }
+                                );
 
-        UsuarioJPADTO guardado = usuarioDAO.save(existente);
-        return guardado.aModelo();
+        NotificacionJPADTO notiPush =
+                notificacionDAO.findByTipo(TipoNotificacion.PUSH, existente.getId())
+                        .orElseGet(() -> {
+                                    NotificacionPush nuevaNotificacion = new NotificacionPush(
+                                            usuario.emailEnabled(),
+                                            existente.getId());
+                                    return NotificacionJPADTO.desdeModelo(nuevaNotificacion);
+                                }
+                        );
+
+        existente.setEmail(usuario.email());
+        existente.setNombre(usuario.nombre());
+        existente.setPassword(passwordEncoder.encode(usuario.password()));
+        existente.setPushToken(usuario.pushToken());
+        existente.agregarNotificacion(noti.aModelo());
+        existente.agregarNotificacion(notiPush.aModelo());
+
+        noti.setEnable(usuario.emailEnabled());
+        notiPush.setEnable(usuario.pushEnabled());
+
+        notificacionDAO.save(noti);
+        notificacionDAO.save(notiPush);
+        usuarioDAO.save(UsuarioJPADTO.desdeModelo(existente));
+        return existente;
     }
 
     @Override
     public Usuario actualizarPreferenciasNotificacion(String email, boolean emailEnabled,
                                                       boolean pushEnabled, String pushToken) {
-        Usuario usuario = recuperarUsuario(email);
-        usuario.setEmailNotificationsEnabled(emailEnabled);
-        usuario.setPushNotificationsEnabled(pushEnabled);
-        usuario.setPushToken(pushToken);
-        return actualizarUsuario(usuario);
+//        Usuario usuario = recuperarUsuario(email);
+//        usuario.setEmailNotificationsEnabled(emailEnabled);
+//        usuario.setPushNotificationsEnabled(pushEnabled);
+//        usuario.setPushToken(pushToken);
+//        return actualizarUsuario(usuario);
+    return null;
     }
 
 //    @Override

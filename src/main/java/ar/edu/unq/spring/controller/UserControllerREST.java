@@ -6,16 +6,17 @@ import ar.edu.unq.spring.persistence.dto.UsuarioJPADTO;
 import ar.edu.unq.spring.service.impl.JwtService;
 import ar.edu.unq.spring.service.interfaces.UsuarioService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -74,28 +75,25 @@ public class UserControllerREST {
     }
 
     @PutMapping("/user")
-    public ResponseEntity<?> updateUser(
-            Authentication authentication,
-            @RequestBody Usuario usuarioRequest) {
+    public ResponseEntity<?> updateUser(Authentication authentication, @Valid @RequestBody UserPrefsDTO usuarioRequest) {
         try {
-            if (usuarioRequest.getPassword() != null && !usuarioRequest.getPassword().isBlank()) {
-                if (usuarioRequest.getPassword().length() < 8) {
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                            .body("La contraseña debe tener más de 8 caracteres");
-                }
-            }
+//            if (usuarioRequest.password() != null && !usuarioRequest.password().isBlank()) {
+//                if (usuarioRequest.password().length() < 8) {
+//                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                            .body("La contraseña debe tener más de 8 caracteres");
+//                }
+//            }
 
             String currentEmail = authentication.getName();
-            Usuario usuario = userService.recuperarUsuario(currentEmail);
+//
+//            usuario.setNombre(usuarioRequest.nombre());
+//            usuario.setEmail(usuarioRequest.email());
+//
+//            if (usuarioRequest.password() != null && !usuarioRequest.password().isBlank()) {
+//                usuario.setPassword(passwordEncoder.encode(usuarioRequest.password()));
+//            }
 
-            usuario.setNombre(usuarioRequest.getNombre());
-            usuario.setEmail(usuarioRequest.getEmail());
-
-            if (usuarioRequest.getPassword() != null && !usuarioRequest.getPassword().isBlank()) {
-                usuario.setPassword(passwordEncoder.encode(usuarioRequest.getPassword()));
-            }
-
-            Usuario actualizado = userService.actualizarUsuario(usuario);
+            Usuario actualizado = userService.actualizarUsuario(currentEmail, usuarioRequest);
             actualizado.setPassword(null);
 
             return ResponseEntity.ok(actualizado);
@@ -112,15 +110,15 @@ public class UserControllerREST {
     @PatchMapping("/user/notification-preferences")
     public ResponseEntity<?> updateNotificationEmailPreferences(
             Authentication authentication,
-            @RequestBody NotificationPrefsDTO prefs) {
+            @RequestBody UserPrefsDTO prefs) {
 
         String email = authentication.getName();
 
         Usuario actualizado = userService.actualizarPreferenciasNotificacion(
                 email,
-                prefs.isEmailEnabled(),
-                prefs.isPushEnabled(),
-                prefs.getPushToken()
+                prefs.emailEnabled(),
+                prefs.pushEnabled(),
+                prefs.pushToken()
         );
         return ResponseEntity.ok(actualizado);
     }

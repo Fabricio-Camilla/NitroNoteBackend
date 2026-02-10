@@ -1,23 +1,22 @@
 package ar.edu.unq.spring.service.impl;
 
+import ar.edu.unq.spring.modelo.*;
 import ar.edu.unq.spring.persistence.MantenimientoDAO;
+import ar.edu.unq.spring.persistence.NotificacionDAO;
 import ar.edu.unq.spring.persistence.NotificationLogDAO;
 import ar.edu.unq.spring.persistence.UsuarioDAO;
 import ar.edu.unq.spring.persistence.dto.MantenimientoJPADTO;
+import ar.edu.unq.spring.persistence.dto.NotificacionJPADTO;
 import ar.edu.unq.spring.persistence.dto.NotificationLogJPADTO;
 import ar.edu.unq.spring.persistence.dto.UsuarioJPADTO;
-import ar.edu.unq.spring.persistence.dto.VehiculoJPADTO;
 import ar.edu.unq.spring.service.interfaces.EmailService;
 import ar.edu.unq.spring.service.interfaces.NotificationService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StreamUtils;
-import java.nio.charset.StandardCharsets;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.stream.Collectors;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -27,16 +26,18 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationLogDAO notificationLogDAO;
     private final EmailService emailService;
     private final ExpoPushNotificationService expoPushService;
+    private final NotificacionDAO notificacionDAO;
 
     public NotificationServiceImpl(MantenimientoDAO mantenimientoDAO,
                                    UsuarioDAO usuarioDAO,
                                    NotificationLogDAO notificationLogDAO,
-                                   EmailService emailService) {
+                                   EmailService emailService, NotificacionDAO notificacionDAO) {
         this.mantenimientoDAO = mantenimientoDAO;
         this.usuarioDAO = usuarioDAO;
         this.notificationLogDAO = notificationLogDAO;
         this.emailService = emailService;
         this.expoPushService = new ExpoPushNotificationService();
+        this.notificacionDAO = notificacionDAO;
     }
 
     private String cargarTemplateEmail() {
@@ -57,7 +58,7 @@ public class NotificationServiceImpl implements NotificationService {
         List<MantenimientoJPADTO> vencenManana = mantenimientoDAO.findMantenimientosQueVencenEnFecha(manana);
 
         for (MantenimientoJPADTO mant : vencenManana) {
-            var vehiculo = mant.getVehiculo();
+            var vehiculo = mant.getVehiculo().aModelo();
             if (vehiculo == null) continue;
 
             Long usuarioId = vehiculo.getUsuario().getId();
@@ -65,6 +66,12 @@ public class NotificationServiceImpl implements NotificationService {
 
             UsuarioJPADTO usuario = usuarioDAO.findById(usuarioId).orElse(null);
             if (usuario == null) continue;
+            var not = notificacionDAO.notificationesDeUsuario(usuarioId)
+                    .stream()
+                    .map(NotificacionJPADTO::aModelo).collect(Collectors.toList());
+
+            var usuario1 = usuario.aModeloSimple();
+            usuario1.setNotificationPreferences(not);
 
             boolean yaEnviado = notificationLogDAO
                     .findByMantenimientoIdAndDateAndType(mant.getId(), hoy, "REMINDER_1_DAY_BEFORE")
@@ -72,67 +79,43 @@ public class NotificationServiceImpl implements NotificationService {
             if (yaEnviado) continue;
 
             // Enviar email si está habilitado
-            if (usuario.isEmailNotificationsEnabled()) {
-                enviarEmailRecordatorio(usuario, vehiculo, mant, hoy);
+
+            var recordatorios = usuario1.enviarEmail(mant.aModelo(vehiculo), vehiculo, hoy);
+
+            if (!recordatorios.isEmpty()) {
+                for (Recordatorio rec : recordatorios) {
+                    switch (rec.tipo()) {
+                        case TipoNotificacion.EMAIL ->
+                                emailService.send(rec.to(), rec.asunto(), rec.cuerpo());
+                        case TipoNotificacion.PUSH ->
+                                expoPushService.sendPushNotification(
+                                usuario1.getPushToken(),
+                                rec.to(),
+                                rec.cuerpo(),
+                                rec.data()
+                        );
+                    }
+                }
+
+
+                // Registrar log
+                NotificationLogJPADTO log = new NotificationLogJPADTO();
+                log.setMantenimientoId(mant.getId());
+                log.setDate(hoy);
+                log.setType("REMINDER_1_DAY_BEFORE");
+                notificationLogDAO.save(log);
             }
-
-            // Enviar push notification si está habilitado
-            if (usuario.isPushNotificationsEnabled() && usuario.getPushToken() != null) {
-                enviarPushRecordatorio(usuario, vehiculo, mant, hoy);
-            }
-
-            // Registrar log
-            NotificationLogJPADTO log = new NotificationLogJPADTO();
-            log.setMantenimientoId(mant.getId());
-            log.setDate(hoy);
-            log.setType("REMINDER_1_DAY_BEFORE");
-            notificationLogDAO.save(log);
         }
+
     }
 
-    private void enviarEmailRecordatorio(UsuarioJPADTO usuario, VehiculoJPADTO vehiculo,
-                                         MantenimientoJPADTO mant, LocalDate hoy) {
-        try {
-            String to = usuario.getEmail();
-            String asunto = "Recordatorio de mantenimiento – " + safe(vehiculo.getModelo());
-            String template = cargarTemplateEmail();
-            String cuerpoHtml = template
-                    .replace("{{nombreUsuario}}", safe(usuario.getNombre()))
-                    .replace("{{nombreMantenimiento}}", safe(mant.getNombre()))
-                    .replace("{{marcaVehiculo}}", safe(vehiculo.getMarca()))
-                    .replace("{{modeloVehiculo}}", safe(vehiculo.getModelo()))
-                    .replace("{{patenteVehiculo}}", safe(vehiculo.getPatente()))
-                    .replace("{{fecha}}", String.valueOf(mant.getFechaARealizar()));
-
-            emailService.send(to, asunto, cuerpoHtml);
-        } catch (Exception e) {
-            System.err.println("Error enviando email a " + usuario.getEmail() + ": " + e.getMessage());
-        }
+    @Override
+    public void guardar(Notificacion notificacionEmail) {
+        notificacionDAO.save(NotificacionJPADTO.desdeModelo(notificacionEmail));
     }
 
-    private void enviarPushRecordatorio(UsuarioJPADTO usuario, VehiculoJPADTO vehiculo,
-                                        MantenimientoJPADTO mant, LocalDate hoy) {
-        try {
-            String titulo = "Recordatorio de mantenimiento";
-            String mensaje = String.format("%s - %s",
-                    safe(mant.getNombre()),
-                    mant.getFechaARealizar().toString());
-
-            Map<String, Object> data = new HashMap<>();
-            data.put("maintenanceId", mant.getId());
-            data.put("type", "maintenance_reminder");
-            data.put("redirectTo", "MantenimientoDetails");
-            System.out.println("Token " + usuario.getPushToken());
-            expoPushService.sendPushNotification(
-                    usuario.getPushToken(),
-                    titulo,
-                    mensaje,
-                    data
-            );
-        } catch (Exception e) {
-            System.err.println("Error enviando push a " + usuario.getEmail() + ": " + e.getMessage());
-        }
+    @Override
+    public void clearAll() {
+        notificacionDAO.deleteAll();
     }
-
-    private String safe(Object o) { return o == null ? "" : o.toString(); }
 }

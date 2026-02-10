@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -36,12 +37,6 @@ public class UsuarioJPADTO implements UserDetails {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<VehiculoJPADTO> vehiculos = new ArrayList<>();
 
-    @Column(name = "email_notifications_enabled", nullable = false)
-    private boolean emailNotificationsEnabled;
-
-    @Column(name = "push_notifications_enabled", nullable = false)
-    private boolean pushNotificationsEnabled;
-
     @Column(name = "push_token")
     private String pushToken;
 
@@ -52,8 +47,6 @@ public class UsuarioJPADTO implements UserDetails {
         usuarioJPADTO.setPassword(usuario.getPassword());
         usuarioJPADTO.setRole(usuario.getRole());
         usuarioJPADTO.setId(usuario.getId());
-        usuarioJPADTO.setEmailNotificationsEnabled(usuario.isEmailNotificationsEnabled());
-        usuarioJPADTO.setPushNotificationsEnabled(usuario.isPushNotificationsEnabled());
         usuarioJPADTO.setPushToken(usuario.getPushToken());
         usuarioJPADTO.setVehiculos(usuario.getVehiculos()
                 .stream()
@@ -69,8 +62,6 @@ public class UsuarioJPADTO implements UserDetails {
         usuarioJPADTO.setPassword(usuario.getPassword());
         usuarioJPADTO.setRole(usuario.getRole());
         usuarioJPADTO.setId(usuario.getId());
-        usuarioJPADTO.setEmailNotificationsEnabled(usuario.isEmailNotificationsEnabled());
-        usuarioJPADTO.setPushNotificationsEnabled(usuario.isPushNotificationsEnabled());
         usuarioJPADTO.setPushToken(usuario.getPushToken());
         return usuarioJPADTO;
     }
@@ -82,8 +73,6 @@ public class UsuarioJPADTO implements UserDetails {
         usuarioJPADTO.setPassword(usuario.getPassword());
         usuarioJPADTO.setRole(usuario.getRole());
         usuarioJPADTO.setId(usuario.getId());
-        usuarioJPADTO.setEmailNotificationsEnabled(usuario.isEmailNotificationsEnabled());
-        usuarioJPADTO.setPushNotificationsEnabled(usuario.isPushNotificationsEnabled());
         usuarioJPADTO.setPushToken(usuario.getPushToken());
         usuarioJPADTO.setVehiculos(usuario.getVehiculos()
                 .stream()
@@ -95,8 +84,6 @@ public class UsuarioJPADTO implements UserDetails {
     public Usuario aModelo(){
         Usuario usuario = new Usuario(nombre, email, password);
         usuario.setRole(role);
-        usuario.setEmailNotificationsEnabled(emailNotificationsEnabled);
-        usuario.setPushNotificationsEnabled(pushNotificationsEnabled);
         usuario.setPushToken(pushToken);
         usuario.setId(id);
         usuario.setVehiculos(vehiculos.stream().map(v -> v.aModelo(usuario)).collect(Collectors.toList()));

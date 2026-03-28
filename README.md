@@ -35,6 +35,7 @@ El proyecto sigue una arquitectura en capas:
 * Entities / DTOs
 
 > ⚠️ Este es un proyecto backend, por lo tanto, no incluye una interfaz de usuario. La API REST está preparada para integrarse con un frontend externo.
+> 🔗 Para probar sus funcionalidades, se recomienda utilizar el siguiente frontend: (https://github.com/lucrecolon/NitroNoteFrontend)
 
 ## Estado del proyecto
 📌 Proyecto académico finalizado, abierto a mejoras y refactorizaciones.
